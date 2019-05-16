@@ -133,7 +133,7 @@ MyGame.prototype.update = function () {
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.K)) {
         this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 + zoomDelta);
     }
-    
+
     this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
     this.mCamera.clampAtBoundary(this.mPortal.getXform(), 0.8);
     this.mCamera.panWith(this.mHero.getXform(), 0.9);
@@ -142,7 +142,6 @@ MyGame.prototype.update = function () {
 //    this.mCollector.update();
     this.mPortal.update();
     this.mBrain.update();
-    this.mMsg.setText("Focused: " + this.mChoice);
 
     var rate = 0.02;
     if (!this.mBrain.getBBox().intersects(this.mHero.getBBox())) {
@@ -162,6 +161,9 @@ MyGame.prototype.update = function () {
         heroView[0] = 0;
     }
     this.mHeroCam.setBounds(heroView);
+    
+    var mousePos = gEngine.Input.getMousePosition();
+    this.mMsg.setText("(" + mousePos[0] + ", " + mousePos[1] + ")");
 
 //    var collisionPoint = [];
 //    if (this.mHero.pixelTouches(this.mCollector, collisionPoint)) {
