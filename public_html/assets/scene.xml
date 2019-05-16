@@ -1,0 +1,11 @@
+<MyGameLevel>
+    <Camera 
+        CenterX="50" 
+        CenterY="37.5" 
+        Width="100"
+        Viewport="0 0 640 480"
+        BgColor="0.8 0.8 0.8 1"
+    />
+    <Square Width="5" Height="5" PosX="20" PosY="60" Rotation="30" Color="1 1 1 1" />
+    <!--<Square Width="2" Height="2" PosX="20" PosY="60" Rotation="0" Color="1 0 0 1" />-->
+</MyGameLevel>

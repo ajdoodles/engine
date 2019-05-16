@@ -1,0 +1,16 @@
+<MyGameLevel>
+        <Camera
+        CenterX="20"
+        CenterY="60"
+        Width="20"
+        Viewport="20 40 600 300"
+        BgColor="0 0 1 1.0" />
+    <!--    <Square PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="1 1 1 1" />-->
+        <Square PosX="20" PosY="60" Width="2" Height="3" Rotation="0" Color="1 0 0 1" />
+    <TextureSquare PosX="15" PosY="60" Width="3" Height="3" Rotation="-5"
+                   Color="1 0 0 0.3" 
+                   Texture="assets/minion_portal.jpg" />
+    <TextureSquare PosX="25" PosY="60" Width="3" Height="3" Rotation="5"
+                   Color="0 0 0 0" 
+                   Texture="assets/minion_collector.jpg" />
+</MyGameLevel>
