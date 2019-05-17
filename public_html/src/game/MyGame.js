@@ -134,6 +134,11 @@ MyGame.prototype.update = function () {
         this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 + zoomDelta);
     }
 
+    if (gEngine.Input.isMouseClicked(gEngine.Input.mouse.Right)
+        || gEngine.Input.isMouseClicked(gEngine.Input.mouse.Middle)) {
+        this.mPortal.setVisible(!this.mPortal.isVisible());
+    }
+
     this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
     this.mCamera.clampAtBoundary(this.mPortal.getXform(), 0.8);
     this.mCamera.panWith(this.mHero.getXform(), 0.9);
