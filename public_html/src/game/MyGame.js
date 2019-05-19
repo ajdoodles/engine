@@ -134,9 +134,22 @@ MyGame.prototype.update = function () {
         this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 + zoomDelta);
     }
 
-    if (gEngine.Input.isMouseClicked(gEngine.Input.mouse.Right)
-        || gEngine.Input.isMouseClicked(gEngine.Input.mouse.Middle)) {
+    if (gEngine.Input.isMouseClicked(gEngine.Input.mouse.Middle)) {
         this.mPortal.setVisible(!this.mPortal.isVisible());
+    }
+
+    if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Left)) {
+        if (this.mCamera.isMouseInViewport()) {
+            var mousePos = this.mCamera.getCursorWorldPosition();
+            this.mPortal.getXform().setPosition(mousePos[0], mousePos[1]);
+        }
+    }
+
+    if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Right)) {
+        if (this.mHeroCam.isMouseInViewport()) {
+            var mousePos = this.mHeroCam.getCursorWorldPosition();
+            this.mHero.getXform().setPosition(mousePos[0], mousePos[1]);
+        }
     }
 
     this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
@@ -166,7 +179,7 @@ MyGame.prototype.update = function () {
         heroView[0] = 0;
     }
     this.mHeroCam.setBounds(heroView);
-    
+
     var mousePos = gEngine.Input.getMousePosition();
     this.mMsg.setText("(" + mousePos[0] + ", " + mousePos[1] + ")");
 
