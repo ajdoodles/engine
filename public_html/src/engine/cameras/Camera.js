@@ -152,3 +152,31 @@ Camera.prototype.clampAtBoundary = function(xform, zone) {
     }
     return status;
 };
+
+Camera.prototype.isMouseInViewport = function() {
+    var inside = false;
+    var mousePos = gEngine.Input.getMousePosition();
+    
+    inside |= mousePos[0] >= this.mViewport[0];
+    inside |= mousePos[1] >= this.mViewport[1];
+    inside |= mousePos[0] < this.mViewport[0] + this.mViewport[2];
+    inside |= mousePos[1] < this.mViewport[1] + this.mViewport[3];
+    
+    return inside;
+};
+
+Camera.prototype.getCursorWorldPosition = function () {
+    if (!this.isMouseInViewport()) {
+        throw "Can't get world position for cursor not in viewport.";
+    }
+    
+    var cameraCenter = this.getWCCenter();
+    var cameraXOrigin = cameraCenter[0] - (this.getWidth()/2);
+    var cameraYOrigin = cameraCenter[1] - (this.getHeight()/2);
+    
+    var screenPos = gEngine.Input.getMousePosition();
+    var scaledXOffset = (screenPos[0] - this.mViewport[0]) * (this.getWidth()/this.mViewport[2]);
+    var scaledYOffset = (screenPos[1] - this.mViewport[1]) * (this.getHeight()/this.mViewport[3]);
+    
+    return vec2.fromValues(cameraXOrigin + scaledXOffset, cameraYOrigin + scaledYOffset);
+};
