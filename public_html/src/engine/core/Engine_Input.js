@@ -58,9 +58,9 @@ gEngine.Input = (function () {
     var mIsKeyClicked = [];
 
     var kMouse = {
-        Left: 1,
-        Middle: 2, 
-        Right: 3,
+        Left: 0,
+        Middle: 1, 
+        Right: 2,
     };
 
     var mMousePreviousState = [];
