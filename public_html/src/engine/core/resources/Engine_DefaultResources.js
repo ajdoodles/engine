@@ -17,6 +17,9 @@ gEngine.DefaultResources = (function () {
     var mTextureShader = null;
     var mSpriteShader = null;
     
+    var mGlobalAmbientColor = vec4.fromValues(0.3, 0.3, 0.3, 1.0);
+    var mGlobalAmbientIntensity = 0.95;
+    
     var kDefaultFont = "assets/fonts/system-default-font";
     
     var _getConstColorShader = function() {
@@ -30,6 +33,22 @@ gEngine.DefaultResources = (function () {
     var _getSpriteShader = function() {
         return mSpriteShader;
     }
+    
+    var getGlobalAmbientColor = function() {
+        return mGlobalAmbientColor;
+    };
+    
+    var setGlobalAmbientColor = function(color) {
+        vec4.clone(mGlobalAmbientColor, color);
+    };
+    
+    var getGlobalAmbientIntensity = function() {
+        return mGlobalAmbientIntensity;
+    };
+    
+    var setGlobalAmbientIntensity = function (intensity) {
+        mGlobalAmbientIntensity = intensity;
+    };
     
     var _getDefaultFont = function() {
         return kDefaultFont;
@@ -70,6 +89,10 @@ gEngine.DefaultResources = (function () {
         getConstColorShader: _getConstColorShader,
         getTextureShader: _getTextureShader,
         getSpriteShader: _getSpriteShader,
+        getGlobalAmbientColor: getGlobalAmbientColor,
+        setGlobalAmbientColor: setGlobalAmbientColor,
+        getGlobalAmbientIntensity: getGlobalAmbientIntensity,
+        setGlobalAmbientIntensity: setGlobalAmbientIntensity,
         getDefaultFont: _getDefaultFont,
     };
     

@@ -10,6 +10,8 @@ function SimpleShader(vertexShaderId, fragmentShaderId) {
     this.mModelTransform = null;
     this.mViewProjTransform = null;
     this.mPixelColor = null;
+    this.mGlobalAmbientColor = null;
+    this.mGlobalAmbientIntensity = 1.0;
 
     var gl = gEngine.Core.getGL();
 
@@ -30,7 +32,9 @@ function SimpleShader(vertexShaderId, fragmentShaderId) {
     this.mModelTransform = gl.getUniformLocation(this.mCompiledShader, "uModelTransform");
     this.mViewProjTransform = gl.getUniformLocation(this.mCompiledShader, "uViewProjTransform");
     this.mPixelColor = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
-
+    this.mGlobalAmbientColor = gl.getUniformLocation(this.mCompiledShader, "uGlobalAmbientColor");
+    this.mGlobalAmbientIntensity = gl.getUniformLocation(this.mCompiledShader, "uGlobalAmbientIntensity");
+    
     gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
 
     gl.vertexAttribPointer(
@@ -60,10 +64,12 @@ SimpleShader.prototype._compileShader = function (filepath, shaderType) {
 SimpleShader.prototype.activateShader = function(pixelColor, camera) {
     var gl = gEngine.Core.getGL();
     gl.useProgram(this.mCompiledShader);
+    gl.uniform4fv(this.mGlobalAmbientColor, gEngine.DefaultResources.getGlobalAmbientColor());
+    gl.uniform1f(this.mGlobalAmbientIntensity, gEngine.DefaultResources.getGlobalAmbientIntensity());
     gl.uniformMatrix4fv(this.mViewProjTransform, false, camera.getVPMatrix());
     gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
     gl.uniform4fv(this.mPixelColor, pixelColor);
-}
+};
 
 SimpleShader.prototype.loadObjectTransform = function(modelTransform) {
     var gl = gEngine.Core.getGL();
