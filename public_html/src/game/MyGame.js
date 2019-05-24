@@ -140,14 +140,14 @@ MyGame.prototype.update = function () {
 
     if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Left)) {
         if (this.mCamera.isMouseInViewport()) {
-            var mousePos = this.mCamera.getCursorWorldPosition();
+            var mousePos = this.mCamera.getWCCursorPosition();
             this.mPortal.getXform().setPosition(mousePos[0], mousePos[1]);
         }
     }
 
     if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Right)) {
         if (this.mHeroCam.isMouseInViewport()) {
-            var mousePos = this.mHeroCam.getCursorWorldPosition();
+            var mousePos = this.mHeroCam.getWCCursorPosition();
             this.mHero.getXform().setPosition(mousePos[0], mousePos[1]);
         }
     }

@@ -35,16 +35,16 @@ Camera.prototype.panWith = function(xform, zone) {
         var newC = vec2.clone(this.getWCCenter());
         var pos = xform.getPosition();
         if ((status & BoundingBox.eBoundCollideStatus.eCollideLeft) !== 0) {
-            newC[0] = pos[0] - xform.getWidth()/2 + (this.getWidth()*zone)/2;
+            newC[0] = pos[0] - xform.getWidth()/2 + (this.getWCWidth()*zone)/2;
         }
         if ((status & BoundingBox.eBoundCollideStatus.eCollideRight) !== 0) {
-            newC[0] = pos[0] + xform.getWidth()/2 - (this.getWidth()*zone)/2;;
+            newC[0] = pos[0] + xform.getWidth()/2 - (this.getWCWidth()*zone)/2;
         }
         if ((status & BoundingBox.eBoundCollideStatus.eCollideTop) !== 0) {
-            newC[1] = pos[1] + xform.getHeight()/2 - (this.getHeight()*zone)/2;
+            newC[1] = pos[1] + xform.getHeight()/2 - (this.getWCHeight()*zone)/2;
         }
         if ((status & BoundingBox.eBoundCollideStatus.eCollideBottom) !== 0) {
-            newC[1] = pos[1] - xform.getHeight()/2 + (this.getHeight()*zone)/2;
+            newC[1] = pos[1] - xform.getHeight()/2 + (this.getWCHeight()*zone)/2;
         }
         this.mCameraState.setCenter(newC);
     }
@@ -53,7 +53,7 @@ Camera.prototype.panWith = function(xform, zone) {
 
 Camera.prototype.zoomBy = function(zoom) {
     if (zoom > 0) {
-        this.setWCWidth(this.getWidth() * zoom);
+        this.setWCWidth(this.getWCWidth() * zoom);
     }
 };
 

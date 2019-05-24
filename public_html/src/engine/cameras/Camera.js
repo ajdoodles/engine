@@ -4,17 +4,29 @@
  * and open the template in the editor.
  */
 
-function Camera(wcCenter, wcWidth, viewport, borderPx) {
+/**
+ * Defines a camera that will draw a section of the world on to a section of
+ * canvas known as a viewport. 
+ * @param {type} wcCenter position to look at in WC space (world units).
+ * @param {type} wcWidth the size of the "frame" the camera looks through.
+ *                       In other words, the frame's left is wcCenter -
+ *                       (wcWidth/2), bottom is wcCenter - (wcHeight/2). The
+ *                       frame is wcWidth world units wide AND
+ *                       (bounds - 2*borderPx) pixels wide. 
+ * @param {type} bounds area of canvas in DC space on which to draw. Strictly
+ *                      contains the viewport.
+ * @param {type} borderPx space between the viewport and the outer bounds.
+ * @returns {Camera}
+ */
+function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
     this.mCameraState = new CameraState(wcCenter, wcWidth);
     this.mCameraShake = null;
     
     this.mViewport = [];
     this.mScissorBounds = []; 
-    this.mViewportBorderPx = 0;
-    if (borderPx !== undefined) {
-        this.mViewportBorderPx = borderPx;
-    }
-    this.setBounds(viewport, this.mViewportBorderPx);
+    this.mViewportBorderPx = borderPx;
+    
+    this.setBounds(bounds, this.mViewportBorderPx);
     
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
@@ -24,27 +36,43 @@ function Camera(wcCenter, wcWidth, viewport, borderPx) {
     this.mViewProjMatrix = mat4.create();
     
     this.mBgColor = [0.8, 0.8, 0.8, 1.0];
-}
+};
 
 Camera.prototype.setWCCenter = function(xPos, yPos) {
     this.mCameraState.setCenter(vec2.fromValues(xPos, yPos));
-}
+};
 
 Camera.prototype.getWCCenter = function() {
     return this.mCameraState.getCenter();
-}
+};
 
 Camera.prototype.setWCWidth = function(width) {
 //    this.mWCWidth = width;
     this.mCameraState.setWidth(width);
-}
+};
 
-Camera.prototype.getWidth = function() {
+Camera.prototype.getWCWidth = function() {
     return this.mCameraState.getWidth();
-}
+};
 
-Camera.prototype.getHeight = function() {
-    return this.getWidth() * (this.mViewport[3]/this.mViewport[2]);
+Camera.prototype.getWCHeight = function() {
+    return this.getWCWidth() * (this.mViewport[3] / this.mViewport[2]);
+};
+
+Camera.prototype.getWCLeft = function() {
+    return this.getWCCenter()[0] - (this.getWCWidth()/2);
+};
+
+Camera.prototype.getWCBottom = function() {
+    return this.getWCCenter()[1] - (this.getWCHeight()/2);
+}; 
+
+Camera.prototype.getViewportLeft = function() {
+    return this.mViewport[0];
+};
+
+Camera.prototype.getViewportBottom = function() {
+    return this.mViewport[1];
 };
 
 Camera.prototype.setBackgroundColor = function(color) {
@@ -66,7 +94,7 @@ Camera.prototype.getBounds = function() {
     out[2] = this.mScissorBounds[2];
     out[3] = this.mScissorBounds[3];
     return out;
-}
+};
 
 Camera.prototype.setBounds = function(bounds, borderPx) {
     if (borderPx !== undefined) {
@@ -110,8 +138,8 @@ Camera.prototype.setupViewProjection = function() {
         [center[0], center[1], 0], // lookat position
         [0, 1, 0]); //orientation
 
-    var wcHalfWidth = this.getWidth() * 0.5;
-    var wcHalfHeight = this.getHeight() * 0.5;
+    var wcHalfWidth = this.getWCWidth() * 0.5;
+    var wcHalfHeight = this.getWCHeight() * 0.5;
 
     mat4.ortho(
         this.mProjMatrix,
@@ -127,8 +155,8 @@ Camera.prototype.setupViewProjection = function() {
 
 Camera.prototype.collideWCBound = function(xform, zone) {
     var xformBounds = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
-    var zoneWidth = zone * this.getWidth();
-    var zoneHeight = zone * this.getHeight();
+    var zoneWidth = zone * this.getWCWidth();
+    var zoneHeight = zone * this.getWCHeight();
     var zoneBounds = new BoundingBox(this.getWCCenter(), zoneWidth, zoneHeight);
     return zoneBounds.boundCollideStatus(xformBounds);
 };
@@ -138,16 +166,16 @@ Camera.prototype.clampAtBoundary = function(xform, zone) {
     if (status !== BoundingBox.eBoundCollideStatus.eInside) {
         var pos = xform.getPosition();
         if ((status & BoundingBox.eBoundCollideStatus.eCollideLeft) !== 0) {
-            pos[0] = this.getWCCenter()[0] - (this.getWidth()*zone)/2 + xform.getWidth()/2;
+            pos[0] = this.getWCCenter()[0] - (this.getWCWidth()*zone)/2 + xform.getWidth()/2;
         }
         if ((status & BoundingBox.eBoundCollideStatus.eCollideRight) !== 0) {
-            pos[0] = this.getWCCenter()[0] + (this.getWidth()*zone)/2 - xform.getWidth()/2;
+            pos[0] = this.getWCCenter()[0] + (this.getWCWidth()*zone)/2 - xform.getWidth()/2;
         }
         if ((status & BoundingBox.eBoundCollideStatus.eCollideTop) !== 0) {
-            pos[1] = this.getWCCenter()[1] + (this.getHeight()*zone)/2 - xform.getHeight()/2;
+            pos[1] = this.getWCCenter()[1] + (this.getWCHeight()*zone)/2 - xform.getHeight()/2;
         }
         if ((status & BoundingBox.eBoundCollideStatus.eCollideBottom) !== 0) {
-            pos[1] = this.getWCCenter()[1] - (this.getHeight()*zone)/2 + xform.getHeight()/2;
+            pos[1] = this.getWCCenter()[1] - (this.getWCHeight()*zone)/2 + xform.getHeight()/2;
         }
     }
     return status;
@@ -165,18 +193,13 @@ Camera.prototype.isMouseInViewport = function() {
     return inside;
 };
 
-Camera.prototype.getCursorWorldPosition = function () {
+Camera.prototype.getWCCursorPosition = function () {
     if (!this.isMouseInViewport()) {
         throw "Can't get world position for cursor not in viewport.";
     }
     
-    var cameraCenter = this.getWCCenter();
-    var cameraXOrigin = cameraCenter[0] - (this.getWidth()/2);
-    var cameraYOrigin = cameraCenter[1] - (this.getHeight()/2);
-    
     var screenPos = gEngine.Input.getMousePosition();
-    var scaledXOffset = (screenPos[0] - this.mViewport[0]) * (this.getWidth()/this.mViewport[2]);
-    var scaledYOffset = (screenPos[1] - this.mViewport[1]) * (this.getHeight()/this.mViewport[3]);
-    
-    return vec2.fromValues(cameraXOrigin + scaledXOffset, cameraYOrigin + scaledYOffset);
+    screenPos = vec3.fromValues(screenPos[0], screenPos[1], 0);
+    var wcPos = this.getWCPosition(screenPos);
+    return vec2.fromValues(wcPos[0], wcPos[1]);
 };
