@@ -182,15 +182,12 @@ Camera.prototype.clampAtBoundary = function(xform, zone) {
 };
 
 Camera.prototype.isMouseInViewport = function() {
-    var inside = false;
     var mousePos = gEngine.Input.getMousePosition();
+    var x = mousePos[0] - this.mViewport[0];
+    var y = mousePos[1] - this.mViewport[1];
     
-    inside |= mousePos[0] >= this.mViewport[0];
-    inside |= mousePos[1] >= this.mViewport[1];
-    inside |= mousePos[0] < this.mViewport[0] + this.mViewport[2];
-    inside |= mousePos[1] < this.mViewport[1] + this.mViewport[3];
-    
-    return inside;
+    var inside = (0 <= x && x < this.mViewport[2]);
+    return inside && (0 <= y && y < this.mViewport[3]);
 };
 
 Camera.prototype.getWCCursorPosition = function () {
