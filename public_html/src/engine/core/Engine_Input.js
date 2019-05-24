@@ -116,6 +116,16 @@ gEngine.Input = (function () {
         return inside;
     };
  
+    var _cancelContextMenu = function(event) {
+        if (typeof event.stopPropagation === 'function') {
+            event.stopPropagation()
+        }
+        if (typeof event.preventDefault === 'function') {
+            event.preventDefault();
+        }
+        return false;
+    };
+ 
     var initialize = function (htmlCanvasID) {
         mCanvas = document.getElementById(htmlCanvasID);
         
@@ -132,6 +142,7 @@ gEngine.Input = (function () {
             mIsMouseClicked[i] = false;
         }
 
+        window.addEventListener('contextmenu', _cancelContextMenu);
         window.addEventListener('keyup', _onKeyUp);
         window.addEventListener('keydown', _onKeyDown);
         window.addEventListener('mouseup', _onMouseUp);
