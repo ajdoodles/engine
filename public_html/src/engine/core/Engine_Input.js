@@ -72,21 +72,45 @@ gEngine.Input = (function () {
     
     var mCanvas = null;
 
+    var _reverseKeyLookup = function(keyCode) {
+        for (var key in kKeys) {
+            if (keyCode === kKeys[key]) {
+                return key;
+            }
+        }
+    };
+
+    var _reverseMouseLookup = function(buttonCode) {
+        for (var button in kMouse) {
+            if (buttonCode === kMouse[button]) {
+                return button;
+            }
+        }
+    };
+
+    var _logInputEvent = function(eventString, button) {
+        console.log(eventString + " fired with " + button + " button.");
+    };
+
     var _onKeyDown = function (event) {
+        _logInputEvent("KEYDOWN", _reverseKeyLookup(event.keyCode));
         mIsKeyPressed[event.keyCode] = true;
     };
 
     var _onKeyUp = function (event) {
+        _logInputEvent("KEYUP", _reverseKeyLookup(event.keyCode));
         mIsKeyPressed[event.keyCode] = false;
     };
 
     var _onMouseDown = function (event) {
+        _logInputEvent("MOUSEDOWN", _reverseMouseLookup(event.button));
         if (_onMouseMove(event)) {
             mIsMousePressed[event.button] = true;            
         }
     };
     
     var _onMouseUp = function (event) {
+        _logInputEvent("MOUSEUP", _reverseMouseLookup(event.button));
         _onMouseMove(event);
         mIsMousePressed[event.button] = false;
     };
@@ -117,6 +141,7 @@ gEngine.Input = (function () {
     };
  
     var _cancelContextMenu = function(event) {
+        _logInputEvent("CONTEXTMENU", "Right");
         if (typeof event.stopPropagation === 'function') {
             event.stopPropagation()
         }
