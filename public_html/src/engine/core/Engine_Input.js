@@ -143,7 +143,7 @@ gEngine.Input = (function () {
     var _cancelContextMenu = function(event) {
         _logInputEvent("CONTEXTMENU", "Right");
         if (typeof event.stopPropagation === 'function') {
-            event.stopPropagation()
+            event.stopPropagation();
         }
         if (typeof event.preventDefault === 'function') {
             event.preventDefault();
@@ -161,10 +161,11 @@ gEngine.Input = (function () {
             mIsKeyClicked[i] = false;
         }
         
-        for (i = 0; i < kMouse.Right; i++) {
-            mMousePreviousState[i] = false;
-            mIsMousePressed[i] = false;
-            mIsMouseClicked[i] = false;
+        var j;
+        for (j = 0; j <= kMouse.Right; j++) {
+            mMousePreviousState[j] = false;
+            mIsMousePressed[j] = false;
+            mIsMouseClicked[j] = false;
         }
 
         window.addEventListener('contextmenu', _cancelContextMenu);
@@ -176,15 +177,16 @@ gEngine.Input = (function () {
     };
     
     var update = function() {
-      var i;
-      for (i = 0; i < kKeys.LastKeyCode; i++) {
-          mIsKeyClicked[i] = (!mKeyPreviousState[i]) && mIsKeyPressed[i]; // the wrong thing is being negated here
-          mKeyPreviousState[i] = mIsKeyPressed[i];
-      }
-      for (i = 0; i < kMouse.Right; i++) {
-          mIsMouseClicked[i] = mIsMousePressed[i] && !mMousePreviousState[i];
-          mMousePreviousState[i] = mIsMousePressed[i];
-      }
+        var i;
+        for (i = 0; i < kKeys.LastKeyCode; i++) {
+            mIsKeyClicked[i] = (!mKeyPreviousState[i]) && mIsKeyPressed[i]; // the wrong thing is being negated here
+            mKeyPreviousState[i] = mIsKeyPressed[i];
+        }
+        var j;
+        for (j = 0; j <= kMouse.Right; j++) {
+            mIsMouseClicked[j] = !mMousePreviousState[j] && mIsMousePressed[j];
+            mMousePreviousState[j] = mIsMousePressed[j];
+        }
     };
 
     var isKeyPressed = function(keyCode) {
