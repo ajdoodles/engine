@@ -17,7 +17,6 @@ function MyGame() {
     this.kCue = "assets/sounds/MyGame_cue.wav";
     
     this.mDrawSet = new Array();
-    this.mCamera = null;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -74,24 +73,16 @@ MyGame.prototype.initialize = function () {
     bgRenderable.getXform().setPosition(50, 35);
     this.mBg = new GameObject(bgRenderable);
 
-//    this.mDyePack = new DyePack(this.kMinionSprite);
-//    this.mMinionSet = new GameObjectSet();
     this.mHero = new Hero(this.kMinionSprite);
     this.mBrain = new Brain(this.kMinionSprite);
     this.mPortal = new Portal(this.kPortal);
-//    this.mCollector = new Collector(this.kCollector);
     this.mLeftMinion = new Minion(this.kMinionSprite, 30, 30);
     this.mRightMinion = new Minion(this.kMinionSprite, 70, 30);
     this.mRightMinion.getXform().setHorizontalFlip(true);
     
     this.mFocusObj = this.mHero;
     this.mChoice = 'H';
-//    var minion, i;
-//    for (i = 0; i < 5; i++) {
-//        minion = new Minion(this.kMinionSprite, Math.random() * 65);
-//        this.mMinionSet.addObject(minion);
-//    }
-
+    
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(1, 2);
@@ -135,7 +126,8 @@ MyGame.prototype.update = function () {
     }
 
     if (gEngine.Input.isMouseClicked(gEngine.Input.mouse.Middle)) {
-        this.mPortal.setVisible(!this.mPortal.isVisible());
+        var visible = this.mPortal.isVisible();
+        this.mPortal.setVisible(!visible);
     }
 
     if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Left)) {
@@ -153,11 +145,9 @@ MyGame.prototype.update = function () {
     }
 
     this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
-    this.mCamera.clampAtBoundary(this.mPortal.getXform(), 0.8);
     this.mCamera.panWith(this.mHero.getXform(), 0.9);
     
     this.mHero.update();
-//    this.mCollector.update();
     this.mPortal.update();
     this.mBrain.update();
 
@@ -173,24 +163,8 @@ MyGame.prototype.update = function () {
     this.mHeroCam.panTo(this.mHero.getXform().getXPos(), this.mHero.getXform().getYPos());
     this.mBrainCam.panTo(this.mBrain.getXform().getXPos(), this.mBrain.getXform().getYPos());
 
-    var heroView = this.mHeroCam.getBounds();
-    heroView[0] += 1;
-    if (heroView[0] > 500) {
-        heroView[0] = 0;
-    }
-    this.mHeroCam.setBounds(heroView);
-
     var mousePos = gEngine.Input.getMousePosition();
     this.mMsg.setText("(" + mousePos[0] + ", " + mousePos[1] + ")");
-
-//    var collisionPoint = [];
-//    if (this.mHero.pixelTouches(this.mCollector, collisionPoint)) {
-//        this.mMsg.setText("Collision! ( " + collisionPoint[0] + ", " + collisionPoint[1] + ")");
-//        this.mDyePack.getXform().setPosition(collisionPoint[0], collisionPoint[1]);
-//        this.mDyePack.setVisible(true);
-//    } else {
-//        this.mDyePack.setVisible(false);
-//    }
 };
 
 MyGame.prototype.draw = function () {
@@ -208,11 +182,7 @@ MyGame.prototype.drawCam = function (camera) {
     this.mBg.draw(camera);
     this.mHero.draw(camera);
     this.mBrain.draw(camera);
-//    this.mMinionSet.draw(camera);
-//    this.mMsg.draw(camera);
     this.mPortal.draw(camera);
     this.mLeftMinion.draw(camera);
     this.mRightMinion.draw(camera);
-//    this.mCollector.draw(camera);
-//    this.mDyePack.draw(camera);
 };
