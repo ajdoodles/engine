@@ -68,7 +68,7 @@ MyGame.prototype.initialize = function () {
             2);
     this.mBrainCam.setBackgroundColor([1, 1, 1, 1]);
 
-    var bgRenderable = new TextureRenderable(this.kBg);
+    var bgRenderable = new LightRenderable(this.kBg);
     bgRenderable.getXform().setSize(150, 150);
     bgRenderable.getXform().setPosition(50, 35);
     this.mBg = new GameObject(bgRenderable);
@@ -87,6 +87,10 @@ MyGame.prototype.initialize = function () {
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(1, 2);
     this.mMsg.setTextHeight(3);
+    
+    this.mLight = new Light();
+    this.mBg.getRenderable().addLights(this.mLight);
+    this.mHero.getRenderable().addLights(this.mLight);
 };
 
 MyGame.prototype.update = function () {

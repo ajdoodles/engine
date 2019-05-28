@@ -8,11 +8,12 @@ function Hero(spriteTexture) {
     this.kDelta = 0.3;
     this.kDeltaDegrees = 1;
     
-    this.mHero = new SpriteRenderable(spriteTexture);
+    this.mHero = new LightRenderable(spriteTexture);
     this.mHero.setColor([1, 1, 1, 0]);
     this.mHero.getXform().setPosition(35, 50);
     this.mHero.getXform().setSize(9, 12);
     this.mHero.setElementPixelCoordinates(0, 120, 0, 180);
+    this.mHero.addLights(new Light());
     GameObject.call(this, this.mHero);
 }
 gEngine.Core.inheritPrototype(GameObject, Hero);
