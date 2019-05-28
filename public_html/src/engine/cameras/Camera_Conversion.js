@@ -5,15 +5,7 @@
  */
 
 Camera.prototype.getPixelsSize = function (wcSize) {
-    return wcSize * this._getWCToPixelsRatio();
-};
-
-/**
- * @returns {Number} float representing the ratio from WC space (world units)
- *                   to DC space (pixels)
- */
-Camera.prototype._getWCToPixelsRatio = function() {
-    return this.mViewport[2]/this.getWCWidth();
+    return wcSize * this._mRenderCache.mWCToPixelsRatio;
 };
 
 Camera.prototype._getPixelsToWCRatio = function() {
@@ -31,15 +23,12 @@ Camera.prototype.getWCPosition = function(pixelPosition) {
 };
 
 Camera.prototype.getPixelsPosition = function (wcPosition) {
-    var pixelsOrigin =
-            vec3.fromValues(
-                this.getViewportLeft(),
-                this.getViewportBottom(),
-                0);
-    var bottomLeft = vec3.fromValues(this.getWCLeft(), this.getWCBottom(), 0);
+    var x = wcPosition[0] - this._mRenderCache.mViewportLeftWC;
+    x = this.mViewport[0] + (x * this._mRenderCache.mWCToPixelsRatio);
 
-    var pixelsPos = vec3.create();
-    vec3.sub(pixelsPos, wcPosition, bottomLeft);
-    vec3.scaleAndAdd(pixelsPos, pixelsOrigin, pixelsPos, this._getWCToPixelsRatio());
-    return pixelsPos;
+    var y = wcPosition[1] - this._mRenderCache.mViewportBottomWC;
+    y = this.mViewport[1] + (y * this._mRenderCache.mWCToPixelsRatio);
+
+    var z = wcPosition[2] * this._mRenderCache.mWCToPixelsRatio;
+    return vec3.fromValues(x, y, z);
 };

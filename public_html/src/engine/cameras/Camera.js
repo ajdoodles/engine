@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 
+function PreRenderCache() {
+    var mWCToPixelsRatio = 1;
+    var mViewportBottomWC = -1;
+    var mViewportLeftWC = -1;
+};
+
 /**
  * Defines a camera that will draw a section of the world on to a section of
  * canvas known as a viewport. 
@@ -20,6 +26,7 @@
  */
 function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
     this.mCameraState = new CameraState(wcCenter, wcWidth);
+    this._mRenderCache = new PreRenderCache();
     this.mCameraShake = null;
     
     this.mViewport = [];
@@ -58,14 +65,6 @@ Camera.prototype.getWCWidth = function() {
 Camera.prototype.getWCHeight = function() {
     return this.getWCWidth() * (this.mViewport[3] / this.mViewport[2]);
 };
-
-Camera.prototype.getWCLeft = function() {
-    return this.getWCCenter()[0] - (this.getWCWidth()/2);
-};
-
-Camera.prototype.getWCBottom = function() {
-    return this.getWCCenter()[1] - (this.getWCHeight()/2);
-}; 
 
 Camera.prototype.getViewportLeft = function() {
     return this.mViewport[0];
@@ -151,6 +150,10 @@ Camera.prototype.setupViewProjection = function() {
         this.mFarPlane); // z-distance to far plane
         
     mat4.multiply(this.mViewProjMatrix, this.mProjMatrix, this.mViewMatrix);
+
+    this._mRenderCache.mWCToPixelsRatio = this.mViewport[2]/this.getWCWidth();
+    this._mRenderCache.mViewportLeftWC = this.getWCCenter()[0] - (this.getWCWidth()/2);
+    this._mRenderCache.mViewportBottomWC = this.getWCCenter()[1] - (this.getWCHeight()/2);
 };
 
 Camera.prototype.collideWCBound = function(xform, zone) {
