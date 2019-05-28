@@ -10,12 +10,14 @@ var gEngine = gEngine || {};
 gEngine.DefaultResources = (function () {
     var kSimpleVS = "src/glslshaders/SimpleVS.glsl";
     var kSimpleFS = "src/glslshaders/SimpleFS.glsl";
-    var mConstColorShader = null;
-    
     var kTextureVS = "src/glslshaders/TextureVS.glsl";
     var kTextureFS = "src/glslshaders/TextureFS.glsl";
-    var mTextureShader = null;
+    var kLightFS = "src/glslshaders/LightFS.glsl";
+    
+    var mConstColorShader = null;
     var mSpriteShader = null;
+    var mTextureShader = null;
+    var mLightShader = null;
     
     var mGlobalAmbientColor = vec4.fromValues(0.3, 0.3, 0.3, 1.0);
     var mGlobalAmbientIntensity = 0.95;
@@ -26,13 +28,17 @@ gEngine.DefaultResources = (function () {
         return mConstColorShader;
     };
     
-    var _getTextureShader = function() {
-        return mTextureShader;
-    }
-    
     var _getSpriteShader = function() {
         return mSpriteShader;
-    }
+    };
+    
+    var _getTextureShader = function() {
+        return mTextureShader;
+    };
+    
+    var _getLightShader = function() {
+        return mLightShader;
+    };
     
     var getGlobalAmbientColor = function() {
         return mGlobalAmbientColor;
@@ -56,8 +62,9 @@ gEngine.DefaultResources = (function () {
     
     var _createShaders = function(callback) {
         mConstColorShader = new SimpleShader(kSimpleVS, kSimpleFS);
-        mTextureShader = new TextureShader(kTextureVS, kTextureFS);
         mSpriteShader = new SpriteShader(kTextureVS, kTextureFS);
+        mTextureShader = new TextureShader(kTextureVS, kTextureFS);
+        mLightShader = new LightShader(kTextureVS, kLightFS);
         callback();
     };
 
@@ -75,6 +82,10 @@ gEngine.DefaultResources = (function () {
         gEngine.TextFileLoader.loadTextFile(
                 kTextureFS,
                 gEngine.TextFileLoader.eTextFileType.eTextFile);
+                
+        gEngine.TextFileLoader.loadTextFile(
+                kLightFS,
+                gEngine.TextFileLoader.eTextFileType.eTextFile);
 
         gEngine.Fonts.loadFont(kDefaultFont);
 
@@ -89,6 +100,7 @@ gEngine.DefaultResources = (function () {
         getConstColorShader: _getConstColorShader,
         getTextureShader: _getTextureShader,
         getSpriteShader: _getSpriteShader,
+        getLightShader: _getLightShader,
         getGlobalAmbientColor: getGlobalAmbientColor,
         setGlobalAmbientColor: setGlobalAmbientColor,
         getGlobalAmbientIntensity: getGlobalAmbientIntensity,
