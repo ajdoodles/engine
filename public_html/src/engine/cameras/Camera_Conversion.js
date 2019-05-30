@@ -24,10 +24,10 @@ Camera.prototype.getWCPosition = function(pixelPosition) {
 
 Camera.prototype.getPixelsPosition = function (wcPosition) {
     var x = wcPosition[0] - this._mRenderCache.mViewportLeftWC;
-    x = this.mViewport[0] + (x * this._mRenderCache.mWCToPixelsRatio);
+    x = this.mViewport[0] + (x * this._mRenderCache.mWCToPixelsRatio) + 0.5;
 
     var y = wcPosition[1] - this._mRenderCache.mViewportBottomWC;
-    y = this.mViewport[1] + (y * this._mRenderCache.mWCToPixelsRatio);
+    y = this.mViewport[1] + (y * this._mRenderCache.mWCToPixelsRatio)+ 0.5;
 
     var z = wcPosition[2] * this._mRenderCache.mWCToPixelsRatio;
     return vec3.fromValues(x, y, z);
