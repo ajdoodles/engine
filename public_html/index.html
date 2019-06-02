@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>JavascriptSourceObjects</title>
+        <title>GameEngine</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -15,55 +15,55 @@ and open the template in the editor.
         gEngine.Core.initializeEngineCore('GLCanvas', myGame);
       ">
 
-        <script type="text/javascript" src="src/lib/gl-matrix.js"/></script>
-        <script type="text/javascript" src="src/engine/core/resources/Engine_AudioClips.js"/></script>
-        <script type="text/javascript" src="src/engine/core/resources/Engine_DefaultResources.js"/></script>
-        <script type="text/javascript" src="src/engine/core/resources/Engine_ResourceMap.js"/></script>
-        <script type="text/javascript" src="src/engine/core/resources/Engine_TextFileLoader.js"/></script>
-        <script type="text/javascript" src="src/engine/core/resources/Engine_Fonts.js"/></script>
-        <script type="text/javascript" src="src/engine/core/Engine_Core.js"/></script>
-        <script type="text/javascript" src="src/engine/core/Engine_GameLoop.js"/></script>
-        <script type="text/javascript" src="src/engine/core/Engine_Textures.js"/></script>
-        <script type="text/javascript" src="src/engine/core/Engine_Input.js"/></script>
-        <script type="text/javascript" src="src/engine/core/Engine_VertexBuffer.js"/></script>
-        <script type="text/javascript" src="src/engine/shaders/SimpleShader.js"/></script>
-        <script type="text/javascript" src="src/engine/shaders/TextureShader.js"/></script>
-        <script type="text/javascript" src="src/engine/shaders/SpriteShader.js"/></script>
-        <script type="text/javascript" src="src/engine/shaders/LightShader.js"/></script>
-        <script type="text/javascript" src="src/engine/shaders/ShaderLightReference.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/Renderable.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/TextureRenderable.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/TextureRenderable_PixelCollision.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/SpriteRenderable.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/SpriteRenderable_PixelCollision.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/SpriteAnimateRenderable.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/FontRenderable.js"/></script>
-        <script type="text/javascript" src="src/engine/renderables/LightRenderable.js"/></script>
-        <script type="text/javascript" src="src/engine/gameobjects/GameObject.js"/></script>
-        <script type="text/javascript" src="src/engine/gameobjects/GameObject_PixelCollision.js"/></script>
-        <script type="text/javascript" src="src/engine/gameobjects/GameObjectSet.js"/></script>
-        <script type="text/javascript" src="src/engine/Scene.js"/></script>
-        <script type="text/javascript" src="src/engine/utils/Transform.js"/></script>
-        <script type="text/javascript" src="src/engine/lights/Lights.js"/></script>
-        <script type="text/javascript" src="src/engine/lights/LightSet.js"/></script>
-        <script type="text/javascript" src="src/engine/cameras/Camera.js"/></script>
-        <script type="text/javascript" src="src/engine/cameras/Camera_Manipulation.js"/></script>
-        <script type="text/javascript" src="src/engine/cameras/Camera_Conversion.js"/></script>
-        <script type="text/javascript" src="src/engine/cameras/CameraState.js"/></script>
-        <script type="text/javascript" src="src/engine/cameras/CameraShake.js"/></script>
-        <script type="text/javascript" src="src/engine/utils/BoundingBox.js"/></script>
-        <script type="text/javascript" src="src/engine/utils/Interpolator.js"/></script>
-        <script type="text/javascript" src="src/engine/utils/InterpolatorVec2.js"/></script>
-        <script type="text/javascript" src="src/engine/utils/ShakePosition.js"/></script>
-        <script type="text/javascript" src="src/game/MyGame.js"/></script>
-        <script type="text/javascript" src="src/game/BlueLevel.js"/></script>
-        <script type="text/javascript" src="src/game/util/SceneFileParser.js"/></script>
-        <script type="text/javascript" src="src/game/objects/DyePack.js"/></script>
-        <script type="text/javascript" src="src/game/objects/Minion.js"/></script>
-        <script type="text/javascript" src="src/game/objects/Hero.js"/></script>
-        <script type="text/javascript" src="src/game/objects/Brain.js"/></script>
-        <script type="text/javascript" src="src/game/objects/Collector.js"/></script>
-        <script type="text/javascript" src="src/game/objects/Portal.js"/></script>
+        <script type="text/javascript" src="src/lib/gl-matrix.js"></script>
+        <script type="text/javascript" src="src/engine/core/resources/Engine_AudioClips.js"></script>
+        <script type="text/javascript" src="src/engine/core/resources/Engine_DefaultResources.js"></script>
+        <script type="text/javascript" src="src/engine/core/resources/Engine_ResourceMap.js"></script>
+        <script type="text/javascript" src="src/engine/core/resources/Engine_TextFileLoader.js"></script>
+        <script type="text/javascript" src="src/engine/core/resources/Engine_Fonts.js"></script>
+        <script type="text/javascript" src="src/engine/core/Engine_Core.js"></script>
+        <script type="text/javascript" src="src/engine/core/Engine_GameLoop.js"></script>
+        <script type="text/javascript" src="src/engine/core/Engine_Textures.js"></script>
+        <script type="text/javascript" src="src/engine/core/Engine_Input.js"></script>
+        <script type="text/javascript" src="src/engine/core/Engine_VertexBuffer.js"></script>
+        <script type="text/javascript" src="src/engine/shaders/SimpleShader.js"></script>
+        <script type="text/javascript" src="src/engine/shaders/TextureShader.js"></script>
+        <script type="text/javascript" src="src/engine/shaders/SpriteShader.js"></script>
+        <script type="text/javascript" src="src/engine/shaders/LightShader.js"></script>
+        <script type="text/javascript" src="src/engine/shaders/ShaderLightReference.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/Renderable.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/TextureRenderable.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/TextureRenderable_PixelCollision.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/SpriteRenderable.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/SpriteRenderable_PixelCollision.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/SpriteAnimateRenderable.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/FontRenderable.js"></script>
+        <script type="text/javascript" src="src/engine/renderables/LightRenderable.js"></script>
+        <script type="text/javascript" src="src/engine/gameobjects/GameObject.js"></script>
+        <script type="text/javascript" src="src/engine/gameobjects/GameObject_PixelCollision.js"></script>
+        <script type="text/javascript" src="src/engine/gameobjects/GameObjectSet.js"></script>
+        <script type="text/javascript" src="src/engine/Scene.js"></script>
+        <script type="text/javascript" src="src/engine/utils/Transform.js"></script>
+        <script type="text/javascript" src="src/engine/lights/Lights.js"></script>
+        <script type="text/javascript" src="src/engine/lights/LightSet.js"></script>
+        <script type="text/javascript" src="src/engine/cameras/Camera.js"></script>
+        <script type="text/javascript" src="src/engine/cameras/Camera_Manipulation.js"></script>
+        <script type="text/javascript" src="src/engine/cameras/Camera_Conversion.js"></script>
+        <script type="text/javascript" src="src/engine/cameras/CameraState.js"></script>
+        <script type="text/javascript" src="src/engine/cameras/CameraShake.js"></script>
+        <script type="text/javascript" src="src/engine/utils/BoundingBox.js"></script>
+        <script type="text/javascript" src="src/engine/utils/Interpolator.js"></script>
+        <script type="text/javascript" src="src/engine/utils/InterpolatorVec2.js"></script>
+        <script type="text/javascript" src="src/engine/utils/ShakePosition.js"></script>
+        <script type="text/javascript" src="src/game/MyGame.js"></script>
+        <script type="text/javascript" src="src/game/BlueLevel.js"></script>
+        <script type="text/javascript" src="src/game/util/SceneFileParser.js"></script>
+        <script type="text/javascript" src="src/game/objects/DyePack.js"></script>
+        <script type="text/javascript" src="src/game/objects/Minion.js"></script>
+        <script type="text/javascript" src="src/game/objects/Hero.js"></script>
+        <script type="text/javascript" src="src/game/objects/Brain.js"></script>
+        <script type="text/javascript" src="src/game/objects/Collector.js"></script>
+        <script type="text/javascript" src="src/game/objects/Portal.js"></script>
 
         <canvas id="GLCanvas" height="480" width="640">
             Your browser does not support the HTML5 canvas.
