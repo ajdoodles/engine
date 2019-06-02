@@ -9,7 +9,7 @@ function Brain(spriteTexture) {
     this.kDeltaRads = this.kDeltaDegrees * (Math.PI / 180);
     this.kDeltaSpeed = 0.01;
 
-    this.mBrain = new SpriteRenderable(spriteTexture);
+    this.mBrain = new LightRenderable(spriteTexture);
     this.mBrain.setColor([1, 1, 1, 0]);
     this.mBrain.getXform().setPosition(50, 10);
     this.mBrain.getXform().setSize(3, 5.4);

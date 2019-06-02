@@ -15,8 +15,8 @@ function MyGame() {
 
     this.kBgClip = "assets/sounds/BGClip.mp3";
     this.kCue = "assets/sounds/MyGame_cue.wav";
-    
-    this.mDrawSet = new Array();
+
+    this.mLightSet = new LightSet();
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -88,9 +88,21 @@ MyGame.prototype.initialize = function () {
     this.mMsg.getXform().setPosition(1, 2);
     this.mMsg.setTextHeight(3);
     
-    this.mLight = new Light();
-    this.mBg.getRenderable().addLights(this.mLight);
-    this.mHero.getRenderable().addLights(this.mLight);
+    this.mLightSet = new LightSet();
+    this.mLightSet.addLight(new Light());
+    this.mLightSet.addLight(
+            new Light(
+                vec4.fromValues(0.1, 0.1, 0.6, 1.0),
+                vec3.fromValues(55, 50, 5),
+                1.0,
+                6,
+                15));
+                
+    for (var i = 0; i < this.mLightSet.numLights(); i++) {
+        this.mBg.getRenderable().addLight(this.mLightSet.getLightAt(i));
+        this.mHero.getRenderable().addLight(this.mLightSet.getLightAt(i));
+        this.mBrain.getRenderable().addLight(this.mLightSet.getLightAt(i));
+    }
 };
 
 MyGame.prototype.update = function () {
