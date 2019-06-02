@@ -4,20 +4,21 @@
  * and open the template in the editor.
  */
 
-function LightRenderable(texture, light = null) {
+function LightRenderable(texture) {
     SpriteRenderable.call(this, texture);
     Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getLightShader());
+    this.mLights = [];
 };
 gEngine.Core.inheritPrototype(SpriteRenderable, LightRenderable);
 
-LightRenderable.prototype.getLight = function () {
-    return this.mLight;
+LightRenderable.prototype.setLights = function(lights) {
+    this.mLights = lights;
 };
-LightRenderable.prototype.addLights = function(light) {
-    this.mLight = light;
+LightRenderable.prototype.addLight = function(light) {
+    this.mLights.push(light);
 };
 
 LightRenderable.prototype.draw = function (camera) {
-    this.mShader.setLight(this.mLight);
+    this.mShader.setLights(this.mLights);
     SpriteRenderable.prototype.draw.call(this, camera);
 };
