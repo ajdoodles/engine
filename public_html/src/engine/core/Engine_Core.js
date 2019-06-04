@@ -23,8 +23,11 @@ gEngine.Core = (function() {
     var _initializeWebGL = function(htmlCanvasId) {
         var canvas = document.getElementById(htmlCanvasId);
         
-        mGL = canvas.getContext("webgl", {alpha: false})
-                || canvas.getContext("experimental-webgl", {alpha: false});
+        mGL = canvas.getContext("webgl2", {alpha: false})
+                || canvas.getContext("experimental-webgl2", {alpha: false});
+        
+//        mGL = canvas.getContext("webgl", {alpha: false})
+//                || canvas.getContext("experimental-webgl", {alpha: false});
         
         mGL.blendFunc(mGL.SRC_ALPHA, mGL.ONE_MINUS_SRC_ALPHA);
         mGL.enable(mGL.BLEND);

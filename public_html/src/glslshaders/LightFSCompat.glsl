@@ -1,5 +1,3 @@
-#version 300 es
-
 precision mediump float;
 
 const int kGLSLuLightArraySize = 4;
@@ -23,9 +21,7 @@ uniform vec4 uPixelColor;
 uniform vec4 uGlobalAmbientColor;
 uniform float uGlobalAmbientIntensity;
 
-in vec2 vTexCoord;
-
-out vec4 fragmentColor;
+varying vec2 vTexCoord;
 
 // TODO: Fix shader versioning and remove this
 // This function needs to die a quick death. smoothStep is a method that exists
@@ -58,7 +54,7 @@ vec4 applyLight(Light light) {
 }
 
 void main(void) {
-    vec4 texColor = texture(uSampler, vec2(vTexCoord.s, vTexCoord.t));
+    vec4 texColor = texture2D(uSampler, vec2(vTexCoord.s, vTexCoord.t));
     vec4 lightEffect = uGlobalAmbientIntensity * uGlobalAmbientColor;
 
     if (texColor.a > 0.0) {
@@ -72,5 +68,7 @@ void main(void) {
     texColor *= lightEffect;
 
     vec3 r = (vec3(texColor) * (1.0 - uPixelColor.a)) + (vec3(uPixelColor) * uPixelColor.a);
-    fragmentColor = vec4(r, texColor.a);
+    vec4 result = vec4(r, texColor.a);
+
+    gl_FragColor = result;
 }
