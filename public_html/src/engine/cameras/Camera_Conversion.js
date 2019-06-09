@@ -13,8 +13,8 @@ Camera.prototype._getPixelsToWCRatio = function() {
 };
 
 Camera.prototype.getWCPosition = function(pixelPosition) {
-    var vpOrigin = vec3.fromValues(this.getViewportLeft(), this.getViewportBottom(), 0);    
-    var bottomLeft = vec3.fromValues(this.getWCLeft(), this.getWCBottom(), 0);
+    var vpOrigin = vec3.fromValues(this.getViewportLeft(), this.getViewportBottom(), 0);
+    var bottomLeft = vec3.fromValues(this.getWCCenter()[0] - (this.getWCWidth()/2), this.getWCCenter()[1] - (this.getWCHeight()/2), this.kCameraZ);
     
     var wcPos = vec3.create();
     vec3.sub(wcPos, pixelPosition, vpOrigin);

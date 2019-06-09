@@ -25,6 +25,8 @@ function PreRenderCache() {
  * @returns {Camera}
  */
 function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
+    this.kCameraZ = 10;
+    
     this.mCameraState = new CameraState(wcCenter, wcWidth);
     this._mRenderCache = new PreRenderCache();
     this.mCameraShake = null;
