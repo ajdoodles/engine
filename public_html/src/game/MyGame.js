@@ -80,66 +80,16 @@ MyGame.prototype.initialize = function () {
     this.mRightMinion = new Minion(this.kMinionSprite, 70, 30);
     this.mRightMinion.getXform().setHorizontalFlip(true);
     
-    this.mFocusObj = this.mHero;
-    this.mChoice = 'H';
-    
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(1, 2);
     this.mMsg.setTextHeight(3);
     
-    this.mLightSet = new LightSet();
-    this.mLightSet.addLight(new Light());
-    this.mLightSet.addLight(
-            new Light(
-                vec4.fromValues(0.1, 0.1, 0.6, 1.0),
-                vec3.fromValues(55, 50, 5),
-                1.0,
-                6,
-                15));
-                
-    for (var i = 0; i < this.mLightSet.numLights(); i++) {
-        this.mBg.getRenderable().addLight(this.mLightSet.getLightAt(i));
-        this.mHero.getRenderable().addLight(this.mLightSet.getLightAt(i));
-        this.mBrain.getRenderable().addLight(this.mLightSet.getLightAt(i));
-    }
+    this.initLights();
 };
 
 MyGame.prototype.update = function () {
     this.mCamera.update();
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L)) {
-        this.mFocusObj = this.mLeftMinion;
-        this.mChoice = 'L';
-        this.mCamera.panTo(this.mLeftMinion.getXform().getXPos(), this.mLeftMinion.getXform().getYPos());
-    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.R)) {
-        this.mFocusObj = this.mRightMinion;
-        this.mChoice = 'R';
-        this.mCamera.panTo(this.mRightMinion.getXform().getXPos(), this.mRightMinion.getXform().getYPos());
-    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.P)) {
-        this.mFocusObj = this.mPortal;
-        this.mChoice = 'P';
-    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.H)) {
-        this.mFocusObj = this.mHero;
-        this.mChoice = 'H';
-    }
-    
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
-        this.mCamera.startShake(-2, -2, 20, 30);
-    }
-    
-    var zoomDelta = 0.05;
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.N)) {
-        this.mCamera.zoomBy(1 - zoomDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.M)) {
-        this.mCamera.zoomBy(1 + zoomDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.J)) {
-        this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 - zoomDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.K)) {
-        this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 + zoomDelta);
-    }
 
     if (gEngine.Input.isMouseClicked(gEngine.Input.mouse.Middle)) {
         var visible = this.mPortal.isVisible();
@@ -181,6 +131,8 @@ MyGame.prototype.update = function () {
 
     var mousePos = gEngine.Input.getMousePosition();
     this.mMsg.setText("(" + mousePos[0] + ", " + mousePos[1] + ")");
+    
+    this.updateLights();
 };
 
 MyGame.prototype.draw = function () {
