@@ -13,6 +13,7 @@ function TextureShader(vertexShaderId, fragmentShaderId) {
     var gl = gEngine.Core.getGL();
     this.mTextureCoordinateAttribute =
             gl.getAttribLocation(this.mCompiledShader, "aTextureCoordinate");
+    this.mColorSampler = gl.getUniformLocation(this.mCompiledShader, "uSampler");
 };
 gEngine.Core.inheritPrototype(SimpleShader, TextureShader);
 
@@ -29,4 +30,5 @@ TextureShader.prototype.activateShader = function(pixelColor, camera) {
             false,
             0,
             0);
+    gl.uniform1i(this.mColorSampler, 0); // Bind color sampler to texture 0
 };

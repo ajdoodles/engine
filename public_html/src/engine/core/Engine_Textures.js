@@ -66,16 +66,28 @@ gEngine.Textures = (function () {
         gEngine.ResourceMap.asyncLoadCompleted(textureName, texInfo);
     };
     
-    var activateTexture = function(textureName) {
+    var activateColorTexture = function(textureName) {
+        var gl = gEngine.Core.getGL();
+        _activateTexture(textureName, gl.TEXTURE0);
+    };
+    
+    var activateNormalTexture = function (textureName) {
+        var gl = gEngine.Core.getGL();
+        _activateTexture(textureName, gl.TEXTURE1);
+    };
+    
+    var _activateTexture = function (textureName, textureUnit) {
         var gl = gEngine.Core.getGL();
         var texInfo = gEngine.ResourceMap.retrieveAsset(textureName);
         
+        gl.activeTexture(textureUnit);
         gl.bindTexture(gl.TEXTURE_2D, texInfo.mGLTexID);
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
         // Blurred "cleaner" rendering of texture if magnified/minimized
+        
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
@@ -116,7 +128,8 @@ gEngine.Textures = (function () {
     var mPublic = {
         loadTexture: loadTexture,
         unloadTexture: unloadTexture,
-        activateTexture: activateTexture,
+        activateColorTexture: activateColorTexture,
+        activateNormalTexture: activateNormalTexture,
         deactivateTexture: deactivateTexture,
         getTextureInfo: getTextureInfo,
         getColorArray: getColorArray,

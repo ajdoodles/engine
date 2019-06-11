@@ -35,6 +35,6 @@ TextureRenderable.prototype.setTexture = function (texture) {
 };
 
 TextureRenderable.prototype.draw = function(camera) {
-    gEngine.Textures.activateTexture(this.mTexture);
+    gEngine.Textures.activateColorTexture(this.mTexture);
     Renderable.prototype.draw.call(this, camera);
 };
