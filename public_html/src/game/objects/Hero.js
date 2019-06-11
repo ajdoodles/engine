@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 
-function Hero(spriteTexture) {
+function Hero(spriteTexture, normalTexture) {
     this.kDelta = 0.3;
     this.kDeltaDegrees = 1;
-    
-    this.mHero = new LightRenderable(spriteTexture);
+     
+    if (normalTexture === null || normalTexture === undefined) {
+        this.mHero = new LightRenderable(spriteTexture);
+    } else {
+        this.mHero = new IllumRenderable(spriteTexture, normalTexture);
+    }
     this.mHero.setColor([1, 1, 1, 0]);
     this.mHero.getXform().setPosition(35, 50);
     this.mHero.getXform().setSize(9, 12);

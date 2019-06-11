@@ -10,8 +10,10 @@ function MyGame() {
     this.kPortal = "assets/minion_portal.png";
     this.kCollector = "assets/minion_collector.png";
     this.kMinionSprite = "assets/minion_sprite.png";
+    this.kMinionSpriteNormal = "assets/minion_sprite_normal.png";
     this.kFontImage = "assets/Consolas-72.png";
     this.kBg = "assets/bg.png";
+    this.kBgNormal = "assets/bg_normal.png";
 
     this.kBgClip = "assets/sounds/BGClip.mp3";
     this.kCue = "assets/sounds/MyGame_cue.wav";
@@ -29,6 +31,10 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kMinionSprite);
     gEngine.Textures.loadTexture(this.kBg);
     gEngine.Textures.loadTexture(this.kFontImage);
+    
+    gEngine.Textures.loadTexture(this.kMinionSpriteNormal);
+    gEngine.Textures.loadTexture(this.kBgNormal);
+    
     gEngine.AudioClips.loadAudio(this.kBgClip);
     gEngine.AudioClips.loadAudio(this.kCue);
 };
@@ -68,7 +74,7 @@ MyGame.prototype.initialize = function () {
             2);
     this.mBrainCam.setBackgroundColor([1, 1, 1, 1]);
 
-    var bgRenderable = new LightRenderable(this.kBg);
+    var bgRenderable = new IllumRenderable(this.kBg, this.kBgNormal);
     bgRenderable.getXform().setSize(150, 150);
     bgRenderable.getXform().setPosition(50, 35);
     this.mBg = new GameObject(bgRenderable);
