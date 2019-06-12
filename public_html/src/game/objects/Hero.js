@@ -15,7 +15,7 @@ function Hero(spriteTexture, normalTexture) {
     }
     this.mHero.setColor([1, 1, 1, 0]);
     this.mHero.getXform().setPosition(35, 50);
-    this.mHero.getXform().setSize(9, 12);
+    this.mHero.getXform().setSize(18, 24);
     this.mHero.setElementPixelCoordinates(0, 120, 0, 180);
     GameObject.call(this, this.mHero);
 }

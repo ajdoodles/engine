@@ -79,7 +79,7 @@ MyGame.prototype.initialize = function () {
     bgRenderable.getXform().setPosition(50, 35);
     this.mBg = new GameObject(bgRenderable);
 
-    this.mHero = new Hero(this.kMinionSprite);
+    this.mHero = new Hero(this.kMinionSprite, this.kMinionSpriteNormal);
     this.mBrain = new Brain(this.kMinionSprite);
     this.mPortal = new Portal(this.kPortal);
     this.mLeftMinion = new Minion(this.kMinionSprite, 30, 30);
