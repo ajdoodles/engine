@@ -76,6 +76,12 @@ MyGame.prototype.updateLights = function() {
         this.mFocus.incZPos(-this.kDelta);
     }
     
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Z)) {
+        this.mFocus.incIntensity(-this.kDelta);
+    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.X)) {
+        this.mFocus.incIntensity(this.kDelta);
+    }
+    
     var pos = this.mFocus.getPosition();
     pos = vec3.fromValues(pos[0].toFixed(1), pos[1].toFixed(1), pos[2].toFixed(1));
     this.mMsg.setText("pos:" + pos[0].toFixed(1) + "," + pos[1].toFixed(1) + ", " + pos[2].toFixed(1) + " color: " + this.mFocus.getColor());
