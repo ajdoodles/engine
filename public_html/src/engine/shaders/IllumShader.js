@@ -13,7 +13,7 @@ function IllumShader(vectorShaderId, fragmentShaderId) {
 gEngine.Core.inheritPrototype(LightShader, IllumShader);
 
 IllumShader.prototype.activateShader = function (pixelColor, camera) {
-    LightShader.activateShader.call(pixelColor, camera);
+    LightShader.prototype.activateShader.call(this, pixelColor, camera);
     
     var gl = gEngine.Core.getGL();
     gl.uniform1i(this.mNormalSampler, 1);

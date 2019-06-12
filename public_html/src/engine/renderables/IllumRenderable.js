@@ -6,7 +6,7 @@
 
 function IllumRenderable(colorTexture, normalTexture) {
     LightRenderable.call(this, colorTexture);
-    Renderable.prototype._setShader(gEngine.DefaultResources.getIllumShader());
+    Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getIllumShader());
     
     this.mNormalTexture = normalTexture;
 };
