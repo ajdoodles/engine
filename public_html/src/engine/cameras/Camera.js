@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 
+Camera.prototype.kCameraZPosWC = 10;
+
 function PreRenderCache() {
     var mWCToPixelsRatio = 1;
     var mViewportBottomWC = -1;
     var mViewportLeftWC = -1;
+    var mCameraPosPx = vec3.fromValues(0.0, 0.0, 0.0);
 };
 
 /**
@@ -25,8 +28,6 @@ function PreRenderCache() {
  * @returns {Camera}
  */
 function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
-    this.kCameraZ = 10;
-    
     this.mCameraState = new CameraState(wcCenter, wcWidth);
     this._mRenderCache = new PreRenderCache();
     this.mCameraShake = null;
@@ -74,6 +75,10 @@ Camera.prototype.getViewportLeft = function() {
 
 Camera.prototype.getViewportBottom = function() {
     return this.mViewport[1];
+};
+
+Camera.prototype.getCameraPosPx = function() {
+    return this._mRenderCache.mCameraPosPx;
 };
 
 Camera.prototype.setBackgroundColor = function(color) {
@@ -135,7 +140,7 @@ Camera.prototype.setupViewProjection = function() {
     
     mat4.lookAt(
         this.mViewMatrix,
-        [center[0], center[1], 10], // Camera position
+        [center[0], center[1], Camera.prototype.kCameraZPosWC], // Camera position
         [center[0], center[1], 0], // lookat position
         [0, 1, 0]); //orientation
 
@@ -156,6 +161,9 @@ Camera.prototype.setupViewProjection = function() {
     this._mRenderCache.mWCToPixelsRatio = this.mViewport[2]/this.getWCWidth();
     this._mRenderCache.mViewportLeftWC = this.getWCCenter()[0] - (this.getWCWidth()/2);
     this._mRenderCache.mViewportBottomWC = this.getWCCenter()[1] - (this.getWCHeight()/2);
+    
+    var cameraPosWC = vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.prototype.kCameraZPosWC);
+    this._mRenderCache.mCameraPosPx = vec3.clone(this.convertWCPosToPx(cameraPosWC));
 };
 
 Camera.prototype.collideWCBound = function(xform, zone) {
@@ -193,15 +201,4 @@ Camera.prototype.isMouseInViewport = function() {
     
     var inside = (0 <= x && x < this.mViewport[2]);
     return inside && (0 <= y && y < this.mViewport[3]);
-};
-
-Camera.prototype.getWCCursorPosition = function () {
-    if (!this.isMouseInViewport()) {
-        throw "Can't get world position for cursor not in viewport.";
-    }
-    
-    var screenPos = gEngine.Input.getMousePosition();
-    screenPos = vec3.fromValues(screenPos[0], screenPos[1], 0);
-    var wcPos = this.getWCPosition(screenPos);
-    return vec2.fromValues(wcPos[0], wcPos[1]);
 };

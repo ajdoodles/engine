@@ -29,10 +29,10 @@ ShaderLightReference.prototype.loadToShader = function (camera, light) {
 
     if (light.isLit()) {
         gl.uniform4fv(this.mColorRef, light.getColor());
-        gl.uniform3fv(this.mPositionRef, camera.getPixelsPosition(light.getPosition()));
+        gl.uniform3fv(this.mPositionRef, camera.convertWCPosToPx(light.getPosition()));
         gl.uniform1f(this.mIntensityRef, light.getIntensity());
-        gl.uniform1f(this.mNearRef, camera.getPixelsSize(light.getNear()));
-        gl.uniform1f(this.mFarRef, camera.getPixelsSize(light.getFar()));
+        gl.uniform1f(this.mNearRef, camera.convertWCSizeToPx(light.getNear()));
+        gl.uniform1f(this.mFarRef, camera.convertWCSizeToPx(light.getFar()));
     }
 };
 
