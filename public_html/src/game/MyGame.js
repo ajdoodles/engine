@@ -77,14 +77,19 @@ MyGame.prototype.initialize = function () {
     var bgRenderable = new IllumRenderable(this.kBg, this.kBgNormal);
     bgRenderable.getXform().setSize(150, 150);
     bgRenderable.getXform().setPosition(50, 35);
+    var material = new Material();
+    material.setShininess(200);
+    material.setSpecular([1, 0, 0, 1]);
+    bgRenderable.setMaterial(material);
     this.mBg = new GameObject(bgRenderable);
 
     this.mHero = new Hero(this.kMinionSprite, this.kMinionSpriteNormal);
     this.mBrain = new Brain(this.kMinionSprite);
     this.mPortal = new Portal(this.kPortal);
-    this.mLeftMinion = new Minion(this.kMinionSprite, 30, 30);
-    this.mRightMinion = new Minion(this.kMinionSprite, 70, 30);
-    this.mRightMinion.getXform().setHorizontalFlip(true);
+    this.mLeftMinion = new Minion(this.kMinionSprite, this.kMinionSpriteNormal);
+    this.mLeftMinion.getXform().setPosition(30, 30);
+    this.mRightMinion = new Minion(this.kMinionSprite);
+    this.mRightMinion.getXform().setPosition(70, 30);
     
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([1, 1, 1, 1]);
