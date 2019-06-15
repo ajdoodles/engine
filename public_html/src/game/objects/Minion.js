@@ -13,7 +13,7 @@ function Minion(spriteTexture, normalTexture) {
     }
     this.mMinion.setColor([1, 1, 1, 0]);
     this.mMinion.getXform().setSize(12, 9.6);
-    this.mMinion.setElementPixelCoordinates(0, 204, 348, 512);
+    this.mMinion.setElementPixelCoordinates(0, 201, 350, 512);
     GameObject.call(this, this.mMinion);
 }
 gEngine.Core.inheritPrototype(GameObject, Minion);
