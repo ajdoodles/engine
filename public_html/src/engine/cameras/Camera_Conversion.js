@@ -38,3 +38,9 @@ Camera.prototype.convertWCPosToPx = function (wcPosition) {
     var z = wcPosition[2] * this._mRenderCache.mWCToPixelsRatio;
     return vec3.fromValues(x, y, z);
 };
+
+Camera.prototype.convertWCVecToPx = function(wcVec) {
+    var result = vec3.create();
+    vec3.scale(result, wcVec, this._mRenderCache.mWCToPixelsRatio);
+    return result;
+};
