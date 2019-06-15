@@ -9,6 +9,8 @@ var gEngine = gEngine || {};
 
 gEngine.Input = (function () {
     var kKeys = {
+        Shift: 16,
+        
         // arrows
         Left: 37,
         Up: 38,
@@ -32,6 +34,7 @@ gEngine.Input = (function () {
 
         // Alphabets
         A: 65,
+        C: 67,
         D: 68,
         E: 69,
         F: 70,
@@ -50,6 +53,7 @@ gEngine.Input = (function () {
         S: 83,
         T: 84,
         U: 85,
+        V: 86,
         W: 87,
         X: 88,
         Y: 89,
