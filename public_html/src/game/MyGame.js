@@ -17,8 +17,6 @@ function MyGame() {
 
     this.kBgClip = "assets/sounds/BGClip.mp3";
     this.kCue = "assets/sounds/MyGame_cue.wav";
-
-    this.mLightSet = new LightSet();
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -77,10 +75,7 @@ MyGame.prototype.initialize = function () {
     var bgRenderable = new IllumRenderable(this.kBg, this.kBgNormal);
     bgRenderable.getXform().setSize(150, 150);
     bgRenderable.getXform().setPosition(50, 35);
-    var material = new Material();
-    material.setShininess(200);
-    material.setSpecular([1, 0, 0, 1]);
-    bgRenderable.setMaterial(material);
+    bgRenderable.setMaterial(new Material());
     this.mBg = new GameObject(bgRenderable);
 
     this.mHero = new Hero(this.kMinionSprite, this.kMinionSpriteNormal);
@@ -139,9 +134,6 @@ MyGame.prototype.update = function () {
 
     this.mHeroCam.panTo(this.mHero.getXform().getXPos(), this.mHero.getXform().getYPos());
     this.mBrainCam.panTo(this.mBrain.getXform().getXPos(), this.mBrain.getXform().getYPos());
-
-    var mousePos = gEngine.Input.getMousePosition();
-    this.mMsg.setText("(" + mousePos[0] + ", " + mousePos[1] + ")");
     
     this.updateLights();
 };
