@@ -22,13 +22,21 @@ gEngine.Core = (function() {
     
     var _initializeWebGL = function(htmlCanvasId) {
         var canvas = document.getElementById(htmlCanvasId);
-        
-        mGL = canvas.getContext("webgl", {alpha: false})
-                || canvas.getContext("experimental-webgl", {alpha: false});
-        
+
+        var args = {
+            alpha: false,
+            depth: true,
+            stencil: true,
+        };
+        mGL = canvas.getContext("webgl", args)
+                || canvas.getContext("experimental-webgl", args);
+
         mGL.blendFunc(mGL.SRC_ALPHA, mGL.ONE_MINUS_SRC_ALPHA);
         mGL.enable(mGL.BLEND);
-        
+
+        mGL.depthFunc(mGL.LEQUAL);
+        mGL.enable(mGL.DEPTH_TEST);
+
         mGL.pixelStorei(mGL.UNPACK_FLIP_Y_WEBGL, true);
         
         if (mGL === null) {
@@ -53,7 +61,7 @@ gEngine.Core = (function() {
     
     var clearCanvas = function(color) {
         mGL.clearColor(color[0], color[1], color[2], color[3]);
-        mGL.clear(mGL.COLOR_BUFFER_BIT);
+        mGL.clear(mGL.COLOR_BUFFER_BIT | mGL.DEPTH_BUFFER_BIT | mGL.STENCIL_BUFFER_BIT);
     };
     
     var mPublic = {
