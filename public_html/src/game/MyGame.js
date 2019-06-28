@@ -52,6 +52,19 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Core.startScene(blueLevel);
 };
 
+MyGame.prototype._setupShadows = function () {
+    this.mBgShadows = new ShadowReceiver(this.mBg);
+    this.mBgShadows.addShadowCaster(this.mHero);
+    this.mBgShadows.addShadowCaster(this.mLeftMinion);
+    this.mBgShadows.addShadowCaster(this.mRightMinion);
+    
+    this.mLeftMinionShadows = new ShadowReceiver(this.mLeftMinion);
+    this.mLeftMinionShadows.addShadowCaster(this.mHero);
+    
+    this.mRightMinionShadows = new ShadowReceiver(this.mRightMinion);
+    this.mRightMinionShadows.addShadowCaster(this.mHero);
+};
+
 MyGame.prototype.initialize = function () {
     //gEngine.AudioClips.playBackgroundAudio(this.kBgClip);
 
@@ -92,6 +105,7 @@ MyGame.prototype.initialize = function () {
     this.mMsg.setTextHeight(3);
     
     this.initLights();
+    this._setupShadows();
 };
 
 MyGame.prototype.update = function () {
@@ -150,10 +164,15 @@ MyGame.prototype.draw = function () {
 MyGame.prototype.drawCam = function (camera) {
     camera.setupViewProjection();
     
-    this.mBg.draw(camera);
+//    this.mBg.draw(camera);
+//    this.mLeftMinion.draw(camera);
+//    this.mRightMinion.draw(camera);
+    
+    this.mBgShadows.draw(camera);
+    this.mLeftMinionShadows.draw(camera);
+    this.mRightMinionShadows.draw(camera);
+    
     this.mHero.draw(camera);
     this.mBrain.draw(camera);
     this.mPortal.draw(camera);
-    this.mLeftMinion.draw(camera);
-    this.mRightMinion.draw(camera);
 };
