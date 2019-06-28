@@ -11,11 +11,17 @@ function LightRenderable(texture) {
 };
 gEngine.Core.inheritPrototype(SpriteRenderable, LightRenderable);
 
+LightRenderable.prototype.getLightAt = function (index) {
+    return this.mLights[index];
+};
 LightRenderable.prototype.setLights = function(lights) {
     this.mLights = lights;
 };
 LightRenderable.prototype.addLight = function(light) {
     this.mLights.push(light);
+};
+LightRenderable.prototype.numLights = function () {
+    return this.mLights.length;
 };
 
 LightRenderable.prototype.draw = function (camera) {
