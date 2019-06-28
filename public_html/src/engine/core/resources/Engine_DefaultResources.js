@@ -14,12 +14,16 @@ gEngine.DefaultResources = (function () {
     var kTextureFS = "src/glslshaders/TextureFS.glsl";
     var kLightFS = "src/glslshaders/LightFS.glsl";
     var kIllumFS = "src/glslshaders/IllumFS.glsl";
+    var kShadowCasterFS = "src/glslshaders/ShadowCasterFS.glsl";
+    var kShadowReceiverFS = "src/glslshaders/ShadowReceiverFS.glsl";
     
     var mConstColorShader = null;
     var mSpriteShader = null;
     var mTextureShader = null;
     var mLightShader = null;
     var mIllumShader = null;
+    var mShadowCasterShader = null;
+    var mShadowReceiverShader = null;
     
     var mGlobalAmbientColor = vec4.fromValues(0.3, 0.3, 0.3, 1.0);
     var mGlobalAmbientIntensity = 0.95;
@@ -44,6 +48,14 @@ gEngine.DefaultResources = (function () {
     
     var _getIllumShader = function() {
         return mIllumShader;
+    };
+    
+    var getShadowCasterShader = function() {
+        return mShadowCasterShader;
+    };
+    
+    var getShadowReceiverShader = function () {
+        return mShadowReceiverShader;
     };
     
     var getGlobalAmbientColor = function() {
@@ -72,6 +84,8 @@ gEngine.DefaultResources = (function () {
         mTextureShader = new TextureShader(kTextureVS, kTextureFS);
         mLightShader = new LightShader(kTextureVS, kLightFS);
         mIllumShader = new IllumShader(kTextureVS, kIllumFS);
+        mShadowCasterShader = new ShadowCasterShader(kTextureVS, kShadowCasterFS);
+        mShadowReceiverShader = new SpriteShader(kTextureVS, kShadowReceiverFS);
         callback();
     };
 
@@ -97,6 +111,13 @@ gEngine.DefaultResources = (function () {
                 kIllumFS,
                 gEngine.TextFileLoader.eTextFileType.eTextFile);
 
+        gEngine.TextFileLoader.loadTextFile(
+                kShadowCasterFS,
+                gEngine.TextFileLoader.eTextFileType.eTextFile);
+        gEngine.TextFileLoader.loadTextFile(
+                kShadowReceiverFS,
+                gEngine.TextFileLoader.eTextFileType.eTextFile);
+
         gEngine.Fonts.loadFont(kDefaultFont);
 
         gEngine.ResourceMap.setLoadCompletedCallback(
@@ -112,6 +133,8 @@ gEngine.DefaultResources = (function () {
         getSpriteShader: _getSpriteShader,
         getLightShader: _getLightShader,
         getIllumShader: _getIllumShader,
+        getShadowCasterShader: getShadowCasterShader,
+        getShadowReceiverShader: getShadowReceiverShader,
         getGlobalAmbientColor: getGlobalAmbientColor,
         setGlobalAmbientColor: setGlobalAmbientColor,
         getGlobalAmbientIntensity: getGlobalAmbientIntensity,
