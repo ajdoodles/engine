@@ -6,12 +6,17 @@
 
 function Renderable() {
     this.mShader = gEngine.DefaultResources.getConstColorShader();
-    this.mColor = [1.0, 1.0, 1.0, 1.0];
+    this.mColor = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
     this.mXform = new Transform();
 }
 
 Renderable.prototype._setShader = function (shader) {
     this.mShader = shader;
+};
+Renderable.prototype.swapShader = function (shader) {
+    var current = this.mShader;
+    this.mShader = shader;
+    return current;
 };
 
 Renderable.prototype.getColor = function() {
@@ -21,10 +26,19 @@ Renderable.prototype.getColor = function() {
 Renderable.prototype.setColor = function(color) {
     this.mColor = color;
 }
+Renderable.prototype.swapColor = function (color) {
+    var current = vec4.clone(this.mColor);
+    vec4.copy(this.mColor, color);
+    return current;
+};
 
 Renderable.prototype.getXform = function() {
     return this.mXform;
 }
+
+Renderable.prototype.setXform = function (xform) {
+    this.mXform = xform;
+};
 
 Renderable.prototype.draw = function(camera) {
     var gl = gEngine.Core.getGL();
