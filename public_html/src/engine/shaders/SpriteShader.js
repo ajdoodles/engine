@@ -17,14 +17,14 @@ function SpriteShader(vertexShaderId, fragmentShaderId) {
     this.mSpriteCoordBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mSpriteCoordBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(initialCoords), gl.DYNAMIC_DRAW);
-}
+};
 gEngine.Core.inheritPrototype(TextureShader, SpriteShader);
 
 SpriteShader.prototype.setTextureCoordinates = function(coordinates) {
     var gl = gEngine.Core.getGL();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mSpriteCoordBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(coordinates));
-}
+};
 
 SpriteShader.prototype.activateShader = function(pixelColor, camera) {
     SimpleShader.prototype.activateShader.call(this, pixelColor, camera);
@@ -39,4 +39,11 @@ SpriteShader.prototype.activateShader = function(pixelColor, camera) {
             false,
             0,
             0);
+};
+
+SpriteShader.prototype.setMaterial = function (material) {
+    // Overridden by IllumShader
+};
+SpriteShader.prototype.setLights = function (lights) {
+    // Overridden by LightShader
 };
