@@ -29,19 +29,14 @@ RigidShapeTest.prototype.unloadScene = function () {
 };
 
 RigidShapeTest.prototype.initialize = function () {
-    this.mCamera =
-        new Camera(
-            vec2.fromValues(50, 37.5),
-            100,
-            [0, 0, 640, 480]);
-    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
+    this._initCamera();
     
-    this.mHeroSet = [];
-    for (var i = 0; i < this.kNumHeroes; i++) {
-        var hero = new Hero(this.kMinionSprite);
+    this.mPlatformSet = [];
+    for (var i = 0; i < this.kNumPlatforms; i++) {
+        var platform = new Platform(this.kPlatform);
         var randomPos = this.mCamera.genRandomPosition2D();
-        hero.getXform().setPosition(randomPos[0], randomPos[1]);
-        this.mHeroSet.push(hero);
+        platform.getXform().setPosition(randomPos[0], randomPos[1]);
+        this.mPlatformSet.push(platform);
     }
     
     this.mMinionSet = [];
@@ -52,6 +47,14 @@ RigidShapeTest.prototype.initialize = function () {
         this.mMinionSet.push(minion);
     } 
         
+    this.mHeroSet = [];
+    for (var i = 0; i < this.kNumHeroes; i++) {
+        var hero = new Hero(this.kMinionSprite);
+        var randomPos = this.mCamera.genRandomPosition2D();
+        hero.getXform().setPosition(randomPos[0], randomPos[1]);
+        this.mHeroSet.push(hero);
+    }
+        
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(1, 2);
@@ -59,17 +62,25 @@ RigidShapeTest.prototype.initialize = function () {
 };
 
 RigidShapeTest.prototype._initCamera = function () {
-
+    this.mCamera =
+        new Camera(
+            vec2.fromValues(50, 37.5),
+            100,
+            [0, 0, 640, 480]);
+    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
 };
 
 RigidShapeTest.prototype.update = function () {
     this.mCamera.update();
     
-    for (var i = 0; i < this.mHeroSet.length; i++) {
-        this.mHeroSet[i].update();
+    for (var i = 0; i < this.mPlatformSet.length; i++) {
+        this.mPlatformSet[i].update();
     }
     for (var i = 0; i < this.mMinionSet.length; i++) {
         this.mMinionSet[i].update();
+    }
+    for (var i = 0; i < this.mHeroSet.length; i++) {
+        this.mHeroSet[i].update();
     }
 };
 
@@ -78,10 +89,13 @@ RigidShapeTest.prototype.draw = function () {
     this.mCamera.setupViewProjection();
     
     this.mMsg.draw(this.mCamera);
-    for (var i = 0; i < this.mHeroSet.length; i++) {
-        this.mHeroSet[i].draw(this.mCamera);
+    for (var i = 0; i < this.mPlatformSet.length; i++) {
+        this.mPlatformSet[i].draw(this.mCamera);
     }
     for (var i = 0; i < this.mMinionSet.length; i++) {
         this.mMinionSet[i].draw(this.mCamera);
+    }
+    for (var i = 0; i < this.mHeroSet.length; i++) {
+        this.mHeroSet[i].draw(this.mCamera);
     }
 };
