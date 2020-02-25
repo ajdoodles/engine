@@ -69,6 +69,27 @@ Camera.prototype.getWCHeight = function() {
     return this.getWCWidth() * (this.mViewport[3] / this.mViewport[2]);
 };
 
+Camera.prototype.getWCLeft = function () {
+    return this.getWCCenter()[0] - (this.getWCWidth()/2);
+};
+Camera.prototype.getWCRight = function () {
+    return this.getWCCenter()[0] + (this.getWCWidth()/2);
+};
+Camera.prototype.getWCBottom = function () {
+    return this.getWCCenter()[1] - (this.getWCHeight()/2);
+};
+Camera.prototype.getWCTop = function () {
+    return this.getWCCenter()[1] + (this.getWCHeight()/2);
+};
+
+Camera.prototype.genRandomPosition2D = function () {
+    var randomX =
+            MathUtils.lerp(this.getWCLeft(), this.getWCRight(), Math.random());
+    var randomY =
+            MathUtils.lerp(this.getWCBottom(), this.getWCTop(), Math.random());
+    return vec2.fromValues(randomX, randomY);
+};
+
 Camera.prototype.getViewportLeft = function() {
     return this.mViewport[0];
 };
