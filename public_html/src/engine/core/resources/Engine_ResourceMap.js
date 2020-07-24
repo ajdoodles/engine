@@ -27,7 +27,7 @@ gEngine.ResourceMap = (function() {
     
     var setLoadCompletedCallback = function(callback) {
         mLoadCompletedCallback = callback;
-        _checkForAllLoadCompleted;
+        _checkForAllLoadCompleted();
     };
     
     var asyncLoadRequested = function(resourceName) {
