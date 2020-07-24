@@ -8,7 +8,7 @@ function Renderable() {
     this.mShader = gEngine.DefaultResources.getConstColorShader();
     this.mColor = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
     this.mXform = new Transform();
-}
+};
 
 Renderable.prototype._setShader = function (shader) {
     this.mShader = shader;
