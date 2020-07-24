@@ -31,34 +31,19 @@ RigidShapeTest.prototype.unloadScene = function () {
 RigidShapeTest.prototype.initialize = function () {
     this._initCamera();
     
-    this.mPlatformSet = [];
-    for (var i = 0; i < this.kNumPlatforms; i++) {
-        var platform = new Platform(this.kPlatform);
-        var randomPos = this.mCamera.genRandomPosition2D();
-        platform.getXform().setPosition(randomPos[0], randomPos[1]);
-        this.mPlatformSet.push(platform);
-    }
-    
-    this.mMinionSet = [];
-    for (var i = 0; i < this.kNumMinions; i++) {
-        var minion = new Minion(this.kMinionSprite);
-        var randomPos = this.mCamera.genRandomPosition2D();
-        minion.getXform().setPosition(randomPos[0], randomPos[1]);
-        this.mMinionSet.push(minion);
-    } 
-        
-    this.mHeroSet = [];
-    for (var i = 0; i < this.kNumHeroes; i++) {
-        var hero = new Hero(this.kMinionSprite);
-        var randomPos = this.mCamera.genRandomPosition2D();
-        hero.getXform().setPosition(randomPos[0], randomPos[1]);
-        this.mHeroSet.push(hero);
-    }
+    this.mSquare = new Renderable();
+    var xForm = this.mSquare.getXform();
+    xForm.setSize(30, 30);
+    xForm.setPosition(10, 10);
         
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(1, 2);
     this.mMsg.setTextHeight(3);
+    
+    this.mLine = new LineRenderable(10, 10, 20, 20);
+    this.mLine.setColor([1.0, 0, 0, 1.0]);
+    this.mLine.setLineWidth(1);
 };
 
 RigidShapeTest.prototype._initCamera = function () {
@@ -72,30 +57,15 @@ RigidShapeTest.prototype._initCamera = function () {
 
 RigidShapeTest.prototype.update = function () {
     this.mCamera.update();
-    
-    for (var i = 0; i < this.mPlatformSet.length; i++) {
-        this.mPlatformSet[i].update();
-    }
-    for (var i = 0; i < this.mMinionSet.length; i++) {
-        this.mMinionSet[i].update();
-    }
-    for (var i = 0; i < this.mHeroSet.length; i++) {
-        this.mHeroSet[i].update();
-    }
 };
 
 RigidShapeTest.prototype.draw = function () {
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]);
     this.mCamera.setupViewProjection();
-    
+
+    this.mSquare.draw(this.mCamera);
+
     this.mMsg.draw(this.mCamera);
-    for (var i = 0; i < this.mPlatformSet.length; i++) {
-        this.mPlatformSet[i].draw(this.mCamera);
-    }
-    for (var i = 0; i < this.mMinionSet.length; i++) {
-        this.mMinionSet[i].draw(this.mCamera);
-    }
-    for (var i = 0; i < this.mHeroSet.length; i++) {
-        this.mHeroSet[i].draw(this.mCamera);
-    }
+    
+    this.mLine.draw(this.mCamera);
 };
