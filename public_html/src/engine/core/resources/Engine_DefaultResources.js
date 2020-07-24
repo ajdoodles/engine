@@ -16,6 +16,7 @@ gEngine.DefaultResources = (function () {
     var kIllumFS = "src/glslshaders/IllumFS.glsl";
     var kShadowCasterFS = "src/glslshaders/ShadowCasterFS.glsl";
     var kShadowReceiverFS = "src/glslshaders/ShadowReceiverFS.glsl";
+    var kLineFS = "src/glslshaders/LineFS.glsl";
     
     var mConstColorShader = null;
     var mSpriteShader = null;
@@ -24,6 +25,7 @@ gEngine.DefaultResources = (function () {
     var mIllumShader = null;
     var mShadowCasterShader = null;
     var mShadowReceiverShader = null;
+    var mLineShader = null;
     
     var mGlobalAmbientColor = vec4.fromValues(0.3, 0.3, 0.3, 1.0);
     var mGlobalAmbientIntensity = 0.95;
@@ -58,6 +60,10 @@ gEngine.DefaultResources = (function () {
         return mShadowReceiverShader;
     };
     
+    var _getLineShader = function() {
+        return mLineShader;
+    };
+
     var getGlobalAmbientColor = function() {
         return mGlobalAmbientColor;
     };
@@ -86,6 +92,7 @@ gEngine.DefaultResources = (function () {
         mIllumShader = new IllumShader(kTextureVS, kIllumFS);
         mShadowCasterShader = new ShadowCasterShader(kTextureVS, kShadowCasterFS);
         mShadowReceiverShader = new SpriteShader(kTextureVS, kShadowReceiverFS);
+        mLineShader = new LineShader(kSimpleVS, kLineFS);
         callback();
     };
 
@@ -118,6 +125,10 @@ gEngine.DefaultResources = (function () {
                 kShadowReceiverFS,
                 gEngine.TextFileLoader.eTextFileType.eTextFile);
 
+        gEngine.TextFileLoader.loadTextFile(
+                kLineFS,
+                gEngine.TextFileLoader.eTextFileType.eTextFile);
+
         gEngine.Fonts.loadFont(kDefaultFont);
 
         gEngine.ResourceMap.setLoadCompletedCallback(
@@ -135,6 +146,7 @@ gEngine.DefaultResources = (function () {
         getIllumShader: _getIllumShader,
         getShadowCasterShader: getShadowCasterShader,
         getShadowReceiverShader: getShadowReceiverShader,
+        getLineShader: _getLineShader,
         getGlobalAmbientColor: getGlobalAmbientColor,
         setGlobalAmbientColor: setGlobalAmbientColor,
         getGlobalAmbientIntensity: getGlobalAmbientIntensity,
