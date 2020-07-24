@@ -134,7 +134,7 @@ Transform.prototype.copy = function (other) {
     vec2.copy(this.mPosition, other.getPosition());
     vec2.copy(this.mScale, other.getScale());
     this.mZ = other.getZPos();
-    this.mRotationInRad = other.getRotation();
+    this.mRotationRad = other.getRotation();
     this.mHFlipMultiplier = other.isHFlipped() ? -1 : 1;
     this.mVFlipMultiplier = other.isVFlipped() ? -1 : 1;
 };
