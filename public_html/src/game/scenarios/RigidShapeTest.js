@@ -41,9 +41,7 @@ RigidShapeTest.prototype.initialize = function () {
     this.mMsg.getXform().setPosition(1, 2);
     this.mMsg.setTextHeight(3);
     
-    this.mLine = new LineRenderable(10, 10, 20, 20);
-    this.mLine.setColor([1.0, 0, 0, 1.0]);
-    this.mLine.setLineWidth(1);
+    this.mHero = new Hero(this.kMinionSprite);
 };
 
 RigidShapeTest.prototype._initCamera = function () {
@@ -57,6 +55,8 @@ RigidShapeTest.prototype._initCamera = function () {
 
 RigidShapeTest.prototype.update = function () {
     this.mCamera.update();
+    
+    this.mHero.update();
 };
 
 RigidShapeTest.prototype.draw = function () {
@@ -66,6 +66,5 @@ RigidShapeTest.prototype.draw = function () {
     this.mSquare.draw(this.mCamera);
 
     this.mMsg.draw(this.mCamera);
-    
-    this.mLine.draw(this.mCamera);
+    this.mHero.draw(this.mCamera);
 };
