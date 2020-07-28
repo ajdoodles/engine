@@ -6,6 +6,7 @@
 
 function GameObject(renderableObj) {
     this.mRenderComponent = renderableObj;
+    this.mPhysicsComponent = null;
     this.mVisible = true;
     this.mCurrentFrontDir = vec2.fromValues(0, 1);
     this.mSpeed = 0;
@@ -17,6 +18,13 @@ GameObject.prototype.getXform = function() {
 
 GameObject.prototype.getRenderable = function() {
     return this.mRenderComponent;
+};
+
+GameObject.prototype.getPhysicsComponent = function () {
+    return this.mPhysicsComponent;
+};
+GameObject.prototype.setPhysicsComponent = function (p) {
+    this.mPhysicsComponent = p;
 };
 
 GameObject.prototype.setVisible = function(visible) {
@@ -91,10 +99,18 @@ GameObject.prototype.rotateObjPointTo = function(target, rate) {
 GameObject.prototype.update = function () {
     var pos = this.getXform().getPosition();
     vec2.scaleAndAdd(pos, pos, this.mCurrentFrontDir, this.mSpeed);
+    
+    if (this.mPhysicsComponent !== null) {
+        this.mPhysicsComponent.update();
+    }
 };
 
 GameObject.prototype.draw = function (camera) {
     if (this.mVisible) {
         this.mRenderComponent.draw(camera);
+
+        if (this.mPhysicsComponent !== null) {
+            this.mPhysicsComponent.draw(camera);
+        }
     }
 };
