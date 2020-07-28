@@ -36,6 +36,15 @@ LineRenderable.prototype._calcXform = function () {
        
     var rotation = vec2.angle(vec2.fromValues(sx, sy), vec2.fromValues(1, 0));
     
+    var axisVector3D = vec3.fromValues(1.0, 0.0, 0.0);
+    var lineVector3D = vec3.fromValues(sx, sy, 0.0);
+    var cross = [];
+    vec3.cross(cross, axisVector3D, lineVector3D);
+
+    if (cross[2] < 0) {
+        rotation = -rotation;
+    }
+
     this.mXform.setPosition(cx, cy);
     this.mXform.setWidth(lineLength);
     this.mXform.setRotationRads(rotation);
