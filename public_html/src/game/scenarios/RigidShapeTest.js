@@ -42,6 +42,8 @@ RigidShapeTest.prototype.initialize = function () {
     this.mMsg.setTextHeight(3);
     
     this.mHero = new Hero(this.kMinionSprite);
+    
+    this.mPlatform = new Platform(this.kPlatform);
 };
 
 RigidShapeTest.prototype._initCamera = function () {
@@ -57,6 +59,7 @@ RigidShapeTest.prototype.update = function () {
     this.mCamera.update();
     
     this.mHero.update();
+    this.mPlatform.update();
 };
 
 RigidShapeTest.prototype.draw = function () {
@@ -67,4 +70,5 @@ RigidShapeTest.prototype.draw = function () {
 
     this.mMsg.draw(this.mCamera);
     this.mHero.draw(this.mCamera);
+    this.mPlatform.draw(this.mCamera);
 };

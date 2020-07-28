@@ -7,13 +7,31 @@
 function Platform(spriteTexture) {
     this.kDelta = 0.3;
     this.kDeltaDegrees = 1;
-    
+
     this.mPlatform = new TextureRenderable(spriteTexture);
     this.mPlatform.getXform().setSize(30, 3.75);
     this.mPlatform.getXform().setPosition(20, 33);
     GameObject.call(this, this.mPlatform);
+
+    var rigidRect = new RigidRect(this.mPlatform.getXform(), 36, 6);
+    rigidRect.setColor([1.0, 0.0, 0.0, 1.0]);
+    rigidRect.setDrawBounds(true);
+    this.setPhysicsComponent(rigidRect);
 }
 gEngine.Core.inheritPrototype(GameObject, Platform);
 
-Portal.prototype.update = function() {
+Platform.prototype.update = function () {
+    var xform = this.mPlatform.getXform();
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
+        xform.incYPos(this.kDelta);
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+        xform.incXPos(-this.kDelta);
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
+        xform.incYPos(-this.kDelta);
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
+        xform.incXPos(this.kDelta);
+    }
 };
