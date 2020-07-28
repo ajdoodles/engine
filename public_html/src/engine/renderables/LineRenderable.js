@@ -9,8 +9,8 @@ function LineRenderable(x1, y1, x2, y2) {
     Renderable.prototype.setColor.call(this, [1.0, 0.0, 0.0, 1.0]);
     Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getLineShader());
     
-    this.mStart = vec2.fromValues(0, 0);
-    this.mEnd = vec2.fromValues(0, 0);
+    this.mStart = vec2.fromValues(0.0, 0.0);
+    this.mEnd = vec2.fromValues(0.0, 0.0);
     this.mLineWidth = 1;
     
     if (x1 !== undefined ) {
@@ -27,15 +27,15 @@ LineRenderable.prototype._calcXform = function () {
     //(sx, sy) is the line's vector
     var sx = this.mEnd[0] - this.mStart[0];
     var sy = this.mEnd[1] - this.mStart[1];
-    
+
     //line center
-    var cx = this.mStart[0] + (sx/2);
-    var cy = this.mStart[1] + (sy/2);
-    
+    var cx = this.mStart[0] + (sx/2.0);
+    var cy = this.mStart[1] + (sy/2.0);
+
     var lineLength = Math.sqrt((sx*sx) + (sy*sy));
-       
-    var rotation = vec2.angle(vec2.fromValues(sx, sy), vec2.fromValues(1, 0));
-    
+
+    var rotation = vec2.angle(vec2.fromValues(sx, sy), vec2.fromValues(1.0, 0.0));
+
     var axisVector3D = vec3.fromValues(1.0, 0.0, 0.0);
     var lineVector3D = vec3.fromValues(sx, sy, 0.0);
     var cross = [];
