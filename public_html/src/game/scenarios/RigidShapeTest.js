@@ -42,11 +42,11 @@ RigidShapeTest.prototype.initialize = function () {
     this.mMsg.setTextHeight(3);
     
     this.mObjectSet = new GameObjectSet();
-    
-    this.mObjectSet.addObject(new Hero(this.kMinionSprite));
-    this.mObjectSet.addObject(new Hero(this.kMinionSprite));
     this.mObjectSet.addObject(new Platform(this.kPlatform));
     this.mObjectSet.addObject(new Platform(this.kPlatform));
+    this.mObjectSet.addObject(new Hero(this.kMinionSprite));
+    this.mObjectSet.addObject(new Hero(this.kMinionSprite));
+    this.mObjectSet.selectObjectAt(0);
 };
 
 RigidShapeTest.prototype._initCamera = function () {
