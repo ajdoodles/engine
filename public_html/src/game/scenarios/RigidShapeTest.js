@@ -36,14 +36,17 @@ RigidShapeTest.prototype.initialize = function () {
     xForm.setSize(30, 30);
     xForm.setPosition(10, 10);
         
-    this.mMsg = new FontRenderable("Status Message");
+    this.mMsg = new FontRenderable("Is this working?");
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(1, 2);
     this.mMsg.setTextHeight(3);
     
-    this.mHero = new Hero(this.kMinionSprite);
+    this.mObjectSet = new GameObjectSet();
     
-    this.mPlatform = new Platform(this.kPlatform);
+    this.mObjectSet.addObject(new Hero(this.kMinionSprite));
+    this.mObjectSet.addObject(new Hero(this.kMinionSprite));
+    this.mObjectSet.addObject(new Platform(this.kPlatform));
+    this.mObjectSet.addObject(new Platform(this.kPlatform));
 };
 
 RigidShapeTest.prototype._initCamera = function () {
@@ -58,8 +61,13 @@ RigidShapeTest.prototype._initCamera = function () {
 RigidShapeTest.prototype.update = function () {
     this.mCamera.update();
     
-    this.mHero.update();
-    this.mPlatform.update();
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
+        this.mObjectSet.incSelected();
+    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
+        this.mObjectSet.decSelected();
+    }
+
+    this.mObjectSet.update();
 };
 
 RigidShapeTest.prototype.draw = function () {
@@ -69,6 +77,5 @@ RigidShapeTest.prototype.draw = function () {
     this.mSquare.draw(this.mCamera);
 
     this.mMsg.draw(this.mCamera);
-    this.mHero.draw(this.mCamera);
-    this.mPlatform.draw(this.mCamera);
+    this.mObjectSet.draw(this.mCamera);
 };
