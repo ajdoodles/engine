@@ -21,7 +21,6 @@ function Hero(spriteTexture, normalTexture) {
     GameObject.call(this, this.mHero);
     
     var hitBox = new RigidCircle(this.mHero.getXform(), 9);
-    hitBox.setColor([1.0, 0.0, 0.0, 1.0]);
     hitBox.setDrawBounds(true);
     this.setPhysicsComponent(hitBox);
 }

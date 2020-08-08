@@ -14,7 +14,6 @@ function Platform(spriteTexture) {
     GameObject.call(this, this.mPlatform);
 
     var rigidRect = new RigidRect(this.mPlatform.getXform(), 36, 6);
-    rigidRect.setColor([1.0, 0.0, 0.0, 1.0]);
     rigidRect.setDrawBounds(true);
     this.setPhysicsComponent(rigidRect);
 }

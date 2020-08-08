@@ -6,7 +6,7 @@
 
 function LineRenderable(x1, y1, x2, y2) {
     Renderable.call(this);
-    Renderable.prototype.setColor.call(this, [1.0, 0.0, 0.0, 1.0]);
+    Renderable.prototype.setColor.call(this, [1.0, 1.0, 1.0, 1.0]);
     Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getLineShader());
     
     this.mStart = vec2.fromValues(0.0, 0.0);
