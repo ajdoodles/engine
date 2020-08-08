@@ -47,6 +47,7 @@ RigidShapeTest.prototype.initialize = function () {
     this.mObjectSet.addObject(new Hero(this.kMinionSprite));
     this.mObjectSet.addObject(new Hero(this.kMinionSprite));
     this.mObjectSet.selectObjectAt(0);
+    this.mObjectSet.setAlertCollisions(true);
 };
 
 RigidShapeTest.prototype._initCamera = function () {
