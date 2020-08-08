@@ -137,7 +137,7 @@ void main(void) {
                 lightEffect += applyLight(uLights[i]);
             }
         }
-    };
+    }
 
     texColor *= lightEffect;
 
