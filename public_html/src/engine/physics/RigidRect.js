@@ -50,16 +50,18 @@ RigidRect.prototype.rigidType = function () {
 };
 
 RigidRect.prototype.draw = function (camera) {
+    RigidShape.prototype.draw.call(this, camera);
+
     if (!this.isDrawingBounds()) {
         return;
     }
-    
-    RigidShape.prototype.draw.call(this, camera);
-    
+
     var x = this.getPosition()[0];
     var y = this.getPosition()[1];
     var halfWidth = this.mWidth/2;
     var halfHeight = this.mHeight/2;
+
+    this.mSides.getXform().setZPos(this.mXform.getZPos());
     
     // top edge
     this.mSides.setStartVertex(x-halfWidth, y+halfHeight);

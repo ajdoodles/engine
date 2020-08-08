@@ -7,7 +7,7 @@
 function RigidCircle(xform, radius) {
     RigidShape.call(this, xform);
     
-    this.kNumSides = 16;
+    this.kNumSides = 15;
     if (this.kNumSides < 2) {
         throw "Need at least three points to draw a circle";
     }
@@ -35,15 +35,16 @@ RigidCircle.prototype.rigidType = function () {
 };
 
 RigidCircle.prototype.draw = function (camera) {
+    RigidShape.prototype.draw.call(this, camera);
+
     if (!this.isDrawingBounds()) {
         return;
     }
-    
-    RigidShape.prototype.draw.call(this, camera);
-    
+
+    this.mSides.getXform().setZPos(this.mXform.getZPos());
+
     var pos = this.getPosition();
     var drawPoint = vec2.fromValues(pos[0] + this.mRadius, pos[1]);
-    
     this.mSides.setStartVertex(drawPoint[0], drawPoint[1]);
     for (var i = 1; i <= this.kNumSides; i++) {
         vec2.rotate(drawPoint, drawPoint, pos, this.kAngularDelta);

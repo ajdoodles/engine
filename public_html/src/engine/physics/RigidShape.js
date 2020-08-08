@@ -54,8 +54,10 @@ RigidShape.prototype.draw = function (camera) {
     if (!this.isDrawingBounds()) {
         return;
     }
-    
+
     var pos = this.getPosition();
+
+    this.mPositionMark.getXform().setZPos(this.mXform.getZPos());
     
     this.mPositionMark.setStartVertex(pos[0] - this.kPadding, pos[1] + this.kPadding);
     this.mPositionMark.setEndVertex(pos[0] + this.kPadding, pos[1] - this.kPadding);
