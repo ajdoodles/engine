@@ -23,12 +23,4 @@ gEngine.Core.inheritPrototype(GameObject, MinionActive);
 
 MinionActive.prototype.update = function() {
     this.mMinion.update();
-    
-    var xform = this.getXform();
-    xform.incXPos(-this.kDelta);
-    
-    if (xform.getXPos() < 0) {
-        xform.setXPos(100);
-        xform.setYPos(Math.random() * 65);
-    }
 };

@@ -20,20 +20,4 @@ function Brain(spriteTexture) {
 gEngine.Core.inheritPrototype(GameObject, Brain);
 
 Brain.prototype.update = function () {
-//    GameObject.prototype.update.call(this);
-//    var xform = this.getXform();
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-//        xform.incRotationInRads(this.kDeltaRads);
-//        vec2.rotate(this.mCurrentFrontDir, this.mCurrentFrontDir, vec2.fromValues(0, 0), this.kDeltaRads);
-//    }
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-//        xform.incRotationInRads(-this.kDeltaRads);
-//        vec2.rotate(this.mCurrentFrontDir, this.mCurrentFrontDir, vec2.fromValues(0, 0), -this.kDeltaRads);
-//    }
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
-//        this.incSpeedBy(this.kDeltaSpeed);
-//    }
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
-//        this.incSpeedBy(-this.kDeltaSpeed);
-//    }
 };

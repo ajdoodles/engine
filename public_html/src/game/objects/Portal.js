@@ -16,23 +16,4 @@ function Portal(spriteTexture) {
 gEngine.Core.inheritPrototype(GameObject, Portal);
 
 Portal.prototype.update = function() {
-    var xform = this.getXform();
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
-        xform.incYPos(this.kDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-        xform.incXPos(-this.kDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
-        xform.incYPos(-this.kDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-        xform.incXPos(this.kDelta);
-    }
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.P)) {
-//        xform.incRotationInDegrees(this.kDeltaDegrees);
-//    }
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.O)) {
-//        xform.incRotationInDegrees(-this.kDeltaDegrees);
-//    }
 };

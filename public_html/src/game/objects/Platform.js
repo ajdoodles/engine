@@ -21,17 +21,4 @@ function Platform(spriteTexture) {
 gEngine.Core.inheritPrototype(GameObject, Platform);
 
 Platform.prototype.update = function () {
-    var xform = this.mPlatform.getXform();
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
-        xform.incYPos(this.kDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-        xform.incXPos(-this.kDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
-        xform.incYPos(-this.kDelta);
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-        xform.incXPos(this.kDelta);
-    }
 };
