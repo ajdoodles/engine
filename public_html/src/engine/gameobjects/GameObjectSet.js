@@ -9,6 +9,7 @@ function GameObjectSet() {
 
     this.mSet = new Array();
     this.mSelected = -1;
+    this.mAlertCollisions = false;
 }
 
 GameObjectSet.prototype.size = function() {
@@ -64,6 +65,13 @@ GameObjectSet.prototype.decSelected = function () {
     this.selectObjectAt(index);
 };
 
+GameObjectSet.prototype.setAlertCollisions = function (alert) {
+    this.mAlertCollisions = alert;
+};
+GameObjectSet.prototype.isAlertingCollisions = function () {
+    return this.mAlertCollisions;
+};
+
 GameObjectSet.prototype.addObject = function(obj) {
     this.mSet.push(obj);
 };
@@ -86,7 +94,24 @@ GameObjectSet.prototype.update = function() {
     }
 
     for (var i = 0; i < this.mSet.length; i++) {
-        this.mSet[i].update();
+        var obj = this.mSet[i];
+        obj.update();
+        if (this.isAlertingCollisions()) {
+            obj.getPhysicsComponent().setColor([1.0, 1.0, 1.0, 1.0]);
+        }
+    }
+
+    if (this.isAlertingCollisions()) {
+        for (var j = 0; j < this.size(); j++) {
+            var theseBounds = this.getObjectAt(j).getPhysicsComponent();
+            for (var k = j+1; k < this.size(); k++) {
+                var thoseBounds = this.getObjectAt(k).getPhysicsComponent();
+                if (theseBounds.collided(thoseBounds)) {
+                    theseBounds.setColor([1.0, 0.0, 0.0, 1.0]);
+                    thoseBounds.setColor([1.0, 0.0, 0.0, 1.0]);
+                }
+            }
+        }
     }
 };
 
