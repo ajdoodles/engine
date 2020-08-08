@@ -7,7 +7,7 @@
 function RigidCircle(xform, radius) {
     RigidShape.call(this, xform);
     
-    this.kNumSides = 15;
+    this.kNumSides = 16;
     if (this.kNumSides < 2) {
         throw "Need at least three points to draw a circle";
     }

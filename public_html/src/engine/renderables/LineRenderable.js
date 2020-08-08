@@ -11,7 +11,7 @@ function LineRenderable(x1, y1, x2, y2) {
     
     this.mStart = vec2.fromValues(0.0, 0.0);
     this.mEnd = vec2.fromValues(0.0, 0.0);
-    this.mLineWidth = 1;
+    this.setLineWidth(0.2);
     
     if (x1 !== undefined ) {
         this.setVertices(x1, y1, x2, y2);
