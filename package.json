@@ -1,8 +1,16 @@
 {
     "name": "JavascriptSourceObjects",
     "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
     "author": "aduda",
     "contributors": [],
-    "dependencies": {}
+    "devDependencies": {
+        "typescript": "^4.7.4"
+    }
 }
