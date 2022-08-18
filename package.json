@@ -11,8 +11,8 @@
     "author": "aduda",
     "contributors": [],
     "scripts": {
-        "build": "rm -rf public_html/build && npx tsc",
-        "postbuild": "mkdir -p public_html/build/lib && cp node_modules/gl-matrix/gl-matrix-min.js public_html/build/lib/"
+        "prebuild": "rm -rf public_html/src/gl-matrix && mkdir -p public_html/src/gl-matrix && cp -r node_modules/gl-matrix/gl-matrix-min.js node_modules/gl-matrix/esm public_html/src/gl-matrix/",
+        "build": "rm -rf public_html/build && npx tsc"
     },
     "devDependencies": {
         "typescript": "^4.7.4"
