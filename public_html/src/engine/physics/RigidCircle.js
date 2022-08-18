@@ -44,10 +44,10 @@ RigidCircle.prototype.draw = function (camera) {
     this.mSides.getXform().setZPos(this.mXform.getZPos());
 
     var pos = this.getPosition();
-    var drawPoint = vec2.fromValues(pos[0] + this.mRadius, pos[1]);
+    var drawPoint = glMatrix.vec2.fromValues(pos[0] + this.mRadius, pos[1]);
     this.mSides.setStartVertex(drawPoint[0], drawPoint[1]);
     for (var i = 1; i <= this.kNumSides; i++) {
-        vec2.rotate(drawPoint, drawPoint, pos, this.kAngularDelta);
+        glMatrix.vec2.rotate(drawPoint, drawPoint, pos, this.kAngularDelta);
 
         if (i % 2 === 0) {
             this.mSides.setStartVertex(drawPoint[0], drawPoint[1]);

@@ -18,13 +18,13 @@ Camera.prototype.getWCCursorPosition = function() {
     }
     
     var mousePos2DPx = gEngine.Input.getMousePosition();
-    var vpOrigin = vec2.fromValues(this.getViewportLeft(), this.getViewportBottom());
-    var bottomLeft = vec2.fromValues(this.getWCCenter()[0] - (this.getWCWidth()/2), this.getWCCenter()[1] - (this.getWCHeight()/2));
+    var vpOrigin = glMatrix.vec2.fromValues(this.getViewportLeft(), this.getViewportBottom());
+    var bottomLeft = glMatrix.vec2.fromValues(this.getWCCenter()[0] - (this.getWCWidth()/2), this.getWCCenter()[1] - (this.getWCHeight()/2));
     
-    var wcPos = vec2.create();
-    vec2.sub(wcPos, mousePos2DPx, vpOrigin);
-    vec2.scaleAndAdd(wcPos, bottomLeft, wcPos, this._getPixelsToWCRatio());
-//    return vec3(wcPos[0], wcPos[1]);
+    var wcPos = glMatrix.vec2.create();
+    glMatrix.vec2.sub(wcPos, mousePos2DPx, vpOrigin);
+    glMatrix.vec2.scaleAndAdd(wcPos, bottomLeft, wcPos, this._getPixelsToWCRatio());
+//    return glMatrix.vec3(wcPos[0], wcPos[1]);
     return wcPos;
 };
 
@@ -36,11 +36,11 @@ Camera.prototype.convertWCPosToPx = function (wcPosition) {
     y = this.mViewport[1] + (y * this._mRenderCache.mWCToPixelsRatio) + 0.5;
 
     var z = wcPosition[2] * this._mRenderCache.mWCToPixelsRatio;
-    return vec3.fromValues(x, y, z);
+    return glMatrix.vec3.fromValues(x, y, z);
 };
 
 Camera.prototype.convertWCVecToPx = function(wcVec) {
-    var result = vec3.create();
-    vec3.scale(result, wcVec, this._mRenderCache.mWCToPixelsRatio);
+    var result = glMatrix.vec3.create();
+    glMatrix.vec3.scale(result, wcVec, this._mRenderCache.mWCToPixelsRatio);
     return result;
 };

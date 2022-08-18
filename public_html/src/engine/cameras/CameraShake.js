@@ -5,17 +5,17 @@
  */
 
 function CameraShake(origCenter, initDeltaX, initDeltaY, numOscillations, shakeDuration) {
-    this.mOrigCenter = vec2.clone(origCenter);
-    this.mShookCenter= vec2.clone(origCenter);
+    this.mOrigCenter = glMatrix.vec2.clone(origCenter);
+    this.mShookCenter= glMatrix.vec2.clone(origCenter);
     this.mShake = new ShakePosition(initDeltaX, initDeltaY, numOscillations, shakeDuration);
 };
 
 CameraShake.prototype.setCenter = function(center) {
-    vec2.copy(this.mOrigCenter, center);
+    glMatrix.vec2.copy(this.mOrigCenter, center);
 };
 
 CameraShake.prototype.getShookPos = function() {
-    return vec2.clone(this.mShookCenter);
+    return glMatrix.vec2.clone(this.mShookCenter);
 }
 
 CameraShake.prototype.shakeDone = function() {
@@ -24,5 +24,5 @@ CameraShake.prototype.shakeDone = function() {
 
 CameraShake.prototype.updateShakeState = function() {
     var shake = this.mShake.calcShake();
-    vec2.add(this.mShookCenter, this.mOrigCenter, shake);
+    glMatrix.vec2.add(this.mShookCenter, this.mOrigCenter, shake);
 };

@@ -29,7 +29,7 @@ SceneFileParser.prototype.parseCamera = function() {
     }
 
     var camera = new Camera(
-            vec2.fromValues(centerX, centerY),
+            glMatrix.vec2.fromValues(centerX, centerY),
             width,
             viewport);
     camera.setBackgroundColor(bgColor);

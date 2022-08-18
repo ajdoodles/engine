@@ -21,8 +21,8 @@ TextureRenderable.prototype._pixelAlphaValue = function(x, y) {
 /**
  * int i: pixel index along the x axis
  * int j: pixel index along the y axis
- * vec2 xVec: unit vector representing the rotated x-axis
- * vec2 yVec: unit vector representing the rotated y-axis
+ * glMatrix.vec2 xVec: unit vector representing the rotated x-axis
+ * glMatrix.vec2 yVec: unit vector representing the rotated y-axis
  */
 TextureRenderable.prototype._indexToWCPosition = function(returnWCPos, i, j, xVec, yVec) {
     // x and y indices are computed in WC units from pixels
@@ -36,16 +36,16 @@ TextureRenderable.prototype._indexToWCPosition = function(returnWCPos, i, j, xVe
     var yDirDisp = [];
     
     // rotated axis unit vectors scaled with offsets from center
-    vec2.scale(xDirDisp, xVec, xDisp);
-    vec2.scale(yDirDisp, yVec, yDisp);
+    glMatrix.vec2.scale(xDirDisp, xVec, xDisp);
+    glMatrix.vec2.scale(yDirDisp, yVec, yDisp);
     
     // origin of the renderable in WC units
 //    var textureOriginX = this.mXform.getXPos() - (this.mXform.getWidth() * 0.5);
 //    var textureOriginY = this.mXform.getYPos() - (this.mXform.getHeight() * 0.5);
     
     // add rotated, scaled offset vectors toobjects center position (WC units)
-    vec2.add(returnWCPos, this.mXform.getPosition(), xDirDisp);
-    vec2.add(returnWCPos, returnWCPos, yDirDisp);
+    glMatrix.vec2.add(returnWCPos, this.mXform.getPosition(), xDirDisp);
+    glMatrix.vec2.add(returnWCPos, returnWCPos, yDirDisp);
     
 //    returnWCPos[0] = textureOriginX + wcInsetX;
 //    returnWCPos[1] = textureOriginY + wcInsetY;
@@ -54,10 +54,10 @@ TextureRenderable.prototype._indexToWCPosition = function(returnWCPos, i, j, xVe
 TextureRenderable.prototype._wcPositionToIndex = function (returnIndex, wcPos,  xVec, yVec) {
     var delta = [];
     // 2d offset from object center to given position (WC units)
-    vec2.sub(delta, wcPos, this.mXform.getPosition());
+    glMatrix.vec2.sub(delta, wcPos, this.mXform.getPosition());
     
-    var xDisp = vec2.dot(delta, xVec);
-    var yDisp = vec2.dot(delta, yVec);
+    var xDisp = glMatrix.vec2.dot(delta, xVec);
+    var yDisp = glMatrix.vec2.dot(delta, yVec);
     
     returnIndex[0] = this.mTexWidth * (xDisp / this.mXform.getWidth());
     returnIndex[1] = this.mTexHeight * (yDisp / this.mXform.getHeight());
@@ -83,10 +83,10 @@ TextureRenderable.prototype.pixelTouches = function(other, wcTouchPos) {
     var yVec = [0, 1];
     var xVecOther = [1, 0];
     var yVecOther = [0, 1];
-    vec2.rotate(xVec, xVec, origin, this.mXform.getRotation());
-    vec2.rotate(yVec, yVec, origin, this.mXform.getRotation());
-    vec2.rotate(xVecOther, xVecOther, origin, other.mXform.getRotation());
-    vec2.rotate(yVecOther, yVecOther, origin, other.mXform.getRotation());
+    glMatrix.vec2.rotate(xVec, xVec, origin, this.mXform.getRotation());
+    glMatrix.vec2.rotate(yVec, yVec, origin, this.mXform.getRotation());
+    glMatrix.vec2.rotate(xVecOther, xVecOther, origin, other.mXform.getRotation());
+    glMatrix.vec2.rotate(yVecOther, yVecOther, origin, other.mXform.getRotation());
        
     while (!pixelTouches && (xIndex < this.mTexWidth)) {
         yIndex = 0;

@@ -5,7 +5,7 @@
  */
 
 RigidCircle.prototype.collidedCircleCircle = function (c1, c2) {
-    var distSquared = vec2.squaredDistance(c1.getPosition(), c2.getPosition());
+    var distSquared = glMatrix.vec2.squaredDistance(c1.getPosition(), c2.getPosition());
     var maxDist = c1.getRadius() + c2.getRadius();
     return distSquared < (maxDist * maxDist);
 };
@@ -22,6 +22,6 @@ RigidCircle.prototype.collided = function (otherShape) {
 };
 
 RigidCircle.prototype.containsPos = function (position) {
-    var dist = vec2.dist(this.getPosition(), position);
+    var dist = glMatrix.vec2.dist(this.getPosition(), position);
     return dist < this.getRadius();
 };

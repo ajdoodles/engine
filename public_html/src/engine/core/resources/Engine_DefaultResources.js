@@ -27,7 +27,7 @@ gEngine.DefaultResources = (function () {
     var mShadowReceiverShader = null;
     var mLineShader = null;
     
-    var mGlobalAmbientColor = vec4.fromValues(0.3, 0.3, 0.3, 1.0);
+    var mGlobalAmbientColor = glMatrix.vec4.fromValues(0.3, 0.3, 0.3, 1.0);
     var mGlobalAmbientIntensity = 0.95;
     
     var kDefaultFont = "assets/fonts/system-default-font";
@@ -69,7 +69,7 @@ gEngine.DefaultResources = (function () {
     };
     
     var setGlobalAmbientColor = function(color) {
-        vec4.clone(mGlobalAmbientColor, color);
+        glMatrix.vec4.clone(mGlobalAmbientColor, color);
     };
     
     var getGlobalAmbientIntensity = function() {

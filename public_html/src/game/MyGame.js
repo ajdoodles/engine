@@ -72,14 +72,14 @@ MyGame.prototype.initialize = function () {
     this.mCamera = sceneParser.parseCamera();
 
     this.mHeroCam = new Camera(
-            vec2.fromValues(50, 30),
+            glMatrix.vec2.fromValues(50, 30),
             20,
             [490, 330, 150, 150],
             2);
     this.mHeroCam.setBackgroundColor([0.5, 0.5, 0.5, 1]);
     
     this.mBrainCam = new Camera(
-            vec2.fromValues(50, 30),
+            glMatrix.vec2.fromValues(50, 30),
             10,
             [0, 330, 150, 150],
             2);

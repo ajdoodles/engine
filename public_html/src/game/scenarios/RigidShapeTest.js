@@ -53,7 +53,7 @@ RigidShapeTest.prototype.initialize = function () {
 RigidShapeTest.prototype._initCamera = function () {
     this.mCamera =
         new Camera(
-            vec2.fromValues(50, 37.5),
+            glMatrix.vec2.fromValues(50, 37.5),
             100,
             [0, 0, 640, 480]);
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);

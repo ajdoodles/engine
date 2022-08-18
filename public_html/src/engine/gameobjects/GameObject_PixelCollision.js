@@ -28,8 +28,8 @@ GameObject.prototype.pixelTouches = function (otherObj, wcTouchPos) {
             var otherRadius = Math.sqrt(Math.pow(otherWidth* 0.5, 2) + Math.pow(otherHeight* 0.5, 2));
             
             var delta = [];
-            vec2.sub(delta, this.getXform().getPosition(), otherObj.getXform().getPosition());
-            if (vec2.length(delta) < (thisRadius + otherRadius)) {
+            glMatrix.vec2.sub(delta, this.getXform().getPosition(), otherObj.getXform().getPosition());
+            if (glMatrix.vec2.length(delta) < (thisRadius + otherRadius)) {
                 thisRen.setColorArray();
                 otherRen.setColorArray();
                 pixelTouches = thisRen.pixelTouches(otherRen, wcTouchPos);

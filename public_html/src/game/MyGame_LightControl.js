@@ -15,8 +15,8 @@ MyGame.prototype.initLights = function () {
     this.mLightSet.addLight(pointLight);
 //    this.mLightSet.addLight(
 //            new Light(
-//                vec4.fromValues(0.1, 0.1, 0.6, 1.0),
-//                vec3.fromValues(55, 50, 5),
+//                glMatrix.vec4.fromValues(0.1, 0.1, 0.6, 1.0),
+//                glMatrix.vec3.fromValues(55, 50, 5),
 //                1.0,
 //                6,
 //                15));
@@ -120,7 +120,7 @@ MyGame.prototype.updateLights = function() {
     }
     
     var pos = this.mFocus.getPosition();
-    pos = vec3.fromValues(pos[0].toFixed(1), pos[1].toFixed(1), pos[2].toFixed(1));
+    pos = glMatrix.vec3.fromValues(pos[0].toFixed(1), pos[1].toFixed(1), pos[2].toFixed(1));
     this.mMsg.setText("Type:" + this.mFocus.getLightTypeString() 
             + " I: " + this.mFocus.getIntensity().toFixed(1)
             + " iDegs: " + this.mFocus.getInnerDegrees() + " oDegs: " + this.mFocus.getOuterDegrees()

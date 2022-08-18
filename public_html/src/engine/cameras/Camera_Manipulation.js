@@ -21,7 +21,7 @@ Camera.prototype.configInterpolation = function(stiffness, duration) {
 }
 
 Camera.prototype.panBy = function(dx, dy) {
-    var center = vec2.clone(this.getWCCenter());
+    var center = glMatrix.vec2.clone(this.getWCCenter());
     this.setWCCenter(center[0] + dx, center[1] + dy);
 };
 
@@ -32,7 +32,7 @@ Camera.prototype.panTo = function(px, py) {
 Camera.prototype.panWith = function(xform, zone) {
     var status = this.collideWCBound(xform, zone);
     if (status !== BoundingBox.eBoundCollideStatus.eInside) {
-        var newC = vec2.clone(this.getWCCenter());
+        var newC = glMatrix.vec2.clone(this.getWCCenter());
         var pos = xform.getPosition();
         if ((status & BoundingBox.eBoundCollideStatus.eCollideLeft) !== 0) {
             newC[0] = pos[0] - xform.getWidth()/2 + (this.getWCWidth()*zone)/2;
@@ -60,10 +60,10 @@ Camera.prototype.zoomBy = function(zoom) {
 Camera.prototype.zoomTowards = function (pos, zoom) {
     if (zoom > 0) {
         var delta = [];
-        var center = vec2.clone(this.getWCCenter());
-        vec2.sub(delta, pos, center);
-        vec2.scale(delta, delta, zoom - 1);
-        vec2.sub(center, center, delta);
+        var center = glMatrix.vec2.clone(this.getWCCenter());
+        glMatrix.vec2.sub(delta, pos, center);
+        glMatrix.vec2.scale(delta, delta, zoom - 1);
+        glMatrix.vec2.sub(center, center, delta);
         this.mCameraState.setCenter(center);
         this.zoomBy(zoom);
     }
@@ -72,7 +72,7 @@ Camera.prototype.zoomTowards = function (pos, zoom) {
 Camera.prototype.startShake = function (initDeltaX, initDeltaY, numOscillations, duration) {
     this.mCameraShake =
             new CameraShake(
-                    vec2.clone(this.mCameraState.getCenter()),
+                    glMatrix.vec2.clone(this.mCameraState.getCenter()),
                     initDeltaX,
                     initDeltaY,
                     numOscillations,

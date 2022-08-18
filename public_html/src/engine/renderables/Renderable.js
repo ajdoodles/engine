@@ -6,7 +6,7 @@
 
 function Renderable() {
     this.mShader = gEngine.DefaultResources.getConstColorShader();
-    this.mColor = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+    this.mColor = glMatrix.vec4.fromValues(1.0, 1.0, 1.0, 1.0);
     this.mXform = new Transform();
 };
 
@@ -27,8 +27,8 @@ Renderable.prototype.setColor = function(color) {
     this.mColor = color;
 }
 Renderable.prototype.swapColor = function (color) {
-    var current = vec4.clone(this.mColor);
-    vec4.copy(this.mColor, color);
+    var current = glMatrix.vec4.clone(this.mColor);
+    glMatrix.vec4.copy(this.mColor, color);
     return current;
 };
 

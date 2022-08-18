@@ -12,9 +12,9 @@ Light.prototype.eLightType = {
 
 function Light(
         lightType = Light.prototype.eLightType.ePointLight,
-        color = vec4.fromValues(1.0, 1.0, 1.0, 1.0), 
-        position = vec3.fromValues(35, 50, 5),
-        direction = vec3.fromValues(0.0, 0.0, -1.0),
+        color = glMatrix.vec4.fromValues(1.0, 1.0, 1.0, 1.0), 
+        position = glMatrix.vec3.fromValues(35, 50, 5),
+        direction = glMatrix.vec3.fromValues(0.0, 0.0, -1.0),
         intensity = 1.0,
         near = 15,
         far = 30,
@@ -22,13 +22,13 @@ function Light(
         innerRads = 5 * (Math.PI / 180.0),
         outerRads = 45 * (Math.PI / 180.0),
         ) {
-    this.kOrigin = vec3.fromValues(0.0, 0.0, 0.0);
+    this.kOrigin = glMatrix.vec3.fromValues(0.0, 0.0, 0.0);
             
     this.mLit = true;
     this.mLightType = lightType;
-    this.mColor = vec4.clone(color);
-    this.mPosition = vec3.clone(position);
-    this.mDirection = vec3.clone(direction);
+    this.mColor = glMatrix.vec4.clone(color);
+    this.mPosition = glMatrix.vec3.clone(position);
+    this.mDirection = glMatrix.vec3.clone(direction);
     this.mIntensity = intensity;
     this.mNear = near;
     this.mFar = far;
@@ -67,41 +67,41 @@ Light.prototype.getColor = function() {
     return this.mColor;
 };
 Light.prototype.setColor = function(color) {
-    vec4.copy(this.mColor, color);
+    glMatrix.vec4.copy(this.mColor, color);
 };
 
 Light.prototype.getPosition = function() {
     return this.mPosition;
 };
 Light.prototype.setPosition = function(position) {
-    vec3.copy(this.mPosition, position);
+    glMatrix.vec3.copy(this.mPosition, position);
 };
 Light.prototype.incXPos = function (delta) {
-    vec3.set(this.mPosition, this.mPosition[0] + delta, this.mPosition[1], this.mPosition[2]);
+    glMatrix.vec3.set(this.mPosition, this.mPosition[0] + delta, this.mPosition[1], this.mPosition[2]);
 };
 Light.prototype.incYPos = function (delta) {
-    vec3.set(this.mPosition, this.mPosition[0], this.mPosition[1] + delta, this.mPosition[2]);
+    glMatrix.vec3.set(this.mPosition, this.mPosition[0], this.mPosition[1] + delta, this.mPosition[2]);
 };
 Light.prototype.incZPos = function (delta) {
-    vec3.set(this.mPosition, this.mPosition[0], this.mPosition[1], this.mPosition[2] + delta);
+    glMatrix.vec3.set(this.mPosition, this.mPosition[0], this.mPosition[1], this.mPosition[2] + delta);
 };
 
 Light.prototype.getDirection = function () {
     return this.mDirection;
 };
 Light.prototype.getReverseDirection = function () {
-    var out = vec3.create();
-    vec3.scale(out, this.mDirection, -1);
+    var out = glMatrix.vec3.create();
+    glMatrix.vec3.scale(out, this.mDirection, -1);
     return out;
 };
 Light.prototype.setDirection = function (direction) {
-    vec3.copy(this.mDirection, direction);
+    glMatrix.vec3.copy(this.mDirection, direction);
 };
 Light.prototype.rotateXDirRads = function (delta) {
-    vec3.rotateY(this.mDirection, this.mDirection, this.kOrigin, delta);
+    glMatrix.vec3.rotateY(this.mDirection, this.mDirection, this.kOrigin, delta);
 };
 Light.prototype.rotateYDirRads = function (delta) {
-    vec3.rotateX(this.mDirection, this.mDirection, this.kOrigin, delta);
+    glMatrix.vec3.rotateX(this.mDirection, this.mDirection, this.kOrigin, delta);
 };
 Light.prototype.rotateXDirDegrees = function (deltaDegrees) {
     this.rotateXDirRads(deltaDegrees * Math.PI/180.0);

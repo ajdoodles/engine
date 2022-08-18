@@ -215,7 +215,7 @@ gEngine.Input = (function () {
     };
 
     var getMousePosition = function() {
-        return vec2.fromValues(mMouseX, mMouseY);
+        return glMatrix.vec2.fromValues(mMouseX, mMouseY);
     };
 
     var mPublic = {

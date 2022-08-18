@@ -14,7 +14,7 @@ BoundingBox.eBoundCollideStatus = Object.freeze({
 });
 
 function BoundingBox(centerPos, w, h) {
-    this.mLL = vec2.fromValues(0, 0);
+    this.mLL = glMatrix.vec2.fromValues(0, 0);
     this.setBounds(centerPos, w, h);
 }
 

@@ -46,5 +46,5 @@ ShakePosition.prototype.calcShake = function() {
         deltaX = harmonic * this.mInitX * xBit;
         deltaY = harmonic * this.mInitY * yBit;
     }
-    return vec2.fromValues(deltaX, deltaY);
+    return glMatrix.vec2.fromValues(deltaX, deltaY);
 };

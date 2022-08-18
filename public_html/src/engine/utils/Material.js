@@ -5,9 +5,9 @@
  */
 
 function Material(
-        ambient = vec4.fromValues(0.0, 0.0, 0.0, 0.0),
-        diffuse = vec4.fromValues(0.2, 0.2, 0.2, 1.0),
-        specular = vec4.fromValues(1.0, 1.0, 1.0, 1.0),
+        ambient = glMatrix.vec4.fromValues(0.0, 0.0, 0.0, 0.0),
+        diffuse = glMatrix.vec4.fromValues(0.2, 0.2, 0.2, 1.0),
+        specular = glMatrix.vec4.fromValues(1.0, 1.0, 1.0, 1.0),
         shininess = 20) {
     this.mAmbient = ambient;
     this.mDiffuse = diffuse;
@@ -19,21 +19,21 @@ Material.prototype.getAmbient = function () {
     return this.mAmbient;
 };
 Material.prototype.setAmbient = function (ambient) {
-    vec4.copy(this.mAmbient, ambient);
+    glMatrix.vec4.copy(this.mAmbient, ambient);
 };
 
 Material.prototype.getDiffuse = function () {
     return this.mDiffuse;
 };
 Material.prototype.setDiffuse = function (diffuse) {
-    vec4.copy(this.mDiffuse, diffuse);
+    glMatrix.vec4.copy(this.mDiffuse, diffuse);
 };
 
 Material.prototype.getSpecular = function () {
     return this.mSpecular;
 };
 Material.prototype.setSpecular = function (specular) {
-    vec4.copy(this.mSpecular, specular);
+    glMatrix.vec4.copy(this.mSpecular, specular);
 };
 
 Material.prototype.getShininess = function () {

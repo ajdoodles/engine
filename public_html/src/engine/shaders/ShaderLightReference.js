@@ -40,7 +40,7 @@ ShaderLightReference.prototype.loadToShader = function (camera, light) {
         gl.uniform1f(this.mNearRef, camera.convertWCSizeToPx(light.getNear()));
         gl.uniform1f(this.mFarRef, camera.convertWCSizeToPx(light.getFar()));
         
-        var direction = vec3.fromValues(0.0, 0.0, 0.0);
+        var direction = glMatrix.vec3.fromValues(0.0, 0.0, 0.0);
         var dropoff = 0;
         var cosInner = 0.0;
         var cosOuter = 0.0;

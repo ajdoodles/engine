@@ -11,5 +11,5 @@ gEngine.Core.inheritPrototype(Interpolator, InterpolatorVec2);
 
 InterpolatorVec2.prototype._interpolateValue = function () {
 //    console.log("In vector interpolation from " + this.mCurrent + " to " + this.mEnd);
-    vec2.lerp(this.mCurrent, this.mCurrent, this.mEnd, this.mRate);
+    glMatrix.vec2.lerp(this.mCurrent, this.mCurrent, this.mEnd, this.mRate);
 };

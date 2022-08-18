@@ -10,7 +10,12 @@
     ],
     "author": "aduda",
     "contributors": [],
+    "scripts": {
+        "build": "rm -rf public_html/build && npx tsc",
+        "postbuild": "mkdir -p public_html/build/lib && cp node_modules/gl-matrix/gl-matrix-min.js public_html/build/lib/"
+    },
     "devDependencies": {
+        "gl-matrix": "^3.4.3",
         "typescript": "^4.7.4"
     }
 }

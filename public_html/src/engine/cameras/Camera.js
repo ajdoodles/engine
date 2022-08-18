@@ -10,7 +10,7 @@ function PreRenderCache() {
     var mWCToPixelsRatio = 1;
     var mViewportBottomWC = -1;
     var mViewportLeftWC = -1;
-    var mCameraPosPx = vec3.fromValues(0.0, 0.0, 0.0);
+    var mCameraPosPx = glMatrix.vec3.fromValues(0.0, 0.0, 0.0);
 };
 
 /**
@@ -41,15 +41,15 @@ function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
     
-    this.mViewMatrix = mat4.create();
-    this.mProjMatrix = mat4.create();
-    this.mViewProjMatrix = mat4.create();
+    this.mViewMatrix = glMatrix.mat4.create();
+    this.mProjMatrix = glMatrix.mat4.create();
+    this.mViewProjMatrix = glMatrix.mat4.create();
     
     this.mBgColor = [0.8, 0.8, 0.8, 1.0];
 };
 
 Camera.prototype.setWCCenter = function(xPos, yPos) {
-    this.mCameraState.setCenter(vec2.fromValues(xPos, yPos));
+    this.mCameraState.setCenter(glMatrix.vec2.fromValues(xPos, yPos));
 };
 
 Camera.prototype.getWCCenter = function() {
@@ -87,7 +87,7 @@ Camera.prototype.genRandomPosition2D = function () {
             MathUtils.lerp(this.getWCLeft(), this.getWCRight(), Math.random());
     var randomY =
             MathUtils.lerp(this.getWCBottom(), this.getWCTop(), Math.random());
-    return vec2.fromValues(randomX, randomY);
+    return glMatrix.vec2.fromValues(randomX, randomY);
 };
 
 Camera.prototype.getViewportLeft = function() {
@@ -159,7 +159,7 @@ Camera.prototype.setupViewProjection = function() {
         center = this.mCameraShake.getShookPos();
     }
     
-    mat4.lookAt(
+    glMatrix.mat4.lookAt(
         this.mViewMatrix,
         [center[0], center[1], Camera.prototype.kCameraZPosWC], // Camera position
         [center[0], center[1], 0], // lookat position
@@ -168,7 +168,7 @@ Camera.prototype.setupViewProjection = function() {
     var wcHalfWidth = this.getWCWidth() * 0.5;
     var wcHalfHeight = this.getWCHeight() * 0.5;
 
-    mat4.ortho(
+    glMatrix.mat4.ortho(
         this.mProjMatrix,
         -wcHalfWidth, // Distance to left edge of world space
         wcHalfWidth, // distance to right edge of world space
@@ -177,14 +177,14 @@ Camera.prototype.setupViewProjection = function() {
         this.mNearPlane, // z-distance to near plane
         this.mFarPlane); // z-distance to far plane
         
-    mat4.multiply(this.mViewProjMatrix, this.mProjMatrix, this.mViewMatrix);
+    glMatrix.mat4.multiply(this.mViewProjMatrix, this.mProjMatrix, this.mViewMatrix);
 
     this._mRenderCache.mWCToPixelsRatio = this.mViewport[2]/this.getWCWidth();
     this._mRenderCache.mViewportLeftWC = this.getWCCenter()[0] - (this.getWCWidth()/2);
     this._mRenderCache.mViewportBottomWC = this.getWCCenter()[1] - (this.getWCHeight()/2);
     
-    var cameraPosWC = vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.prototype.kCameraZPosWC);
-    this._mRenderCache.mCameraPosPx = vec3.clone(this.convertWCPosToPx(cameraPosWC));
+    var cameraPosWC = glMatrix.vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.prototype.kCameraZPosWC);
+    this._mRenderCache.mCameraPosPx = glMatrix.vec3.clone(this.convertWCPosToPx(cameraPosWC));
 };
 
 Camera.prototype.collideWCBound = function(xform, zone) {

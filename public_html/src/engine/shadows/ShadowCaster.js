@@ -13,7 +13,7 @@ function ShadowCaster(caster, receiver) {
     this.mShadowCaster = caster;
     this.mShadowReceiver = receiver;
     this.mCasterShader = gEngine.DefaultResources.getShadowCasterShader();
-    this.mShadowColor = vec4.fromValues(0.2, 0.2, 0.2, 1.0);
+    this.mShadowColor = glMatrix.vec4.fromValues(0.2, 0.2, 0.2, 1.0);
     this.mSaveXform = new Transform();
 }
 
@@ -51,11 +51,11 @@ ShadowCaster.prototype._computeShadowGeometry = function (light) {
     var lightDir = light.getDirection();
     var casterToReceiverZ = receiverXform.getZPos() - casterXform.getZPos();
     
-    var lightToCaster = vec3.create();
+    var lightToCaster = glMatrix.vec3.create();
     var distanceToReceiver = 0.0;
     
     var scale = 1.0;
-    var offset = vec3.fromValues(0.0, 0.0, 0.0);
+    var offset = glMatrix.vec3.fromValues(0.0, 0.0, 0.0);
     
     
     if (light.getLightType() === Light.prototype.eLightType.eDirectionLight) {
@@ -65,14 +65,14 @@ ShadowCaster.prototype._computeShadowGeometry = function (light) {
             return false; // light direction is opposite direction from caster to reciever
         }
         
-        vec3.copy(lightToCaster, lightDir);
-        vec3.normalize(lightToCaster, lightToCaster);
+        glMatrix.vec3.copy(lightToCaster, lightDir);
+        glMatrix.vec3.normalize(lightToCaster, lightToCaster);
         
         distanceToReceiver = Math.abs(casterToReceiverZ/lightDir[2]);
         scale = Math.abs(1/lightDir[2]);
     } else {
         var casterPos3D = casterXform.getPosition3D();
-        vec3.subtract(lightToCaster, casterPos3D,  light.getPosition());
+        glMatrix.vec3.subtract(lightToCaster, casterPos3D,  light.getPosition());
         
         var lightToReceiverZ = receiverXform.getZPos() - light.getPosition()[2];
         
@@ -84,8 +84,8 @@ ShadowCaster.prototype._computeShadowGeometry = function (light) {
             return false; // caster too close to light to throw shadow
         }
         
-        var distToCaster = vec3.length(lightToCaster);
-        vec3.scale(lightToCaster, lightToCaster, 1/distToCaster);
+        var distToCaster = glMatrix.vec3.length(lightToCaster);
+        glMatrix.vec3.scale(lightToCaster, lightToCaster, 1/distToCaster);
         
         distanceToReceiver = Math.abs(casterToReceiverZ/lightDir[2]);
         
@@ -94,7 +94,7 @@ ShadowCaster.prototype._computeShadowGeometry = function (light) {
                 / distToCaster;
     }
     
-    vec3.scale(offset, lightToCaster, distanceToReceiver + this.kDistanceFudge);
+    glMatrix.vec3.scale(offset, lightToCaster, distanceToReceiver + this.kDistanceFudge);
     
     casterXform.offset(offset);
     casterXform.setWidth(casterXform.getWidth() * scale);
