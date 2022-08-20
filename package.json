@@ -11,7 +11,7 @@
     "author": "aduda",
     "contributors": [],
     "scripts": {
-        "prebuild": "rm -rf public_html/src/gl-matrix && mkdir -p public_html/src/gl-matrix && cp -r node_modules/gl-matrix/gl-matrix-min.js node_modules/gl-matrix/esm public_html/src/gl-matrix/",
+        "prebuild": "rm -rf public_html/src/gl-matrix && mkdir -p public_html/src/gl-matrix && cp -r node_modules/gl-matrix/index.d.ts node_modules/gl-matrix/gl-matrix-min.js node_modules/gl-matrix/esm public_html/src/gl-matrix/",
         "build": "rm -rf public_html/build && npx tsc"
     },
     "devDependencies": {
