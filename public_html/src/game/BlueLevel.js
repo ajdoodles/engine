@@ -16,7 +16,7 @@ function BlueLevel() {
     this.mSquareSet = new Array();
     this.mCamera = null;
 }
-gEngine.Core.inheritPrototype(BlueLevel, Scene);
+gEngine.Core.inheritPrototype(Scene, BlueLevel);
 
 BlueLevel.prototype.loadScene = function () {
     gEngine.TextFileLoader.loadTextFile(

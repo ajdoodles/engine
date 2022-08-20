@@ -18,7 +18,7 @@ function MyGame() {
     this.kBgClip = "assets/sounds/BGClip.mp3";
     this.kCue = "assets/sounds/MyGame_cue.wav";
 }
-gEngine.Core.inheritPrototype(MyGame, Scene);
+gEngine.Core.inheritPrototype(Scene, MyGame);
 
 MyGame.prototype.loadScene = function () {
     gEngine.TextFileLoader.loadTextFile(

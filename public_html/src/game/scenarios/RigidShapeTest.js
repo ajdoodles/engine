@@ -14,7 +14,7 @@ function RigidShapeTest() {
     this.kNumMinions = 4;
     this.kNumPlatforms = 5;
 }
-gEngine.Core.inheritPrototype(RigidShapeTest, Scene);
+gEngine.Core.inheritPrototype(Scene, RigidShapeTest);
 
 RigidShapeTest.prototype.loadScene = function() {
     gEngine.Textures.loadTexture(this.kMinionSprite);

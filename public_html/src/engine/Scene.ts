@@ -4,7 +4,16 @@
  * and open the template in the editor.
  */
 
-function Scene() { /* constructor */ }
+abstract class Scene {
+    //Called from Engine_Core's startScene
+    loadScene(): void { }
+    unloadScene(): void { }
+
+    // Called by the game loop after all resources are loaded (defined in loadscene)
+    initialize(): void { }
+    update(): void { }
+    draw(): void { }
+}
 
 //Called from Engine_Core's startScene
 Scene.prototype.loadScene = function() { };
