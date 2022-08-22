@@ -6,7 +6,7 @@
 
 import { vec2 } from "../../gl-matrix/esm/index.js";
 
-function CameraShake(origCenter, initDeltaX, initDeltaY, numOscillations, shakeDuration) {
+export default function CameraShake(origCenter, initDeltaX, initDeltaY, numOscillations, shakeDuration) {
     this.mOrigCenter = vec2.clone(origCenter);
     this.mShookCenter= vec2.clone(origCenter);
     this.mShake = new ShakePosition(initDeltaX, initDeltaY, numOscillations, shakeDuration);
