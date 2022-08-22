@@ -15,7 +15,7 @@ import FontRenderable from "../../engine/renderables/FontRenderable.js";
 import GameObjectSet from "../../engine/gameobjects/GameObjectSet.js";
 import Platform from "../objects/Platform.js";
 import Hero from "../objects/Hero.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 export default class RigidShapeTest extends Scene {
     square!: Renderable

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import { vec2, vec3 } from "../../gl-matrix/esm/index.js";
+import { vec2, vec3 } from "gl-matrix";
 
 export default function GameObject(renderableObj) {
     this.mRenderComponent = renderableObj;

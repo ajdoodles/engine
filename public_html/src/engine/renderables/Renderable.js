@@ -6,7 +6,7 @@
 
 import ShaderFactory from "../shaders/ShaderFactory.js";
 import core from "../core/Engine_Core.js";
-import { vec4 } from "../../gl-matrix/esm/index.js";
+import { vec4 } from "gl-matrix";
 import Transform from "../utils/Transform.js";
 
 export default function Renderable() {

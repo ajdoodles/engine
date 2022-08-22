@@ -5,7 +5,7 @@
  */
 
 import ShaderFactory from "../shaders/ShaderFactory.js";
-import { vec3, vec4 } from "../../gl-matrix/esm/index.js";
+import { vec3, vec4 } from "gl-matrix";
 
 function ShadowCaster(caster, receiver) {
     this.kCasterMaxScale = 3;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import { vec4 } from "../../gl-matrix/esm/index.js";
+import { vec4 } from "gl-matrix";
 
 function Material(
         ambient = vec4.fromValues(0.0, 0.0, 0.0, 0.0),

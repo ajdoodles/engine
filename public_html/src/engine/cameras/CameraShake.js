@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 export default function CameraShake(origCenter, initDeltaX, initDeltaY, numOscillations, shakeDuration) {
     this.mOrigCenter = vec2.clone(origCenter);

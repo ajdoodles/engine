@@ -5,7 +5,7 @@
  */
 
 "use strict";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 export default (function () {
     var kKeys = {

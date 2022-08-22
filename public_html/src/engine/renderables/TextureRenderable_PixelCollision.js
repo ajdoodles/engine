@@ -6,7 +6,7 @@
 
 import TextureRenderable from "./TextureRenderable.js";
 import textures from "../core/Engine_Textures.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 TextureRenderable.prototype.setColorArray = function() {
     if (this.mColorArray == null) {

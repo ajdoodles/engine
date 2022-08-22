@@ -5,7 +5,7 @@
  */
 
 import Camera from "./Camera.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 Camera.prototype.update = function() {
     if (this.mCameraShake !== null) {

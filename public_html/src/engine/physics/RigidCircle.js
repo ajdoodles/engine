@@ -6,7 +6,7 @@
 
 import core from "../core/Engine_Core.js";
 import RigidShape from "./RigidShape.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 import LineRenderable from "../renderables/LineRenderable.js";
 
 export default function RigidCircle(xform, radius) {

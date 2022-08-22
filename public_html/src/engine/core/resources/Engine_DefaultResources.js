@@ -8,7 +8,7 @@
 import resourceMap from "./Engine_ResourceMap.js";
 import textFileLoader from "./Engine_TextFileLoader.js";
 import fonts from "./Engine_Fonts.js";
-import { vec4 } from "../../../gl-matrix/esm/index.js";
+import { vec4 } from "gl-matrix";
 
 export default (function () {
     var kSimpleVS = "src/glslshaders/SimpleVS.glsl";

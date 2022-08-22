@@ -5,7 +5,7 @@
  */
 
 import GameObject from "./GameObject.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 GameObject.prototype.pixelTouches = function (otherObj, wcTouchPos) {
     var pixelTouches = false;

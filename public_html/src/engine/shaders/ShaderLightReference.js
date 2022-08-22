@@ -5,7 +5,7 @@
  */
 
 import core from "../core/Engine_Core.js";
-import { vec3 } from "../../gl-matrix/esm/index.js";
+import { vec3 } from "gl-matrix";
 
 export default function ShaderLightReference(shader, index) {
     //TODO MOVE THIS OUT INTO A CONSTANTS MODULE OR SOMETHING

@@ -11,10 +11,15 @@
     "author": "aduda",
     "contributors": [],
     "scripts": {
-        "prebuild": "rm -rf public_html/src/gl-matrix && mkdir -p public_html/src/gl-matrix && cp -r node_modules/gl-matrix/index.d.ts node_modules/gl-matrix/gl-matrix-min.js node_modules/gl-matrix/esm public_html/src/gl-matrix/",
-        "build": "rm -rf public_html/build && npx tsc"
+        "prebuild": "rm -rf public_html/build",
+        "build": "npx rollup -c"
     },
     "devDependencies": {
+        "@rollup/plugin-multi-entry": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.3.0",
+        "@rollup/plugin-typescript": "^8.3.4",
+        "rollup": "^2.78.1",
+        "tslib": "^2.4.0",
         "typescript": "^4.7.4"
     },
     "dependencies": {

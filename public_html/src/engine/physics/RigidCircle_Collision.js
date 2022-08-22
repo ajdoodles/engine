@@ -5,7 +5,7 @@
  */
 
 import RigidCircle from "./RigidCircle.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 import RigidShape from "./RigidShape.js";
 
 RigidCircle.prototype.collidedCircleCircle = function (c1, c2) {

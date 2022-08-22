@@ -6,7 +6,7 @@
 
 import core from "../core/Engine_Core.js";
 import Interpolator from "./Interpolator.js";
-import { vec2 } from "../../gl-matrix/esm/index.js";
+import { vec2 } from "gl-matrix";
 
 export default function InterpolatorVec2(start, cycles, rate) {
     Interpolator.call(this, start, cycles, rate);

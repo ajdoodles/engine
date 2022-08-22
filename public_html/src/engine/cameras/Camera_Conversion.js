@@ -6,7 +6,7 @@
 
 import input from "../core/Engine_Input.js";
 import Camera from "./Camera.js";
-import { vec2, vec3 } from "../../gl-matrix/esm/index.js"
+import { vec2, vec3 } from "gl-matrix"
 
 Camera.prototype.convertWCSizeToPx = function (wcSize) {
     return wcSize * this._mRenderCache.mWCToPixelsRatio;

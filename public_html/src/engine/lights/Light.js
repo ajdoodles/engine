@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import { vec3, vec4 } from "../../gl-matrix/esm/index.js";
+import { vec3, vec4 } from "gl-matrix";
 
 Light.prototype.eLightType = {
     ePointLight: 0,

@@ -7,7 +7,7 @@
 import ShaderFactory from "../shaders/ShaderFactory.js";
 import core from "../core/Engine_Core.js";
 import Renderable from "./Renderable.js";
-import { vec2, vec3 } from "../../gl-matrix/esm/index.js";
+import { vec2, vec3 } from "gl-matrix";
 
 export default function LineRenderable(x1, y1, x2, y2) {
     Renderable.call(this);

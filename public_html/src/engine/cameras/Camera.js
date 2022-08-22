@@ -6,7 +6,7 @@
 
 import core from "../core/Engine_Core.js";
 import input from "../core/Engine_Input.js";
-import { vec3, mat4 } from "../../gl-matrix/esm/index.js";
+import { vec3, mat4 } from "gl-matrix";
 import CameraState from "./CameraState.js";
 import MathUtils from "../utils/MathUtils.js";
 
