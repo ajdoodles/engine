@@ -9,7 +9,6 @@ import textures from "../../engine/core/Engine_Textures.js";
 import core from "../../engine/core/Engine_Core.js";
 import input from "../../engine/core/Engine_Input.js";
 import Camera from "../../engine/cameras/Camera.js";
-import "../../engine/cameras/Camera_Manipulation.js";
 import Renderable from "../../engine/renderables/Renderable.js";
 import FontRenderable from "../../engine/renderables/FontRenderable.js";
 import GameObjectSet from "../../engine/gameobjects/GameObjectSet.js";
