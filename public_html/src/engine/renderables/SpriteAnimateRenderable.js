@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 
+import core from "../core/Engine_Core.js";
+import resourceMap from "../core/resources/Engine_ResourceMap.js";
+import SpriteRenderable from "./SpriteRenderable.js";
+
 SpriteAnimateRenderable.eAnimationType = Object.freeze({
     eAnimateRight: 0,
     eAnimateLeft: 1,
@@ -28,7 +32,7 @@ function SpriteAnimateRenderable(texture) {
     
     this._initAnimation();
 }
-gEngine.Core.inheritPrototype(SpriteRenderable, SpriteAnimateRenderable);
+core.inheritPrototype(SpriteRenderable, SpriteAnimateRenderable);
 
 
 SpriteAnimateRenderable.prototype.setAnimationType = function(animationType) {
@@ -77,7 +81,7 @@ SpriteAnimateRenderable.prototype.setSpriteSequence = function(
         elementHeightPx,
         numElements,
         widthPaddingPx) {
-    var texInfo = gEngine.ResourceMap.retrieveAsset(this.mTexture);
+    var texInfo = resourceMap.retrieveAsset(this.mTexture);
     var imgHeight = texInfo.mHeight;
     var imgWidth = texInfo.mWidth;
     

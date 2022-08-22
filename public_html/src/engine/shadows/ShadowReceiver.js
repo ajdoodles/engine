@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 
-function ShadowReceiver(receiver) {
+import ShaderFactory from "../shaders/ShaderFactory.js";
+
+export default function ShadowReceiver(receiver) {
     this.kShadowStencilBit = 0x01;
     this.kShadowStencilMask = 0xFF;
     
-    this.mShadowReceiverShader = gEngine.DefaultResources.getShadowReceiverShader();
+    this.mShadowReceiverShader = ShaderFactory.getShadowReceiverShader();
     
     this.mShadowReceiver = receiver;
     this.mShadowCasters = [];

@@ -5,9 +5,9 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
+import core from "./Engine_Core.js";
 
-gEngine.VertexBuffer = (function(){
+export default (function(){
     var mVerticesOfSquare = [
         0.5, 0.5, 0.0,
         -0.5, 0.5, 0.0,
@@ -32,7 +32,7 @@ gEngine.VertexBuffer = (function(){
     };
     
     var initialize = function() {
-        var gl = gEngine.Core.getGL();
+        var gl = core.getGL();
         
         mSquareVertexBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, mSquareVertexBuffer);

@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
 
 function MinionActive(spriteTexture, x, y) {
     this.kDelta = 0.2;
@@ -19,7 +21,7 @@ function MinionActive(spriteTexture, x, y) {
     this.mMinion.setAnimationSpeed(15);
     GameObject.call(this, this.mMinion);
 }
-gEngine.Core.inheritPrototype(GameObject, MinionActive);
+core.inheritPrototype(GameObject, MinionActive);
 
 MinionActive.prototype.update = function() {
     this.mMinion.update();

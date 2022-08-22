@@ -4,7 +4,18 @@
  * and open the template in the editor.
  */
 
-function RigidShapeTest() {
+import Scene from "../../engine/Scene.js";
+import textures from "../../engine/core/Engine_Textures.js";
+import core from "../../engine/core/Engine_Core.js";
+import input from "../../engine/core/Engine_Input.js";
+import Camera from "../../engine/cameras/Camera.js";
+import Renderable from "../../engine/renderables/Renderable.js";
+import FontRenderable from "../../engine/renderables/FontRenderable.js";
+import GameObjectSet from "../../engine/gameobjects/GameObjectSet.js";
+import Platform from "../objects/Platform.js";
+import Hero from "../objects/Hero.js";
+
+export default function RigidShapeTest() {
     this.kMinionSprite = "assets/minion_sprite.png";
     this.kPlatform = "assets/platform.png";
     
@@ -14,18 +25,18 @@ function RigidShapeTest() {
     this.kNumMinions = 4;
     this.kNumPlatforms = 5;
 }
-gEngine.Core.inheritPrototype(Scene, RigidShapeTest);
+core.inheritPrototype(Scene, RigidShapeTest);
 
 RigidShapeTest.prototype.loadScene = function() {
-    gEngine.Textures.loadTexture(this.kMinionSprite);
-    gEngine.Textures.loadTexture(this.kPlatform);
-    gEngine.Textures.loadTexture(this.kFontImage);
+    textures.loadTexture(this.kMinionSprite);
+    textures.loadTexture(this.kPlatform);
+    textures.loadTexture(this.kFontImage);
 };
 
 RigidShapeTest.prototype.unloadScene = function () {
-    gEngine.Textures.unloadTexture(this.kMinionSprite);
-    gEngine.Textures.unloadTexture(this.kPlatform);
-    gEngine.Textures.unloadTexture(this.kFontImage);
+    textures.unloadTexture(this.kMinionSprite);
+    textures.unloadTexture(this.kPlatform);
+    textures.unloadTexture(this.kFontImage);
 };
 
 RigidShapeTest.prototype.initialize = function () {
@@ -62,9 +73,9 @@ RigidShapeTest.prototype._initCamera = function () {
 RigidShapeTest.prototype.update = function () {
     this.mCamera.update();
     
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
+    if (input.isKeyClicked(input.keys.E)) {
         this.mObjectSet.incSelected();
-    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
+    } else if (input.isKeyClicked(input.keys.Q)) {
         this.mObjectSet.decSelected();
     }
 
@@ -72,7 +83,7 @@ RigidShapeTest.prototype.update = function () {
 };
 
 RigidShapeTest.prototype.draw = function () {
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]);
+    core.clearCanvas([0.9, 0.9, 0.9, 1]);
     this.mCamera.setupViewProjection();
 
     this.mSquare.draw(this.mCamera);

@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 
+import RigidShape from "./RigidShape.js";
+import { vec2 } from "../../gl-matrix/esm/index.js";
+import MathUtils from "../utils/MathUtils.js";
+
 RigidShape.prototype.collidedRectCircle = function (rect, circle) {
     var rectPos = rect.getPosition();
     var circlePos = circle.getPosition();
@@ -17,8 +21,8 @@ RigidShape.prototype.collidedRectCircle = function (rect, circle) {
     var clampedY =
             MathUtils.clamp(circlePos[1], rect.bottom(), rect.top());
     
-    var closestRectPos = glMatrix.vec2.fromValues(clampedX, clampedY);
-    var squaredDistance = glMatrix.vec2.squaredDistance(circlePos, closestRectPos);
+    var closestRectPos = vec2.fromValues(clampedX, clampedY);
+    var squaredDistance = vec2.squaredDistance(circlePos, closestRectPos);
     
     return squaredDistance < (circle.getRadius() * circle.getRadius());
 };

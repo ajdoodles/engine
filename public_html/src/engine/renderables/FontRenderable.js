@@ -10,8 +10,13 @@
 // Constructor and object definition
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function FontRenderable(aString) {
-    this.mFont = gEngine.DefaultResources.getDefaultFont();
+import defaultResources from "../core/resources/Engine_DefaultResources.js";
+import fonts from "../core/resources/Engine_Fonts.js";
+import SpriteRenderable from "./SpriteRenderable.js";
+import Transform from "../utils/Transform.js";
+
+export default function FontRenderable(aString) {
+    this.mFont = defaultResources.getDefaultFont();
     this.mOneChar = new SpriteRenderable(this.mFont + ".png");
     this.mXform = new Transform(); // transform that moves this object around
     this.mText = aString;
@@ -34,7 +39,7 @@ FontRenderable.prototype.draw = function (camera) {
     var charIndex, aChar, charInfo, xSize, ySize, xOffset, yOffset;
     for (charIndex = 0; charIndex < this.mText.length; charIndex++) {
         aChar = this.mText.charCodeAt(charIndex);
-        charInfo = gEngine.Fonts.getCharInfo(this.mFont, aChar);
+        charInfo = fonts.getCharInfo(this.mFont, aChar);
 
         // set the texture coordinate
         this.mOneChar.setElementUVCoordinates(charInfo.mTexCoordLeft, charInfo.mTexCoordRight,
@@ -64,7 +69,7 @@ FontRenderable.prototype.setText = function (t) {
     this.setTextHeight(this.getXform().getHeight());
 };
 FontRenderable.prototype.setTextHeight = function (h) {
-    var charInfo = gEngine.Fonts.getCharInfo(this.mFont, "A".charCodeAt(0)); // this is for "A"
+    var charInfo = fonts.getCharInfo(this.mFont, "A".charCodeAt(0)); // this is for "A"
     var w = h * charInfo.mCharAspectRatio;
     this.getXform().setSize(w * this.mText.length, h);
 };

@@ -4,14 +4,18 @@
  * and open the template in the editor.
  */
 
-function RigidRect(xform, width, height) {
+import core from "../core/Engine_Core.js";
+import RigidShape from "./RigidShape.js";
+import LineRenderable from "../renderables/LineRenderable.js";
+
+export default function RigidRect(xform, width, height) {
     RigidShape.call(this, xform);
     this.mSides = new LineRenderable();
     
     this.mWidth = width;
     this.mHeight = height;
 };
-gEngine.Core.inheritPrototype(RigidShape, RigidRect);
+core.inheritPrototype(RigidShape, RigidRect);
 
 RigidRect.prototype.getWidth = function () {
     return this.mWidth;

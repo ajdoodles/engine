@@ -4,12 +4,17 @@
  * and open the template in the editor.
  */
 
-function LightRenderable(texture) {
+import ShaderFactory from "../shaders/ShaderFactory.js";
+import core from "../core/Engine_Core.js";
+import SpriteRenderable from "./SpriteRenderable.js";
+import Renderable from "./Renderable.js";
+
+export default function LightRenderable(texture) {
     SpriteRenderable.call(this, texture);
-    Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getLightShader());
+    Renderable.prototype._setShader.call(this, ShaderFactory.getLightShader());
     this.mLights = [];
 };
-gEngine.Core.inheritPrototype(SpriteRenderable, LightRenderable);
+core.inheritPrototype(SpriteRenderable, LightRenderable);
 
 LightRenderable.prototype.getLightAt = function (index) {
     return this.mLights[index];

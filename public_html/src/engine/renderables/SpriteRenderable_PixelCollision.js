@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import SpriteRenderable from "./SpriteRenderable.js";
+
 SpriteRenderable.prototype._setTexInfo = function() {
     var imageW = this.mTextureInfo.mWidth;
     var imageH = this.mTextureInfo.mHeight;

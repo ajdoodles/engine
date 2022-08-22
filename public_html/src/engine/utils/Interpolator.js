@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function Interpolator(start, cycles, rate) {
+export default function Interpolator(start, cycles, rate) {
     this.mCurrent = start;
     this.mEnd = start;
     this.mRate = rate;

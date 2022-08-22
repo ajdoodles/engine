@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-function GameObjectSet() {
+import input from "../core/Engine_Input.js";
+
+export default function GameObjectSet() {
     this.kDelta = 0.3;
 
     this.mSet = new Array();
@@ -79,16 +81,16 @@ GameObjectSet.prototype.addObject = function(obj) {
 GameObjectSet.prototype.update = function() {
     if (this.hasValidSelection()) {
         var xform = this.getSelectedObject().getXform();
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
+        if (input.isKeyPressed(input.keys.Up)) {
             xform.incYPos(this.kDelta);
         }
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+        if (input.isKeyPressed(input.keys.Left)) {
             xform.incXPos(-this.kDelta);
         }
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
+        if (input.isKeyPressed(input.keys.Down)) {
             xform.incYPos(-this.kDelta);
         }
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
+        if (input.isKeyPressed(input.keys.Right)) {
             xform.incXPos(this.kDelta);
         }
     }

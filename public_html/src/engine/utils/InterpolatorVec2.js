@@ -4,12 +4,16 @@
  * and open the template in the editor.
  */
 
-function InterpolatorVec2(start, cycles, rate) {
+import core from "../core/Engine_Core.js";
+import Interpolator from "./Interpolator.js";
+import { vec2 } from "../../gl-matrix/esm/index.js";
+
+export default function InterpolatorVec2(start, cycles, rate) {
     Interpolator.call(this, start, cycles, rate);
 }
-gEngine.Core.inheritPrototype(Interpolator, InterpolatorVec2);
+core.inheritPrototype(Interpolator, InterpolatorVec2);
 
 InterpolatorVec2.prototype._interpolateValue = function () {
 //    console.log("In vector interpolation from " + this.mCurrent + " to " + this.mEnd);
-    glMatrix.vec2.lerp(this.mCurrent, this.mCurrent, this.mEnd, this.mRate);
+    vec2.lerp(this.mCurrent, this.mCurrent, this.mEnd, this.mRate);
 };

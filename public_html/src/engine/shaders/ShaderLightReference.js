@@ -4,15 +4,23 @@
  * and open the template in the editor.
  */
 
-function ShaderLightReference(shader, index) {
-    if (index < 0 || index >= LightShader.kGLSLuLightArraySize) {
+import core from "../core/Engine_Core.js";
+import { vec3 } from "../../gl-matrix/esm/index.js";
+
+export default function ShaderLightReference(shader, index) {
+    //TODO MOVE THIS OUT INTO A CONSTANTS MODULE OR SOMETHING
+    //THIS VARIABLE WAS COPIED FROM ANOTHER VARIABLE THAT WAS
+    //COPIED FROM A GLSL VARIABLE
+    // SEE LightShader.js
+    let kGLSLuLightArraySize = 4;
+    if (index < 0 || index >= kGLSLuLightArraySize) {
         throw "Light index " + index + " out of bounds.";
     }
 
     this.mIndex = index;
     var indexString = "uLights[" + index + "].";
     
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     this.mIsLitRef = gl.getUniformLocation(shader, indexString + "IsLit");
     this.mLightTypeRef = gl.getUniformLocation(shader, indexString + "LightType");
     this.mColorRef = gl.getUniformLocation(shader, indexString + "Color");
@@ -27,7 +35,7 @@ function ShaderLightReference(shader, index) {
 }
 
 ShaderLightReference.prototype.loadToShader = function (camera, light) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     
     var isLit = light !== undefined && light !== null && light.isLit();
     gl.uniform1i(this.mIsLitRef, isLit);
@@ -40,7 +48,7 @@ ShaderLightReference.prototype.loadToShader = function (camera, light) {
         gl.uniform1f(this.mNearRef, camera.convertWCSizeToPx(light.getNear()));
         gl.uniform1f(this.mFarRef, camera.convertWCSizeToPx(light.getFar()));
         
-        var direction = glMatrix.vec3.fromValues(0.0, 0.0, 0.0);
+        var direction = vec3.fromValues(0.0, 0.0, 0.0);
         var dropoff = 0;
         var cosInner = 0.0;
         var cosOuter = 0.0;
@@ -62,6 +70,6 @@ ShaderLightReference.prototype.loadToShader = function (camera, light) {
 };
 
 ShaderLightReference.prototype.setLit = function (isLit) {
-    var gl = gEngine.Core.getGL();    
+    var gl = core.getGL();    
     gl.uniform1i(this.mIsLitRef, isLit);
 };

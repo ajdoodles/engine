@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
 
 function Minion(spriteTexture, normalTexture) {
     this.kDelta = 0.2;
@@ -16,4 +18,4 @@ function Minion(spriteTexture, normalTexture) {
     this.mMinion.setElementPixelCoordinates(0, 201, 350, 512);
     GameObject.call(this, this.mMinion);
 }
-gEngine.Core.inheritPrototype(GameObject, Minion);
+core.inheritPrototype(GameObject, Minion);

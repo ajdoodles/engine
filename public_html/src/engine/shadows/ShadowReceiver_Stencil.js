@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 
+import ShadowReceiver from "./ShadowReceiver.js";
+import core from "../core/Engine_Core.js";
+
 ShadowReceiver.prototype._shadowReceiverStencilOn = function () {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.clear(gl.STENCIL_BUFFER_BIT);
     gl.enable(gl.STENCIL_TEST);
     gl.colorMask(false, false, false, false);
@@ -16,7 +19,7 @@ ShadowReceiver.prototype._shadowReceiverStencilOn = function () {
 };
 
 ShadowReceiver.prototype._shadowReceiverStencilOff = function () {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.depthMask(gl.TRUE);
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     gl.stencilFunc(gl.EQUAL, this.kShadowStencilBit, this.kShadowStencilMask);
@@ -24,6 +27,6 @@ ShadowReceiver.prototype._shadowReceiverStencilOff = function () {
 };
 
 ShadowReceiver.prototype._shadowReceiverStencilDisable = function () {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.disable(gl.STENCIL_TEST);
 };

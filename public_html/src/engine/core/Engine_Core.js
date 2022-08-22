@@ -5,9 +5,13 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
+import gameLoop from "./Engine_GameLoop.js";
+import vertexBuffer from "./Engine_VertexBuffer.js";
+import input from "./Engine_Input.js";
+import audioClips from "./resources/Engine_AudioClips.js";
+import defaultResources from "./resources/Engine_DefaultResources.js";
 
-gEngine.Core = (function() {
+export default (function() {
     var mGL = null;
     
     var getGL = function() {
@@ -45,18 +49,21 @@ gEngine.Core = (function() {
         }
     };
     
-    var initializeEngineCore = function(htmlCanvasID, myGame) {
+    var initializeEngineCore = function(htmlCanvasID, myGame, shaderInitCallback) {
         _initializeWebGL(htmlCanvasID);
-        gEngine.VertexBuffer.initialize();
-        gEngine.Input.initialize(htmlCanvasID);
-        gEngine.AudioClips.initAudioContext();
-        
-        gEngine.DefaultResources.initialize(function() { startScene(myGame); });
-    }
+        vertexBuffer.initialize();
+        input.initialize(htmlCanvasID);
+        audioClips.initAudioContext();
+     
+        defaultResources.initialize(function() { 
+            shaderInitCallback();
+            startScene(myGame);
+        });
+}
     
     var startScene = function(myGame) {
         myGame.loadScene.call(myGame);
-        gEngine.GameLoop.start(myGame);
+        gameLoop.start(myGame);
     }
     
     var clearCanvas = function(color) {

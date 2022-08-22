@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
 
 function DyePack(spriteTexture) {
     this.kRefWidth = 80;
@@ -15,4 +17,4 @@ function DyePack(spriteTexture) {
     this.mDyePack.setElementPixelCoordinates(510, 595, 23, 153);
     GameObject.call(this, this.mDyePack);
 }
-gEngine.Core.inheritPrototype(GameObject, DyePack);
+core.inheritPrototype(GameObject, DyePack);

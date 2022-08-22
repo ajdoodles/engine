@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function MathUtils() {
+export default function MathUtils() {
 };
 
 MathUtils.clamp = function(value, min, max) {

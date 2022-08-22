@@ -4,13 +4,19 @@
  * and open the template in the editor.
  */
 
+import core from "../core/Engine_Core.js";
+import input from "../core/Engine_Input.js";
+import { vec3, mat4 } from "../../gl-matrix/esm/index.js";
+import CameraState from "./CameraState.js";
+import MathUtils from "../utils/MathUtils.js";
+
 Camera.prototype.kCameraZPosWC = 10;
 
 function PreRenderCache() {
     var mWCToPixelsRatio = 1;
     var mViewportBottomWC = -1;
     var mViewportLeftWC = -1;
-    var mCameraPosPx = glMatrix.vec3.fromValues(0.0, 0.0, 0.0);
+    var mCameraPosPx = vec3.fromValues(0.0, 0.0, 0.0);
 };
 
 /**
@@ -27,7 +33,7 @@ function PreRenderCache() {
  * @param {type} borderPx space between the viewport and the outer bounds.
  * @returns {Camera}
  */
-function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
+export default function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
     this.mCameraState = new CameraState(wcCenter, wcWidth);
     this._mRenderCache = new PreRenderCache();
     this.mCameraShake = null;
@@ -41,15 +47,15 @@ function Camera(wcCenter, wcWidth, bounds, borderPx = 0) {
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
     
-    this.mViewMatrix = glMatrix.mat4.create();
-    this.mProjMatrix = glMatrix.mat4.create();
-    this.mViewProjMatrix = glMatrix.mat4.create();
+    this.mViewMatrix = mat4.create();
+    this.mProjMatrix = mat4.create();
+    this.mViewProjMatrix = mat4.create();
     
     this.mBgColor = [0.8, 0.8, 0.8, 1.0];
 };
 
 Camera.prototype.setWCCenter = function(xPos, yPos) {
-    this.mCameraState.setCenter(glMatrix.vec2.fromValues(xPos, yPos));
+    this.mCameraState.setCenter(vec2.fromValues(xPos, yPos));
 };
 
 Camera.prototype.getWCCenter = function() {
@@ -87,7 +93,7 @@ Camera.prototype.genRandomPosition2D = function () {
             MathUtils.lerp(this.getWCLeft(), this.getWCRight(), Math.random());
     var randomY =
             MathUtils.lerp(this.getWCBottom(), this.getWCTop(), Math.random());
-    return glMatrix.vec2.fromValues(randomX, randomY);
+    return vec2.fromValues(randomX, randomY);
 };
 
 Camera.prototype.getViewportLeft = function() {
@@ -142,14 +148,14 @@ Camera.prototype.setBounds = function(bounds, borderPx) {
 };
 
 Camera.prototype.setupViewProjection = function() {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     
     var bounds = this.mScissorBounds;
     gl.viewport(this.mViewport[0], this.mViewport[1], this.mViewport[2], this.mViewport[3]);
     gl.scissor(bounds[0], bounds[1], bounds[2], bounds[3]);
     
     gl.enable(gl.SCISSOR_TEST);
-    gEngine.Core.clearCanvas(this.mBgColor);
+    core.clearCanvas(this.mBgColor);
     gl.disable(gl.SCISSOR_TEST);
     
     var center = [];
@@ -159,7 +165,7 @@ Camera.prototype.setupViewProjection = function() {
         center = this.mCameraShake.getShookPos();
     }
     
-    glMatrix.mat4.lookAt(
+    mat4.lookAt(
         this.mViewMatrix,
         [center[0], center[1], Camera.prototype.kCameraZPosWC], // Camera position
         [center[0], center[1], 0], // lookat position
@@ -168,7 +174,7 @@ Camera.prototype.setupViewProjection = function() {
     var wcHalfWidth = this.getWCWidth() * 0.5;
     var wcHalfHeight = this.getWCHeight() * 0.5;
 
-    glMatrix.mat4.ortho(
+    mat4.ortho(
         this.mProjMatrix,
         -wcHalfWidth, // Distance to left edge of world space
         wcHalfWidth, // distance to right edge of world space
@@ -177,14 +183,14 @@ Camera.prototype.setupViewProjection = function() {
         this.mNearPlane, // z-distance to near plane
         this.mFarPlane); // z-distance to far plane
         
-    glMatrix.mat4.multiply(this.mViewProjMatrix, this.mProjMatrix, this.mViewMatrix);
+    mat4.multiply(this.mViewProjMatrix, this.mProjMatrix, this.mViewMatrix);
 
     this._mRenderCache.mWCToPixelsRatio = this.mViewport[2]/this.getWCWidth();
     this._mRenderCache.mViewportLeftWC = this.getWCCenter()[0] - (this.getWCWidth()/2);
     this._mRenderCache.mViewportBottomWC = this.getWCCenter()[1] - (this.getWCHeight()/2);
     
-    var cameraPosWC = glMatrix.vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.prototype.kCameraZPosWC);
-    this._mRenderCache.mCameraPosPx = glMatrix.vec3.clone(this.convertWCPosToPx(cameraPosWC));
+    var cameraPosWC = vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.prototype.kCameraZPosWC);
+    this._mRenderCache.mCameraPosPx = vec3.clone(this.convertWCPosToPx(cameraPosWC));
 };
 
 Camera.prototype.collideWCBound = function(xform, zone) {
@@ -216,7 +222,7 @@ Camera.prototype.clampAtBoundary = function(xform, zone) {
 };
 
 Camera.prototype.isMouseInViewport = function() {
-    var mousePos = gEngine.Input.getMousePosition();
+    var mousePos = input.getMousePosition();
     var x = mousePos[0] - this.mViewport[0];
     var y = mousePos[1] - this.mViewport[1];
     

@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import { vec2, vec3, mat4 } from "../../gl-matrix/esm/index.js";
 
-function Transform() {
-    this.mPosition = glMatrix.vec2.fromValues(0.0, 0.0);
+export default function Transform() {
+    this.mPosition = vec2.fromValues(0.0, 0.0);
     this.mZ = 0.0;
-    this.mScale = glMatrix.vec2.fromValues(1.0, 1.0);
+    this.mScale = vec2.fromValues(1.0, 1.0);
     this.mRotationRad = 0.0;
     this.mHFlipMultiplier = 1; // -1 or 1
     this.mVFlipMultiplier = 1; // -1 or 1
@@ -17,7 +18,7 @@ Transform.prototype.getPosition = function() {
     return this.mPosition;
 };
 Transform.prototype.getPosition3D = function() {
-    return glMatrix.vec3.fromValues(this.getXPos(), this.getYPos(), this.getZPos());
+    return vec3.fromValues(this.getXPos(), this.getYPos(), this.getZPos());
 };
 Transform.prototype.getXPos = function() {
    return this.mPosition[0]; 
@@ -29,13 +30,13 @@ Transform.prototype.getZPos = function () {
     return this.mZ;
 };
 Transform.prototype.setPosition = function(x, y) {
-    glMatrix.vec2.set(this.mPosition, x, y);
+    vec2.set(this.mPosition, x, y);
 };
 Transform.prototype.setXPos = function(x) {
-    glMatrix.vec2.set(this.mPosition, x, this.getYPos());
+    vec2.set(this.mPosition, x, this.getYPos());
 };
 Transform.prototype.setYPos = function(y) {
-    glMatrix.vec2.set(this.mPosition, this.getXPos(), y);
+    vec2.set(this.mPosition, this.getXPos(), y);
 };
 Transform.prototype.setZPos = function (z) {
     this.mZ = z;
@@ -68,15 +69,15 @@ Transform.prototype.getHeight = function() {
 };
 
 Transform.prototype.setSize = function(width, height) {
-    glMatrix.vec2.set(this.mScale, width, height);
+    vec2.set(this.mScale, width, height);
 };
 
 Transform.prototype.setHeight = function(height) {
-    glMatrix.vec2.set(this.mScale, this.getWidth(), height);
+    vec2.set(this.mScale, this.getWidth(), height);
 };
 
 Transform.prototype.setWidth = function(width) {
-    glMatrix.vec2.set(this.mScale, width, this.getHeight());
+    vec2.set(this.mScale, width, this.getHeight());
 };
 
 Transform.prototype.incSize = function(deltaSize) {
@@ -121,18 +122,18 @@ Transform.prototype.setVerticalFlip = function(shouldFlip) {
 };
 
 Transform.prototype.getXForm = function() {
-    var xform = glMatrix.mat4.create();
-    glMatrix.mat4.translate(xform, xform, this.getPosition3D());
-    glMatrix.mat4.rotateZ(xform, xform, this.mRotationRad);
+    var xform = mat4.create();
+    mat4.translate(xform, xform, this.getPosition3D());
+    mat4.rotateZ(xform, xform, this.mRotationRad);
     var width = this.getWidth() * this.mHFlipMultiplier;
     var height = this.getHeight() * this.mVFlipMultiplier;
-    glMatrix.mat4.scale(xform, xform, glMatrix.vec3.fromValues(width, height, 1.0));
+    mat4.scale(xform, xform, vec3.fromValues(width, height, 1.0));
     return xform;
 };
 
 Transform.prototype.copy = function (other) {
-    glMatrix.vec2.copy(this.mPosition, other.getPosition());
-    glMatrix.vec2.copy(this.mScale, other.getScale());
+    vec2.copy(this.mPosition, other.getPosition());
+    vec2.copy(this.mScale, other.getScale());
     this.mZ = other.getZPos();
     this.mRotationRad = other.getRotation();
     this.mHFlipMultiplier = other.isHFlipped() ? -1 : 1;

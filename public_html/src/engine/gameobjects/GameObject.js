@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import { vec2, vec3 } from "../../gl-matrix/esm/index.js";
 
-function GameObject(renderableObj) {
+export default function GameObject(renderableObj) {
     this.mRenderComponent = renderableObj;
     this.mPhysicsComponent = null;
     this.mVisible = true;
-    this.mCurrentFrontDir = glMatrix.vec2.fromValues(0, 1);
+    this.mCurrentFrontDir = vec2.fromValues(0, 1);
     this.mSpeed = 0;
 }
 
@@ -52,7 +53,7 @@ GameObject.prototype.getCurrentFrontDir = function() {
 };
 
 GameObject.prototype.setFrontDir = function(direction) {
-    glMatrix.vec2.normalize(this.mCurrentFrontDir, direction);
+    vec2.normalize(this.mCurrentFrontDir, direction);
 };
 
 GameObject.prototype.getBBox = function() {
@@ -61,16 +62,16 @@ GameObject.prototype.getBBox = function() {
 };
 
 GameObject.prototype.rotateObjPointTo = function(target, rate) {
-//    var distToTarget = glMatrix.vec2.distance(target, this.getXform().getPosition());
+//    var distToTarget = vec2.distance(target, this.getXform().getPosition());
     var targetVector = [];
-    glMatrix.vec2.subtract(targetVector, target, this.getXform().getPosition());
-    var distToTarget = glMatrix.vec2.length(targetVector);
+    vec2.subtract(targetVector, target, this.getXform().getPosition());
+    var distToTarget = vec2.length(targetVector);
     if (distToTarget < Number.MIN_VALUE) {
         return; //reached target
     }
-    glMatrix.vec2.scale(targetVector, targetVector, 1 / distToTarget);
+    vec2.scale(targetVector, targetVector, 1 / distToTarget);
     
-    var cosTheta = glMatrix.vec2.dot(targetVector, this.mCurrentFrontDir);
+    var cosTheta = vec2.dot(targetVector, this.mCurrentFrontDir);
     if (cosTheta > 0.999999){
         return; //facing the correct direction
     }
@@ -81,10 +82,10 @@ GameObject.prototype.rotateObjPointTo = function(target, rate) {
         cosTheta = -1;
     }
     
-    var targetVector3D = glMatrix.vec3.fromValues(targetVector[0], targetVector[1], 0);
-    var frontDir3D = glMatrix.vec3.fromValues(this.mCurrentFrontDir[0], this.mCurrentFrontDir[1], 0);
+    var targetVector3D = vec3.fromValues(targetVector[0], targetVector[1], 0);
+    var frontDir3D = vec3.fromValues(this.mCurrentFrontDir[0], this.mCurrentFrontDir[1], 0);
     var cross = [];
-    glMatrix.vec3.cross(cross, frontDir3D, targetVector3D);
+    vec3.cross(cross, frontDir3D, targetVector3D);
     
     var rads = Math.acos(cosTheta);
     if (cross[2] < 0) {
@@ -92,13 +93,13 @@ GameObject.prototype.rotateObjPointTo = function(target, rate) {
     }
     
     rads *= rate;
-    glMatrix.vec2.rotate(this.mCurrentFrontDir, this.mCurrentFrontDir, glMatrix.vec2.fromValues(0, 0), rads);
+    vec2.rotate(this.mCurrentFrontDir, this.mCurrentFrontDir, vec2.fromValues(0, 0), rads);
     this.getXform().incRotationInRads(rads);
 };
 
 GameObject.prototype.update = function () {
     var pos = this.getXform().getPosition();
-    glMatrix.vec2.scaleAndAdd(pos, pos, this.mCurrentFrontDir, this.mSpeed);
+    vec2.scaleAndAdd(pos, pos, this.mCurrentFrontDir, this.mSpeed);
     
     if (this.mPhysicsComponent !== null) {
         this.mPhysicsComponent.update();

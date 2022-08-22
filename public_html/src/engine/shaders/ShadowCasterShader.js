@@ -4,13 +4,17 @@
  * and open the template in the editor.
  */
 
-function ShadowCasterShader(vertexShaderId, fragmentShaderId) {
+import core from "../core/Engine_Core.js";
+import SpriteShader from "./SpriteShader.js";
+import ShaderLightReference from "./ShaderLightReference.js";
+
+export default function ShadowCasterShader(vertexShaderId, fragmentShaderId) {
     SpriteShader.call(this, vertexShaderId, fragmentShaderId);
     
     this.mLight = null;
     this.mLightRef = new ShaderLightReference(this.mCompiledShader, 0);
 };
-gEngine.Core.inheritPrototype(SpriteShader, ShadowCasterShader);
+core.inheritPrototype(SpriteShader, ShadowCasterShader);
 
 ShadowCasterShader.prototype.setLight = function (light) {
     this.mLight = light;
@@ -19,7 +23,7 @@ ShadowCasterShader.prototype.setLight = function (light) {
 ShadowCasterShader.prototype.activateShader = function (pixelColor, camera) {
     SpriteShader.prototype.activateShader.call(this, pixelColor, camera);
     
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     this.mLightRef.loadToShader(camera, this.mLight);
 };
 

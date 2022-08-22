@@ -4,9 +4,14 @@
  * and open the template in the editor.
  */
 
-function Renderable() {
-    this.mShader = gEngine.DefaultResources.getConstColorShader();
-    this.mColor = glMatrix.vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+import ShaderFactory from "../shaders/ShaderFactory.js";
+import core from "../core/Engine_Core.js";
+import { vec4 } from "../../gl-matrix/esm/index.js";
+import Transform from "../utils/Transform.js";
+
+export default function Renderable() {
+    this.mShader = ShaderFactory.getConstColorShader();
+    this.mColor = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
     this.mXform = new Transform();
 };
 
@@ -27,8 +32,8 @@ Renderable.prototype.setColor = function(color) {
     this.mColor = color;
 }
 Renderable.prototype.swapColor = function (color) {
-    var current = glMatrix.vec4.clone(this.mColor);
-    glMatrix.vec4.copy(this.mColor, color);
+    var current = vec4.clone(this.mColor);
+    vec4.copy(this.mColor, color);
     return current;
 };
 
@@ -41,7 +46,7 @@ Renderable.prototype.setXform = function (xform) {
 };
 
 Renderable.prototype.draw = function(camera) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     this.mShader.activateShader(this.mColor, camera);
     this.mShader.loadObjectTransform(this.mXform.getXForm());
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

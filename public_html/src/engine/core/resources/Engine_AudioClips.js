@@ -5,9 +5,9 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
+import resourceMap from "./Engine_ResourceMap.js";
 
-gEngine.AudioClips = (function() {
+export default (function() {
     var mAudioContext = null;
     var mBgAudioNode = null;
     
@@ -21,8 +21,8 @@ gEngine.AudioClips = (function() {
     };
     
     var loadAudio = function(fileName) {
-        if (gEngine.ResourceMap.isAssetLoaded(fileName)) {
-            gEngine.ResourceMap.incAssetRefCount(fileName);
+        if (resourceMap.isAssetLoaded(fileName)) {
+            resourceMap.incAssetRefCount(fileName);
             
 //            if (callback !== null && callback !== undefined) {
 //                callback();
@@ -30,7 +30,7 @@ gEngine.AudioClips = (function() {
 //            return;
         }
         
-        gEngine.ResourceMap.asyncLoadRequested(fileName);
+        resourceMap.asyncLoadRequested(fileName);
 
         var req = new XMLHttpRequest();
         req.onreadystatechange = function () {
@@ -46,7 +46,7 @@ gEngine.AudioClips = (function() {
             mAudioContext.decodeAudioData(
                     req.response,
                     function (buffer) {
-                        gEngine.ResourceMap.asyncLoadCompleted(fileName, buffer);
+                        resourceMap.asyncLoadCompleted(fileName, buffer);
 //                        if (callback !== null && callback !== undefined) {
 //                            callback(fileName);
 //                        }
@@ -57,11 +57,11 @@ gEngine.AudioClips = (function() {
     };
 
     var unloadAudio = function (filePath) {
-        gEngine.ResourceMap.unloadAsset(filePath);
+        resourceMap.unloadAsset(filePath);
     };
 
     var playCue = function (clipName) {
-        var clipData = gEngine.ResourceMap.retrieveAsset(clipName);
+        var clipData = resourceMap.retrieveAsset(clipName);
         if (clipData !== null) {
             var sourceNode = mAudioContext.createBufferSource();
             sourceNode.buffer = clipData;
@@ -71,7 +71,7 @@ gEngine.AudioClips = (function() {
     };
 
     var playBackgroundAudio = function (clipName) {
-        var clipData = gEngine.ResourceMap.retrieveAsset(clipName);
+        var clipData = resourceMap.retrieveAsset(clipName);
         if (clipData !== null) {
             stopBackgroundAudio();
             mBgAudioNode = mAudioContext.createBufferSource();

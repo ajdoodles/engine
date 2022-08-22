@@ -4,9 +4,15 @@
  * and open the template in the editor.
  */
 
-function SpriteRenderable(texture) {
+import ShaderFactory from "../shaders/ShaderFactory.js";
+import resourceMap from "../core/resources/Engine_ResourceMap.js";
+import core from "../core/Engine_Core.js";
+import TextureRenderable from "./TextureRenderable.js";
+import Renderable from "./Renderable.js";
+
+export default function SpriteRenderable(texture) {
     TextureRenderable.call(this, texture);
-    Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getSpriteShader());
+    Renderable.prototype._setShader.call(this, ShaderFactory.getSpriteShader());
 
     this.mTexLeft = 0.0;
     this.mTexRight = 1.0;
@@ -14,7 +20,7 @@ function SpriteRenderable(texture) {
     this.mTexBottom = 0.0;
     this._setTexInfo();
 }
-gEngine.Core.inheritPrototype(TextureRenderable, SpriteRenderable);
+core.inheritPrototype(TextureRenderable, SpriteRenderable);
 
 SpriteRenderable.prototype.setElementUVCoordinates = function(left, right, bottom, top){
     this.mTexLeft = left;
@@ -25,7 +31,7 @@ SpriteRenderable.prototype.setElementUVCoordinates = function(left, right, botto
 };
 
 SpriteRenderable.prototype.setElementPixelCoordinates = function(left, right, bottom, top) {
-    var texInfo = gEngine.ResourceMap.retrieveAsset(this.mTexture);
+    var texInfo = resourceMap.retrieveAsset(this.mTexture);
     
     var imgHeight = texInfo.mHeight;
     var imgWidth = texInfo.mWidth;

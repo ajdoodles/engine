@@ -5,9 +5,7 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
-
-gEngine.ResourceMap = (function() {
+export default (function() {
     var MapEntry = function(name) {
         this.mAsset = name;
         this.mRefCount = 1;

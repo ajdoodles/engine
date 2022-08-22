@@ -5,23 +5,23 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
+import resourceMap from "./Engine_ResourceMap.js";
 
-gEngine.TextFileLoader = (function() {
+export default (function() {
     var eTextFileType = Object.freeze({
        eXMLFile: 0,
        eTextFile: 1,
     });
     
     var loadTextFile = function (fileName, fileType, callback) {
-        if (gEngine.ResourceMap.isAssetLoaded(fileName)) {
+        if (resourceMap.isAssetLoaded(fileName)) {
             if (callback !== null && callback !== undefined) {
                 callback(fileName);
             }
             return;
         }
 
-        gEngine.ResourceMap.asyncLoadRequested(fileName);
+        resourceMap.asyncLoadRequested(fileName);
 
         var req = new XMLHttpRequest();
         req.onreadystatechange = function () {
@@ -41,7 +41,7 @@ gEngine.TextFileLoader = (function() {
                 fileContent = req.responseText;
             }
             
-            gEngine.ResourceMap.asyncLoadCompleted(fileName, fileContent);
+            resourceMap.asyncLoadCompleted(fileName, fileContent);
             if (callback !== null && callback !== undefined) {
                 callback(fileName);
             }
@@ -51,7 +51,7 @@ gEngine.TextFileLoader = (function() {
     };
     
     var unloadTextFile = function(fileName) {
-        gEngine.ResourceMap.unloadAsset(fileName);
+        resourceMap.unloadAsset(fileName);
     };
     
     var mPublic = {

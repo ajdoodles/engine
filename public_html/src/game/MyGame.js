@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 
-function MyGame() {
+import Scene from "../engine/Scene.js";
+import audioClips from "../engine/core/resources/Engine_AudioClips.js";
+import core from "../engine/core/Engine_Core.js";
+import input from "../engine/core/Engine_Input.js";
+
+export default function MyGame() {
     this.kSceneFile = "assets/scene.xml";
 
     this.kPortal = "assets/minion_portal.png";
@@ -18,38 +23,38 @@ function MyGame() {
     this.kBgClip = "assets/sounds/BGClip.mp3";
     this.kCue = "assets/sounds/MyGame_cue.wav";
 }
-gEngine.Core.inheritPrototype(Scene, MyGame);
+core.inheritPrototype(Scene, MyGame);
 
 MyGame.prototype.loadScene = function () {
-    gEngine.TextFileLoader.loadTextFile(
+    textFileLoader.loadTextFile(
             this.kSceneFile,
-            gEngine.TextFileLoader.eTextFileType.eXMLFile);
-                gEngine.Textures.loadTexture(this.kPortal);
-    gEngine.Textures.loadTexture(this.kCollector);
-    gEngine.Textures.loadTexture(this.kMinionSprite);
-    gEngine.Textures.loadTexture(this.kBg);
-    gEngine.Textures.loadTexture(this.kFontImage);
+            textFileLoader.eTextFileType.eXMLFile);
+                textures.loadTexture(this.kPortal);
+    textures.loadTexture(this.kCollector);
+    textures.loadTexture(this.kMinionSprite);
+    textures.loadTexture(this.kBg);
+    textures.loadTexture(this.kFontImage);
     
-    gEngine.Textures.loadTexture(this.kMinionSpriteNormal);
-    gEngine.Textures.loadTexture(this.kBgNormal);
+    textures.loadTexture(this.kMinionSpriteNormal);
+    textures.loadTexture(this.kBgNormal);
     
-    gEngine.AudioClips.loadAudio(this.kBgClip);
-    gEngine.AudioClips.loadAudio(this.kCue);
+    audioClips.loadAudio(this.kBgClip);
+    audioClips.loadAudio(this.kCue);
 };
 
 MyGame.prototype.unloadScene = function () {
-    gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
-    gEngine.AudioClips.stopBackgroundAudio();
-    //gEngine.Textures.unloadTexture(this.kPortal);
-//    gEngine.Textures.unloadTexture(this.kCollector);
-    gEngine.Textures.unloadTexture(this.kMinionSprite);
-    gEngine.Textures.unloadTexture(this.kFontImage);
-    gEngine.Textures.unloadTexture(this.kBg);
-    //gEngine.AudioClips.unloadAudio(this.kBgClip);
-    gEngine.AudioClips.unloadAudio(this.kCue);
+    textFileLoader.unloadTextFile(this.kSceneFile);
+    audioClips.stopBackgroundAudio();
+    //textures.unloadTexture(this.kPortal);
+//    textures.unloadTexture(this.kCollector);
+    textures.unloadTexture(this.kMinionSprite);
+    textures.unloadTexture(this.kFontImage);
+    textures.unloadTexture(this.kBg);
+    //audioClips.unloadAudio(this.kBgClip);
+    audioClips.unloadAudio(this.kCue);
 
     var blueLevel = new BlueLevel();
-    gEngine.Core.startScene(blueLevel);
+    core.startScene(blueLevel);
 };
 
 MyGame.prototype._setupShadows = function () {
@@ -66,7 +71,7 @@ MyGame.prototype._setupShadows = function () {
 };
 
 MyGame.prototype.initialize = function () {
-    //gEngine.AudioClips.playBackgroundAudio(this.kBgClip);
+    //audioClips.playBackgroundAudio(this.kBgClip);
 
     var sceneParser = new SceneFileParser(this.kSceneFile);
     this.mCamera = sceneParser.parseCamera();
@@ -111,19 +116,19 @@ MyGame.prototype.initialize = function () {
 MyGame.prototype.update = function () {
     this.mCamera.update();
 
-    if (gEngine.Input.isMouseClicked(gEngine.Input.mouse.Middle)) {
+    if (input.isMouseClicked(input.mouse.Middle)) {
         var visible = this.mPortal.isVisible();
         this.mPortal.setVisible(!visible);
     }
 
-    if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Left)) {
+    if (input.isMousePressed(input.mouse.Left)) {
         if (this.mCamera.isMouseInViewport()) {
             var mousePos = this.mCamera.getWCCursorPosition();
             this.mPortal.getXform().setPosition(mousePos[0], mousePos[1]);
         }
     }
 
-    if (gEngine.Input.isMousePressed(gEngine.Input.mouse.Right)) {
+    if (input.isMousePressed(input.mouse.Right)) {
         if (this.mHeroCam.isMouseInViewport()) {
             var mousePos = this.mHeroCam.getWCCursorPosition();
             this.mHero.getXform().setPosition(mousePos[0], mousePos[1]);
@@ -154,7 +159,7 @@ MyGame.prototype.update = function () {
 
 MyGame.prototype.draw = function () {
     // Clear entire canvas
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
+    core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
     this.drawCam(this.mCamera);
     this.mMsg.draw(this.mCamera);
     this.drawCam(this.mHeroCam);

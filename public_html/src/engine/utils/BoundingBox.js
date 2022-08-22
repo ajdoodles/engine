@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import { vec2 } from "../../gl-matrix/esm/index.js";
+
 BoundingBox.eBoundCollideStatus = Object.freeze({
     eOutside: 0,
     eCollideLeft: 1,
@@ -14,7 +16,7 @@ BoundingBox.eBoundCollideStatus = Object.freeze({
 });
 
 function BoundingBox(centerPos, w, h) {
-    this.mLL = glMatrix.vec2.fromValues(0, 0);
+    this.mLL = vec2.fromValues(0, 0);
     this.setBounds(centerPos, w, h);
 }
 

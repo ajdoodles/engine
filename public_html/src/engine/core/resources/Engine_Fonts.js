@@ -9,7 +9,9 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-var gEngine = gEngine || { };
+import textures from "../Engine_Textures.js";
+import textFileLoader from "./Engine_TextFileLoader.js";
+import resourceMap from "./Engine_ResourceMap.js";
 
 // for convenenit communication of per-character information
 // all size returned are in normalize unit (range between 0 to 1)
@@ -33,46 +35,46 @@ function CharacterInfo() {
 // Note: font name is the path to the fnt file. (without the fnt extension!)
 //    You must also provide the image file in the exact same folder
 //    with the exact same name, with ".png" extension.
-gEngine.Fonts = (function () {
+export default (function () {
     
     var _storeLoadedFont = function (fontInfoSourceString) {
         var fontName = fontInfoSourceString.slice(0, -4);  // trims the .fnt extension
-        var fontInfo = gEngine.ResourceMap.retrieveAsset(fontInfoSourceString);
+        var fontInfo = resourceMap.retrieveAsset(fontInfoSourceString);
         fontInfo.mFontImage = fontName + ".png";
-        gEngine.ResourceMap.asyncLoadCompleted(fontName, fontInfo); // to store the actual font info
+        resourceMap.asyncLoadCompleted(fontName, fontInfo); // to store the actual font info
     };
 
     var loadFont = function (fontName) {
-        if (!(gEngine.ResourceMap.isAssetLoaded(fontName))) {
+        if (!(resourceMap.isAssetLoaded(fontName))) {
             var fontInfoSourceString = fontName + ".fnt";
             var textureSourceString = fontName + ".png";
 
-            gEngine.ResourceMap.asyncLoadRequested(fontName); // to register an entry in the map
+            resourceMap.asyncLoadRequested(fontName); // to register an entry in the map
 
-            gEngine.Textures.loadTexture(textureSourceString);
-            gEngine.TextFileLoader.loadTextFile(fontInfoSourceString,
-                            gEngine.TextFileLoader.eTextFileType.eXMLFile, _storeLoadedFont);
+            textures.loadTexture(textureSourceString);
+            textFileLoader.loadTextFile(fontInfoSourceString,
+                            textFileLoader.eTextFileType.eXMLFile, _storeLoadedFont);
         } else {
-            gEngine.ResourceMap.incAssetRefCount(fontName);
+            resourceMap.incAssetRefCount(fontName);
         }
     };
 
     // Remove the reference to allow associated memory 
     // be available for subsequent garbage collection
     var unloadFont = function (fontName) {
-        gEngine.ResourceMap.unloadAsset(fontName);
-        if (!(gEngine.ResourceMap.isAssetLoaded(fontName))) {
+        resourceMap.unloadAsset(fontName);
+        if (!(resourceMap.isAssetLoaded(fontName))) {
             var fontInfoSourceString = fontName + ".fnt";
             var textureSourceString = fontName + ".png";
 
-            gEngine.Textures.unloadTexture(textureSourceString);
-            gEngine.TextFileLoader.unloadTextFile(fontInfoSourceString);
+            textures.unloadTexture(textureSourceString);
+            textFileLoader.unloadTextFile(fontInfoSourceString);
         }
     };
 
     var getCharInfo = function (fontName, aChar) {
         var returnInfo = null;
-        var fontInfo = gEngine.ResourceMap.retrieveAsset(fontName);
+        var fontInfo = resourceMap.retrieveAsset(fontName);
         var commonPath = "font/common";
         var commonInfo = fontInfo.evaluate(commonPath, fontInfo, null, XPathResult.ANY_TYPE, null);
         commonInfo = commonInfo.iterateNext();
@@ -90,7 +92,7 @@ gEngine.Fonts = (function () {
         }
 
         returnInfo = new CharacterInfo();
-        var texInfo = gEngine.Textures.getTextureInfo(fontInfo.mFontImage);
+        var texInfo = textures.getTextureInfo(fontInfo.mFontImage);
         var leftPixel = Number(charInfo.getAttribute("x"));
         var rightPixel = leftPixel + Number(charInfo.getAttribute("width")) - 1;
         var topPixel = (texInfo.mHeight - 1) - Number(charInfo.getAttribute("y"));

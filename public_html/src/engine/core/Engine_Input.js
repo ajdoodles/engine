@@ -5,9 +5,9 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
+import { vec2 } from "../../gl-matrix/esm/index.js";
 
-gEngine.Input = (function () {
+export default (function () {
     var kKeys = {
         Shift: 16,
         
@@ -215,7 +215,7 @@ gEngine.Input = (function () {
     };
 
     var getMousePosition = function() {
-        return glMatrix.vec2.fromValues(mMouseX, mMouseY);
+        return vec2.fromValues(mMouseX, mMouseY);
     };
 
     var mPublic = {

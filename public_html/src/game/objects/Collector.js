@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
 
 function Collector(spriteTexture) {
     this.kDelta = 0.3;
@@ -13,7 +15,7 @@ function Collector(spriteTexture) {
     this.mCollector.getXform().setPosition(50, 33);
     GameObject.call(this, this.mCollector);
 }
-gEngine.Core.inheritPrototype(GameObject, Collector);
+core.inheritPrototype(GameObject, Collector);
 
 Collector.prototype.update = function () {
 };

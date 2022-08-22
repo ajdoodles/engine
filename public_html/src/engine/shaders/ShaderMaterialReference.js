@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 
-function ShaderMaterialReference(shader) {
-    var gl = gEngine.Core.getGL();
+import core from "../core/Engine_Core.js";
+
+export default function ShaderMaterialReference(shader) {
+    var gl = core.getGL();
     
     this.mAmbientRef = gl.getUniformLocation(shader, "uMaterial.Ka");
     this.mDiffuseRef = gl.getUniformLocation(shader, "uMaterial.Kd");
@@ -18,7 +20,7 @@ ShaderMaterialReference.prototype.loadToShader = function (material) {
         return;
     }
     
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     
     gl.uniform4fv(this.mAmbientRef, material.getAmbient());
     gl.uniform4fv(this.mDiffuseRef, material.getDiffuse());

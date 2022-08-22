@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 
-function LightShader(vertexShaderId, fragmentShaderId) {
+import core from "../core/Engine_Core.js";
+import SpriteShader from "./SpriteShader.js";
+import ShaderLightReference from "./ShaderLightReference.js";
+
+export default function LightShader(vertexShaderId, fragmentShaderId) {
     SpriteShader.call(this, vertexShaderId, fragmentShaderId);
     
     // THIS MUST MATCH THE VALUE OF kGLSLuLightArraySize IN LightFS.GLSL
@@ -17,7 +21,7 @@ function LightShader(vertexShaderId, fragmentShaderId) {
     }
     this.mLights= [];
 };
-gEngine.Core.inheritPrototype(SpriteShader, LightShader);
+core.inheritPrototype(SpriteShader, LightShader);
 
 LightShader.prototype.setLights = function(lights) {
     this.mLights = lights;

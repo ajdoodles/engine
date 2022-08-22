@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
+import LineRenderable from "../../engine/renderables/LineRenderable.js";
+
 RigidShape.eRigidType = Object.freeze({
     eAbstract: 0,
     eCircle: 1,
     eRect: 2,
 });
 
-function RigidShape(xform) {
+export default function RigidShape(xform) {
     this.kPadding = 0.25;
     
     this.mXform = xform;

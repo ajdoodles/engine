@@ -4,18 +4,20 @@
  * and open the template in the editor.
  */
 
+import { vec2 } from "../../gl-matrix/esm/index.js";
+
 function CameraShake(origCenter, initDeltaX, initDeltaY, numOscillations, shakeDuration) {
-    this.mOrigCenter = glMatrix.vec2.clone(origCenter);
-    this.mShookCenter= glMatrix.vec2.clone(origCenter);
+    this.mOrigCenter = vec2.clone(origCenter);
+    this.mShookCenter= vec2.clone(origCenter);
     this.mShake = new ShakePosition(initDeltaX, initDeltaY, numOscillations, shakeDuration);
 };
 
 CameraShake.prototype.setCenter = function(center) {
-    glMatrix.vec2.copy(this.mOrigCenter, center);
+    vec2.copy(this.mOrigCenter, center);
 };
 
 CameraShake.prototype.getShookPos = function() {
-    return glMatrix.vec2.clone(this.mShookCenter);
+    return vec2.clone(this.mShookCenter);
 }
 
 CameraShake.prototype.shakeDone = function() {
@@ -24,5 +26,5 @@ CameraShake.prototype.shakeDone = function() {
 
 CameraShake.prototype.updateShakeState = function() {
     var shake = this.mShake.calcShake();
-    glMatrix.vec2.add(this.mShookCenter, this.mOrigCenter, shake);
+    vec2.add(this.mShookCenter, this.mOrigCenter, shake);
 };

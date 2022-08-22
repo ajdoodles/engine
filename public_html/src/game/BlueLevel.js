@@ -4,6 +4,14 @@
  * and open the template in the editor.
  */
 
+import Scene from "../engine/Scene.js";
+import gameLoop from "../engine/core/Engine_GameLoop.js";
+import core from "../engine/core/Engine_Core.js";
+import textFileLoader from "../engine/core/resources/Engine_TextFileLoader.js";
+import textures from "../engine/core/Engine_Textures.js";
+import audioClips from "../engine/core/resources/Engine_AudioClips.js";
+import input from "../engine/core/Engine_Input.js";
+
 function BlueLevel() {
     this.kSceneFile = "assets/bluelevel.xml";
     
@@ -16,32 +24,32 @@ function BlueLevel() {
     this.mSquareSet = new Array();
     this.mCamera = null;
 }
-gEngine.Core.inheritPrototype(Scene, BlueLevel);
+core.inheritPrototype(Scene, BlueLevel);
 
 BlueLevel.prototype.loadScene = function () {
-    gEngine.TextFileLoader.loadTextFile(
+    textFileLoader.loadTextFile(
             this.kSceneFile,
-            gEngine.TextFileLoader.eTextFileType.eXMLFile);
-    gEngine.Textures.loadTexture(this.kPortal);
-    gEngine.Textures.loadTexture(this.kCollector);
-    gEngine.AudioClips.loadAudio(this.kBgClip);
-    gEngine.AudioClips.loadAudio(this.kCue);
+            textFileLoader.eTextFileType.eXMLFile);
+    textures.loadTexture(this.kPortal);
+    textures.loadTexture(this.kCollector);
+    audioClips.loadAudio(this.kBgClip);
+    audioClips.loadAudio(this.kCue);
 };
 
 BlueLevel.prototype.unloadScene = function () {
-    gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
-    gEngine.AudioClips.stopBackgroundAudio();
-    gEngine.Textures.unloadTexture(this.kPortal);
-    gEngine.Textures.unloadTexture(this.kCollector);
-    gEngine.AudioClips.unloadAudio(this.kBgClip);
-    gEngine.AudioClips.unloadAudio(this.kCue);
+    textFileLoader.unloadTextFile(this.kSceneFile);
+    audioClips.stopBackgroundAudio();
+    textures.unloadTexture(this.kPortal);
+    textures.unloadTexture(this.kCollector);
+    audioClips.unloadAudio(this.kBgClip);
+    audioClips.unloadAudio(this.kCue);
 
     var myGame = new MyGame();
-    gEngine.Core.startScene(myGame);
+    core.startScene(myGame);
 };
 
 BlueLevel.prototype.initialize = function () {
-    gEngine.AudioClips.playBackgroundAudio(this.kBgClip);
+    audioClips.playBackgroundAudio(this.kBgClip);
 
     var sceneParser = new SceneFileParser(this.kSceneFile);
     sceneParser.parseSquares(this.mSquareSet);
@@ -54,30 +62,30 @@ BlueLevel.prototype.update = function () {
     var redXform = this.mSquareSet[1].getXform();
     var deltaX = 0.05;
 
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-        gEngine.AudioClips.playCue(this.kCue);
+    if (input.isKeyPressed(input.keys.Right)) {
+        audioClips.playCue(this.kCue);
         if (whiteXform.getXPos() > 30) {
             whiteXform.setPosition(10, 60);
         }
         whiteXform.incXPos(deltaX);
     }
 
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up)) {
+    if (input.isKeyClicked(input.keys.Up)) {
         whiteXform.incRotationInDegrees(1);
     }
 
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
+    if (input.isKeyPressed(input.keys.Down)) {
         if (redXform.getWidth() > 5) {
             redXform.setSize(2, 2);
         }
         redXform.incSize(0.05);
     }
 
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-        gEngine.AudioClips.playCue(this.kCue);
+    if (input.isKeyPressed(input.keys.Left)) {
+        audioClips.playCue(this.kCue);
         whiteXform.incXPos(-deltaX);
         if (whiteXform.getXPos() < 11) {
-            gEngine.GameLoop.stop();
+            gameLoop.stop();
         }
     }
     
@@ -91,7 +99,7 @@ BlueLevel.prototype.update = function () {
 
 BlueLevel.prototype.draw = function () {
     // Clear entire canvas
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
+    core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
 
     this.mCamera.setupViewProjection();
 

@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 
-function SimpleShader(vertexShaderId, fragmentShaderId) {
+import core from "../core/Engine_Core.js";
+import vertexBuffer from "../core/Engine_VertexBuffer.js";
+import resourceMap from "../core/resources/Engine_ResourceMap.js";
+import defaultResources from "../core/resources/Engine_DefaultResources.js";
+
+export default function SimpleShader(vertexShaderId, fragmentShaderId) {
     this.mCompiledShader = null;
     this.mShaderVertexPositionAttribute = null;
     this.mModelTransform = null;
@@ -13,7 +18,7 @@ function SimpleShader(vertexShaderId, fragmentShaderId) {
     this.mGlobalAmbientColor = null;
     this.mGlobalAmbientIntensity = 1.0;
 
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
 
     var vertexShader = this._compileShader(vertexShaderId, gl.VERTEX_SHADER);
     var fragmentShader = this._compileShader(fragmentShaderId, gl.FRAGMENT_SHADER);
@@ -35,7 +40,7 @@ function SimpleShader(vertexShaderId, fragmentShaderId) {
     this.mGlobalAmbientColor = gl.getUniformLocation(this.mCompiledShader, "uGlobalAmbientColor");
     this.mGlobalAmbientIntensity = gl.getUniformLocation(this.mCompiledShader, "uGlobalAmbientIntensity");
     
-    gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLVertexRef());
 
     gl.vertexAttribPointer(
             this.mShaderVertexPositionAttribute,
@@ -47,8 +52,8 @@ function SimpleShader(vertexShaderId, fragmentShaderId) {
 }
 
 SimpleShader.prototype._compileShader = function (filepath, shaderType) {
-    var gl = gEngine.Core.getGL();
-    var shaderSource = gEngine.ResourceMap.retrieveAsset(filepath);
+    var gl = core.getGL();
+    var shaderSource = resourceMap.retrieveAsset(filepath);
     var compiledShader = gl.createShader(shaderType);
 
     gl.shaderSource(compiledShader, shaderSource);
@@ -62,17 +67,17 @@ SimpleShader.prototype._compileShader = function (filepath, shaderType) {
 };
 
 SimpleShader.prototype.activateShader = function(pixelColor, camera) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.useProgram(this.mCompiledShader);
-    gl.uniform4fv(this.mGlobalAmbientColor, gEngine.DefaultResources.getGlobalAmbientColor());
-    gl.uniform1f(this.mGlobalAmbientIntensity, gEngine.DefaultResources.getGlobalAmbientIntensity());
+    gl.uniform4fv(this.mGlobalAmbientColor, defaultResources.getGlobalAmbientColor());
+    gl.uniform1f(this.mGlobalAmbientIntensity, defaultResources.getGlobalAmbientIntensity());
     gl.uniformMatrix4fv(this.mViewProjTransform, false, camera.getVPMatrix());
     gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
     gl.uniform4fv(this.mPixelColor, pixelColor);
 };
 
 SimpleShader.prototype.loadObjectTransform = function(modelTransform) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.uniformMatrix4fv(this.mModelTransform, false, modelTransform);
 }
 

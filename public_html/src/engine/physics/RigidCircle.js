@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 
-function RigidCircle(xform, radius) {
+import core from "../core/Engine_Core.js";
+import RigidShape from "./RigidShape.js";
+import { vec2 } from "../../gl-matrix/esm/index.js";
+import LineRenderable from "../renderables/LineRenderable.js";
+
+export default function RigidCircle(xform, radius) {
     RigidShape.call(this, xform);
     
     this.kNumSides = 16;
@@ -16,7 +21,7 @@ function RigidCircle(xform, radius) {
     this.mRadius = radius;
     this.mSides = new LineRenderable();
 };
-gEngine.Core.inheritPrototype(RigidShape, RigidCircle);
+core.inheritPrototype(RigidShape, RigidCircle);
 
 RigidCircle.prototype.getRadius = function () {
     return this.mRadius;
@@ -44,10 +49,10 @@ RigidCircle.prototype.draw = function (camera) {
     this.mSides.getXform().setZPos(this.mXform.getZPos());
 
     var pos = this.getPosition();
-    var drawPoint = glMatrix.vec2.fromValues(pos[0] + this.mRadius, pos[1]);
+    var drawPoint = vec2.fromValues(pos[0] + this.mRadius, pos[1]);
     this.mSides.setStartVertex(drawPoint[0], drawPoint[1]);
     for (var i = 1; i <= this.kNumSides; i++) {
-        glMatrix.vec2.rotate(drawPoint, drawPoint, pos, this.kAngularDelta);
+        vec2.rotate(drawPoint, drawPoint, pos, this.kAngularDelta);
 
         if (i % 2 === 0) {
             this.mSides.setStartVertex(drawPoint[0], drawPoint[1]);

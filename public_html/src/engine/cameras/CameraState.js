@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
-function CameraState(center, width) {
+import Interpolator from "../utils/Interpolator.js";
+import InterpolatorVec2 from "../utils/InterpolatorVec2.js";
+
+export default function CameraState(center, width) {
     this.kRate = 0.1;
     this.kCycles = 300;
     this.mWidth = new Interpolator(width, this.kCycles, this.kRate);

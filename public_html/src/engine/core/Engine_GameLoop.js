@@ -5,9 +5,10 @@
  */
 
 "use strict";
-var gEngine = gEngine || {};
+import input from "./Engine_Input.js";
+import resourceMap from "./resources/Engine_ResourceMap.js";
 
-gEngine.GameLoop = (function() {
+export default (function() {
    
     var kFPS = 60;
     var kMPF = 1000 / kFPS;
@@ -31,7 +32,7 @@ gEngine.GameLoop = (function() {
             mLagTime += mElapsedTime;
             
             while (mIsLoopRunning && (mLagTime > kMPF)) {
-                gEngine.Input.update();
+                input.update();
                 this.update();
                 mLagTime -= kMPF;
             }
@@ -57,7 +58,7 @@ gEngine.GameLoop = (function() {
 
     var start = function (myGame) {
         mMyGame = myGame;
-        gEngine.ResourceMap.setLoadCompletedCallback(
+        resourceMap.setLoadCompletedCallback(
                 function() {
                     mMyGame.initialize();
                     _startLoop();

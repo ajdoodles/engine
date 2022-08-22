@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
+import TextureRenderable from "../../engine/renderables/TextureRenderable.js";
+import RigidRect from "../../engine/physics/RigidRect.js";
 
-function Platform(spriteTexture) {
+export default function Platform(spriteTexture) {
     this.kDelta = 0.3;
     this.kDeltaDegrees = 1;
 
@@ -17,7 +21,7 @@ function Platform(spriteTexture) {
     rigidRect.setDrawBounds(true);
     this.setPhysicsComponent(rigidRect);
 }
-gEngine.Core.inheritPrototype(GameObject, Platform);
+core.inheritPrototype(GameObject, Platform);
 
 Platform.prototype.update = function () {
 };

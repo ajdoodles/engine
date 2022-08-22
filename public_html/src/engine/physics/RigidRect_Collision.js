@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+import RigidRect from "./RigidRect.js";
+import RigidShape from "./RigidShape.js";
+
 RigidRect.prototype.collidedRectRect = function (first, second) {
     return (first.left() < second.right()) && (first.right() > second.left())
             && (first.bottom() < second.top()) && (first.top() > second.bottom());

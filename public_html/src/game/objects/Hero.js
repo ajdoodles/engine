@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
+import IllumRenderable from "../../engine/renderables/IllumRenderable.js";
+import LightRenderable from "../../engine/renderables/LightRenderable.js";
+import RigidCircle from "../../engine/physics/RigidCircle.js";
 
-function Hero(spriteTexture, normalTexture) {
+export default function Hero(spriteTexture, normalTexture) {
     this.kDelta = 0.3;
     this.kDeltaDegrees = 1;
      
@@ -24,7 +29,7 @@ function Hero(spriteTexture, normalTexture) {
     hitBox.setDrawBounds(true);
     this.setPhysicsComponent(hitBox);
 }
-gEngine.Core.inheritPrototype(GameObject, Hero);
+core.inheritPrototype(GameObject, Hero);
 
 Hero.prototype.update = function () {
 };

@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 
+import MyGame from "./MyGame.js";
+import input from "../engine/core/Engine_Input.js";
+import core from "../engine/core/Engine_Core.js";
+import textFileLoader from "../engine/core/resources/Engine_TextFileLoader.js";
+import textures from "../engine/core/Engine_Textures.js";
+
 MyGame.prototype.initLights = function () {
     this.kDelta = 0.1;
     this.kSmallDelta = 0.01;
@@ -47,75 +53,75 @@ MyGame.prototype.moveLightVertical = function(shifted = false, multiplier = 1.0)
 };
 
 MyGame.prototype.updateLights = function() {
-    var shifted = gEngine.Input.isKeyPressed(gEngine.Input.keys.Shift);
+    var shifted = input.isKeyPressed(input.keys.Shift);
     
     // select light
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
+    if (input.isKeyClicked(input.keys.One)) {
         this.mFocus = this.mLightSet.getLightAt(0);
-    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
+    } else if (input.isKeyClicked(input.keys.Two)) {
         this.mFocus = this.mLightSet.getLightAt(1);
-    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
+    } else if (input.isKeyClicked(input.keys.Three)) {
         this.mFocus = this.mLightSet.getLightAt(2);
     }
     
     // modify near
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.T)) {
+    if (input.isKeyPressed(input.keys.T)) {
         this.mFocus.incNear(this.kDelta);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.G)) {
+    } else if (input.isKeyPressed(input.keys.G)) {
         this.mFocus.incNear(-this.kDelta);
     }
     
     // modify far
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Y)) {
+    if (input.isKeyPressed(input.keys.Y)) {
         this.mFocus.incFar(this.kDelta);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.H)) {
+    } else if (input.isKeyPressed(input.keys.H)) {
         this.mFocus.incFar(-this.kDelta);
     }
     
     // modify outer rads
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.M)) {
+    if (input.isKeyPressed(input.keys.M)) {
         this.mFocus.incOuterDegrees(this.kDeltaDegrees);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.N)) {
+    } else if (input.isKeyPressed(input.keys.N)) {
         this.mFocus.incOuterDegrees(-this.kDeltaDegrees);
     }
     
     // modify inner rads
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.V)) {
+    if (input.isKeyPressed(input.keys.V)) {
         this.mFocus.incInnerDegrees(this.kDeltaDegrees);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.C)) {
+    } else if (input.isKeyPressed(input.keys.C)) {
         this.mFocus.incInnerDegrees(-this.kDeltaDegrees);
     }
     
     // light switch
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.P)) {
+    if (input.isKeyPressed(input.keys.P)) {
         this.mFocus.setLit(this.mFocus.isLit());
     }
     
     // Up and down
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.I)) {
+    if (input.isKeyPressed(input.keys.I)) {
         this.moveLightVertical(shifted);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.K)) {
+    } else if (input.isKeyPressed(input.keys.K)) {
         this.moveLightVertical(shifted, -1.0);
     }
     
     // Left and right
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.J)) {
+    if (input.isKeyPressed(input.keys.J)) {
         this.moveLightHorizontal(shifted, -1.0);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.L)) {
+    } else if (input.isKeyPressed(input.keys.L)) {
         this.moveLightHorizontal(shifted);
     }
     
     // raise and lower
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.U)) {
+    if (input.isKeyPressed(input.keys.U)) {
         this.mFocus.incZPos(this.kDelta, shifted);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.O)) {
+    } else if (input.isKeyPressed(input.keys.O)) {
         this.mFocus.incZPos(-this.kDelta, shifted);
     }
     
     // modify intensity
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Z)) {
+    if (input.isKeyPressed(input.keys.Z)) {
         this.mFocus.incIntensity(-this.kSmallDelta);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.X)) {
+    } else if (input.isKeyPressed(input.keys.X)) {
         this.mFocus.incIntensity(this.kSmallDelta);
     }
     

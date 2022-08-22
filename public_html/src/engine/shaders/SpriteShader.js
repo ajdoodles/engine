@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 
-function SpriteShader(vertexShaderId, fragmentShaderId) {
+import core from "../core/Engine_Core.js";
+import TextureShader from "./TextureShader.js";
+import SimpleShader from "./SimpleShader.js";
+
+export default function SpriteShader(vertexShaderId, fragmentShaderId) {
     TextureShader.call(this, vertexShaderId, fragmentShaderId);
     
     var initialCoords = [
@@ -13,15 +17,15 @@ function SpriteShader(vertexShaderId, fragmentShaderId) {
         1.0, 0.0,
         0.0, 0.0];
 
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     this.mSpriteCoordBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mSpriteCoordBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(initialCoords), gl.DYNAMIC_DRAW);
 };
-gEngine.Core.inheritPrototype(TextureShader, SpriteShader);
+core.inheritPrototype(TextureShader, SpriteShader);
 
 SpriteShader.prototype.setTextureCoordinates = function(coordinates) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mSpriteCoordBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(coordinates));
 };
@@ -29,7 +33,7 @@ SpriteShader.prototype.setTextureCoordinates = function(coordinates) {
 SpriteShader.prototype.activateShader = function(pixelColor, camera) {
     SimpleShader.prototype.activateShader.call(this, pixelColor, camera);
    
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mSpriteCoordBuffer);
     gl.enableVertexAttribArray(this.mTextureCoordinateAttribute);
     gl.vertexAttribPointer(

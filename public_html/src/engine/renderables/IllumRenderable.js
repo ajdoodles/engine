@@ -4,14 +4,19 @@
  * and open the template in the editor.
  */
 
-function IllumRenderable(colorTexture, normalTexture, material = new Material()) {
+import ShaderFactory from "../shaders/ShaderFactory.js";
+import core from "../core/Engine_Core.js";
+import textures from "../core/Engine_Textures.js";
+import LightRenderable from "./LightRenderable.js";
+
+export default function IllumRenderable(colorTexture, normalTexture, material = new Material()) {
     LightRenderable.call(this, colorTexture);
-    Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getIllumShader());
+    Renderable.prototype._setShader.call(this, ShaderFactory.getIllumShader());
     
     this.mNormalTexture = normalTexture;
     this.mMaterial = material;
 };
-gEngine.Core.inheritPrototype(LightRenderable, IllumRenderable);
+core.inheritPrototype(LightRenderable, IllumRenderable);
 
 IllumRenderable.prototype.getMaterial = function () {
     return this.mMaterial;
@@ -21,7 +26,7 @@ IllumRenderable.prototype.setMaterial = function (material) {
 };
 
 IllumRenderable.prototype.draw = function (camera) {
-    gEngine.Textures.activateNormalTexture(this.mNormalTexture);
+    textures.activateNormalTexture(this.mNormalTexture);
     this.mShader.setMaterial(this.mMaterial);
     LightRenderable.prototype.draw.call(this, camera);
 };

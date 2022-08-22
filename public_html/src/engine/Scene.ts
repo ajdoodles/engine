@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-abstract class Scene {
+export default abstract class Scene {
     //Called from Engine_Core's startScene
     loadScene(): void { }
     unloadScene(): void { }

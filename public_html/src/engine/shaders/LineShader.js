@@ -4,14 +4,19 @@
  * and open the template in the editor.
  */
 
-function LineShader(vertexShaderId, fragmentShaderId) {
+import core from "../core/Engine_Core.js";
+import vertexBuffer from "../core/Engine_VertexBuffer.js";
+import resourceMap from "../core/resources/Engine_ResourceMap.js";
+import SimpleShader from "./SimpleShader.js";
+
+export default function LineShader(vertexShaderId, fragmentShaderId) {
     this.mCompiledShader = null;
     this.mShaderVertexPositionAttribute = null;
     this.mModelTransform = null;
     this.mViewProjTransform = null;
     this.mPixelColor = null;
     
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     
     var vertexShader = this._compileShader(vertexShaderId, gl.VERTEX_SHADER);
     var fragmentShader = this._compileShader(fragmentShaderId, gl.FRAGMENT_SHADER);
@@ -31,7 +36,7 @@ function LineShader(vertexShaderId, fragmentShaderId) {
     this.mViewProjTransform = gl.getUniformLocation(this.mCompiledShader, "uViewProjTransform");
     this.mPixelColor = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLVertexRef());
 
     gl.vertexAttribPointer(
             this.mShaderVertexPositionAttribute,
@@ -41,11 +46,11 @@ function LineShader(vertexShaderId, fragmentShaderId) {
             0,
             0);
 };
-gEngine.Core.inheritPrototype(SimpleShader, LineShader);
+core.inheritPrototype(SimpleShader, LineShader);
 
 LineShader.prototype._compileShader = function (filepath, shaderType) {
-    var gl = gEngine.Core.getGL();
-    var shaderSource = gEngine.ResourceMap.retrieveAsset(filepath);
+    var gl = core.getGL();
+    var shaderSource = resourceMap.retrieveAsset(filepath);
     var compiledShader = gl.createShader(shaderType);
 
     gl.shaderSource(compiledShader, shaderSource);
@@ -61,7 +66,7 @@ LineShader.prototype._compileShader = function (filepath, shaderType) {
 };
 
 LineShader.prototype.activateShader = function (pixelColor, camera) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.useProgram(this.mCompiledShader);
     gl.uniformMatrix4fv(this.mViewProjTransform, false, camera.getVPMatrix());
     gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
@@ -69,6 +74,6 @@ LineShader.prototype.activateShader = function (pixelColor, camera) {
 };
 
 LineShader.prototype.loadObjectTransform = function(modelTransform) {
-    var gl = gEngine.Core.getGL();
+    var gl = core.getGL();
     gl.uniformMatrix4fv(this.mModelTransform, false, modelTransform);
 };

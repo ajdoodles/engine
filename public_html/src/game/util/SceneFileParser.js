@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 
+import resourceMap from "../../engine/core/resources/Engine_ResourceMap.js";
+
 function SceneFileParser(sceneFilePath) {
-    this.mSceneXML = gEngine.ResourceMap.retrieveAsset(sceneFilePath);
+    this.mSceneXML = resourceMap.retrieveAsset(sceneFilePath);
 }
 
 SceneFileParser.prototype._getElements = function(elementTag) {

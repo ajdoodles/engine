@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+import core from "../../engine/core/Engine_Core.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
+
 function Brain(spriteTexture) {
     this.kDeltaDegrees = 1;
     this.kDeltaRads = this.kDeltaDegrees * (Math.PI / 180);
@@ -17,7 +20,7 @@ function Brain(spriteTexture) {
     GameObject.call(this, this.mBrain);
     this.setSpeed(0.05);
 }
-gEngine.Core.inheritPrototype(GameObject, Brain);
+core.inheritPrototype(GameObject, Brain);
 
 Brain.prototype.update = function () {
 };

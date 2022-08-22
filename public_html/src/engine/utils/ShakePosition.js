@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import { vec2 } from "../../gl-matrix/esm/index.js";
 
 /**
  * 
@@ -46,5 +47,5 @@ ShakePosition.prototype.calcShake = function() {
         deltaX = harmonic * this.mInitX * xBit;
         deltaY = harmonic * this.mInitY * yBit;
     }
-    return glMatrix.vec2.fromValues(deltaX, deltaY);
+    return vec2.fromValues(deltaX, deltaY);
 };
