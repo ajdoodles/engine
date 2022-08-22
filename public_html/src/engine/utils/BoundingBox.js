@@ -15,7 +15,7 @@ BoundingBox.eBoundCollideStatus = Object.freeze({
     eInside: 16,
 });
 
-function BoundingBox(centerPos, w, h) {
+export default function BoundingBox(centerPos, w, h) {
     this.mLL = vec2.fromValues(0, 0);
     this.setBounds(centerPos, w, h);
 }
