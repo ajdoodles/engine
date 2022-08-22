@@ -7,10 +7,10 @@
 export default function MathUtils() {
 };
 
-MathUtils.clamp = function(value, min, max) {
+MathUtils.clamp = function(value:number, min:number, max:number) {
     return Math.max(Math.min(value, max), min);
 };
 
-MathUtils.lerp = function(start, end, value) {
+MathUtils.lerp = function(start:number, end:number, value:number) {
     return start + ((end - start) * value);
 };
