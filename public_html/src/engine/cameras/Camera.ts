@@ -8,7 +8,7 @@ import core from "../core/Engine_Core.js";
 import input from "../core/Engine_Input.js";
 import CameraState from "./CameraState.js";
 import MathUtils from "../utils/MathUtils.js";
-import { vec2, vec3, vec4, mat4 } from "gl-matrix";
+import { vec2, vec3, mat4 } from "gl-matrix";
 import CameraShake from "./CameraShake.js";
 import Transform from "../utils/Transform.js";
 import BoundingBox from "../utils/BoundingBox.js";
