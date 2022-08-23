@@ -6,13 +6,13 @@
 
 export default abstract class Scene {
     //Called from Engine_Core's startScene
-    loadScene(): void { }
-    unloadScene(): void { }
+    abstract loadScene(): void
+    abstract unloadScene(): void
 
     // Called by the game loop after all resources are loaded (defined in loadscene)
-    initialize(): void { }
-    update(): void { }
-    draw(): void { }
+    abstract initialize(): void
+    abstract update(): void
+    abstract draw(): void
 }
 
 //Called from Engine_Core's startScene

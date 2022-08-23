@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-export default function MathUtils() {
-};
+export default abstract class MathUtils {
 
-MathUtils.clamp = function(value:number, min:number, max:number) {
-    return Math.max(Math.min(value, max), min);
-};
+    static clamp(value:number, min:number, max:number):number {
+        return Math.max(Math.min(value, max), min);
+    }
 
-MathUtils.lerp = function(start:number, end:number, value:number) {
-    return start + ((end - start) * value);
-};
+    static lerp(start:number, end:number, value:number):number {
+        return start + ((end - start) * value);
+    }
+}

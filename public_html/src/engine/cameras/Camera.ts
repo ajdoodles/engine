@@ -17,11 +17,11 @@ type bounds = [number, number, number, number];
 type color = [number, number, number, number];
 
 class PreRenderCache {
-    wcToPixelsRatio: number = 1;
-    viewportBottomWC: number = -1;
-    viewportLeftWC: number = -1;
+    wcToPixelsRatio = 1;
+    viewportBottomWC = -1;
+    viewportLeftWC = -1;
     cameraPosPx: vec3 = vec3.fromValues(0.0, 0.0, 0.0);
-};
+}
 
 /**
  * Defines a camera that will draw a section of the world on to a section of
@@ -57,7 +57,7 @@ export default class Camera {
 
     bgColor: color;
 
-    constructor(wcCenter:vec2, wcWidth:number, bounds:bounds, borderPx:number = 0) {
+    constructor(wcCenter:vec2, wcWidth:number, bounds:bounds, borderPx = 0) {
         this.cameraState = new CameraState(wcCenter, wcWidth);
         this.renderCache = new PreRenderCache();
         this.cameraShake = null;
@@ -80,78 +80,78 @@ export default class Camera {
 
     setWCCenter(xPos: number, yPos:number) {
         this.cameraState.setCenter(vec2.fromValues(xPos, yPos));
-    };
+    }
     
     getWCCenter() {
         return this.cameraState.getCenter();
-    };
+    }
     
     setWCWidth(width:number) {
     //    this.mWCWidth = width;
         this.cameraState.setWidth(width);
-    };
+    }
     
     getWCWidth() {
         return this.cameraState.getWidth();
-    };
+    }
     
     getWCHeight() {
         return this.getWCWidth() * (this.viewport[3] / this.viewport[2]);
-    };
+    }
     
     getWCLeft () {
         return this.getWCCenter()[0] - (this.getWCWidth()/2);
-    };
+    }
     getWCRight () {
         return this.getWCCenter()[0] + (this.getWCWidth()/2);
-    };
+    }
     getWCBottom () {
         return this.getWCCenter()[1] - (this.getWCHeight()/2);
-    };
+    }
     getWCTop () {
         return this.getWCCenter()[1] + (this.getWCHeight()/2);
-    };
+    }
     
     genRandomPosition2D () {
-        var randomX =
+        const randomX =
                 MathUtils.lerp(this.getWCLeft(), this.getWCRight(), Math.random());
-        var randomY =
+        const randomY =
                 MathUtils.lerp(this.getWCBottom(), this.getWCTop(), Math.random());
         return vec2.fromValues(randomX, randomY);
-    };
+    }
     
     getViewportLeft() {
         return this.viewport[0];
-    };
+    }
     
     getViewportBottom() {
         return this.viewport[1];
-    };
+    }
     
     getCameraPosPx() {
         return this.renderCache.cameraPosPx;
-    };
+    }
     
     setBackgroundColor(color:color) {
         this.bgColor = color;
-    };
+    }
     
     getBackgroundColor() {
         return this.bgColor;
-    };
+    }
     
     getVPMatrix() {
         return this.viewProjMatrix;
-    };
+    }
     
     getBounds() {
-        var out:bounds = [0,0,0,0];
+        const out:bounds = [0,0,0,0];
         out[0] = this.scissorBounds[0];
         out[1] = this.scissorBounds[1];
         out[2] = this.scissorBounds[2];
         out[3] = this.scissorBounds[3];
         return out;
-    };
+    }
     
     setBounds(bounds:bounds, borderPx:number) {
         if (borderPx !== undefined) {
@@ -169,12 +169,12 @@ export default class Camera {
         this.scissorBounds[1] = bounds[1];
         this.scissorBounds[2] = bounds[2];
         this.scissorBounds[3] = bounds[3];
-    };
+    }
     
     setupViewProjection() {
-        var gl = core.getGL();
+        const gl = core.getGL();
         
-        var bounds = this.scissorBounds;
+        const bounds = this.scissorBounds;
         gl.viewport(this.viewport[0], this.viewport[1], this.viewport[2], this.viewport[3]);
         gl.scissor(bounds[0], bounds[1], bounds[2], bounds[3]);
         
@@ -182,7 +182,7 @@ export default class Camera {
         core.clearCanvas(this.bgColor);
         gl.disable(gl.SCISSOR_TEST);
         
-        var center:vec2 = [0,0];
+        let center:vec2 = [0,0];
         if (this.cameraShake === null) {
             center = this.getWCCenter();
         } else {
@@ -195,8 +195,8 @@ export default class Camera {
             [center[0], center[1], 0], // lookat position
             [0, 1, 0]); //orientation
     
-        var wcHalfWidth = this.getWCWidth() * 0.5;
-        var wcHalfHeight = this.getWCHeight() * 0.5;
+        const wcHalfWidth = this.getWCWidth() * 0.5;
+        const wcHalfHeight = this.getWCHeight() * 0.5;
     
         mat4.ortho(
             this.projMatrix,
@@ -213,22 +213,22 @@ export default class Camera {
         this.renderCache.viewportLeftWC = this.getWCCenter()[0] - (this.getWCWidth()/2);
         this.renderCache.viewportBottomWC = this.getWCCenter()[1] - (this.getWCHeight()/2);
         
-        var cameraPosWC = vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.kCameraZPosWC);
+        const cameraPosWC = vec3.fromValues(this.getWCCenter()[0], this.getWCCenter()[1], Camera.kCameraZPosWC);
         this.renderCache.cameraPosPx = vec3.clone(this.convertWCPosToPx(cameraPosWC));
-    };
+    }
     
     collideWCBound(xform:Transform, zone:number) {
-        var xformBounds = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
-        var zoneWidth = zone * this.getWCWidth();
-        var zoneHeight = zone * this.getWCHeight();
-        var zoneBounds = new BoundingBox(this.getWCCenter(), zoneWidth, zoneHeight);
+        const xformBounds = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
+        const zoneWidth = zone * this.getWCWidth();
+        const zoneHeight = zone * this.getWCHeight();
+        const zoneBounds = new BoundingBox(this.getWCCenter(), zoneWidth, zoneHeight);
         return zoneBounds.boundCollideStatus(xformBounds);
-    };
+    }
     
     clampAtBoundary(xform:Transform, zone:number) {
-        var status = this.collideWCBound(xform, zone);
+        const status = this.collideWCBound(xform, zone);
         if (status !== BoundingBox.eBoundCollideStatus.eInside) {
-            var pos = xform.getPosition();
+            const pos = xform.getPosition();
             if ((status & BoundingBox.eBoundCollideStatus.eCollideLeft) !== 0) {
                 pos[0] = this.getWCCenter()[0] - (this.getWCWidth()*zone)/2 + xform.getWidth()/2;
             }
@@ -243,35 +243,35 @@ export default class Camera {
             }
         }
         return status;
-    };
+    }
     
     isMouseInViewport() {
-        var mousePos = input.getMousePosition();
-        var x = mousePos[0] - this.viewport[0];
-        var y = mousePos[1] - this.viewport[1];
+        const mousePos = input.getMousePosition();
+        const x = mousePos[0] - this.viewport[0];
+        const y = mousePos[1] - this.viewport[1];
         
-        var inside = (0 <= x && x < this.viewport[2]);
+        const inside = (0 <= x && x < this.viewport[2]);
         return inside && (0 <= y && y < this.viewport[3]);
-    };
+    }
     
     convertWCSizeToPx (wcSize:number) {
         return wcSize * this.renderCache.wcToPixelsRatio;
-    };
+    }
     
     getPixelsToWCRatio() {
         return this.getWCWidth()/this.viewport[2];
-    };
+    }
     
     getWCCursorPosition() {
         if (!this.isMouseInViewport()) {
             throw "Mouse not found in viewport, can't get position in world space."
         }
         
-        var mousePos2DPx = input.getMousePosition();
-        var vpOrigin = vec2.fromValues(this.getViewportLeft(), this.getViewportBottom());
-        var bottomLeft = vec2.fromValues(this.getWCCenter()[0] - (this.getWCWidth()/2), this.getWCCenter()[1] - (this.getWCHeight()/2));
+        const mousePos2DPx = input.getMousePosition();
+        const vpOrigin = vec2.fromValues(this.getViewportLeft(), this.getViewportBottom());
+        const bottomLeft = vec2.fromValues(this.getWCCenter()[0] - (this.getWCWidth()/2), this.getWCCenter()[1] - (this.getWCHeight()/2));
         
-        var wcPos = vec2.create();
+        const wcPos = vec2.create();
         vec2.sub(wcPos, mousePos2DPx, vpOrigin);
         vec2.scaleAndAdd(wcPos, bottomLeft, wcPos, this.getPixelsToWCRatio());
     //    return vec3(wcPos[0], wcPos[1]);
@@ -279,21 +279,21 @@ export default class Camera {
     }
     
     convertWCPosToPx(wcPosition:vec3) {
-        var x = wcPosition[0] - this.renderCache.viewportLeftWC;
+        let x = wcPosition[0] - this.renderCache.viewportLeftWC;
         x = this.viewport[0] + (x * this.renderCache.wcToPixelsRatio) + 0.5;
     
-        var y = wcPosition[1] - this.renderCache.viewportBottomWC;
+        let y = wcPosition[1] - this.renderCache.viewportBottomWC;
         y = this.viewport[1] + (y * this.renderCache.wcToPixelsRatio) + 0.5;
     
-        var z = wcPosition[2] * this.renderCache.wcToPixelsRatio;
+        const z = wcPosition[2] * this.renderCache.wcToPixelsRatio;
         return vec3.fromValues(x, y, z);
-    };
+    }
     
     convertWCVecToPx(wcVec:vec3) {
-        var result = vec3.create();
+        const result = vec3.create();
         vec3.scale(result, wcVec, this.renderCache.wcToPixelsRatio);
         return result;
-    };
+    }
 
     /**
      * Imported from Camera_Manipulation.js
@@ -309,26 +309,26 @@ export default class Camera {
             }
         }
         this.cameraState.update();
-    };
+    }
     
     configInterpolation(stiffness:number, duration:number) {
         this.cameraState.configInterpolation(stiffness, duration);
     }
     
     panBy(dx:number, dy:number) {
-        var center = vec2.clone(this.getWCCenter());
+        const center = vec2.clone(this.getWCCenter());
         this.setWCCenter(center[0] + dx, center[1] + dy);
-    };
+    }
     
     panTo(px:number, py:number) {
         this.setWCCenter(px, py);
-    };
+    }
     
     panWith(xform:Transform, zone:number) {
-        var status = this.collideWCBound(xform, zone);
+        const status = this.collideWCBound(xform, zone);
         if (status !== BoundingBox.eBoundCollideStatus.eInside) {
-            var newC = vec2.clone(this.getWCCenter());
-            var pos = xform.getPosition();
+            const newC = vec2.clone(this.getWCCenter());
+            const pos = xform.getPosition();
             if ((status & BoundingBox.eBoundCollideStatus.eCollideLeft) !== 0) {
                 newC[0] = pos[0] - xform.getWidth()/2 + (this.getWCWidth()*zone)/2;
             }
@@ -344,25 +344,25 @@ export default class Camera {
             this.cameraState.setCenter(newC);
         }
         return status;
-    };
+    }
     
     zoomBy(zoom:number) {
         if (zoom > 0) {
             this.setWCWidth(this.getWCWidth() * zoom);
         }
-    };
+    }
     
     zoomTowards (pos:vec2, zoom:number) {
         if (zoom > 0) {
-            var delta:vec2 = vec2.create();
-            var center = vec2.clone(this.getWCCenter());
+            const delta:vec2 = vec2.create();
+            const center = vec2.clone(this.getWCCenter());
             vec2.sub(delta, pos, center);
             vec2.scale(delta, delta, zoom - 1);
             vec2.sub(center, center, delta);
             this.cameraState.setCenter(center);
             this.zoomBy(zoom);
         }
-    };
+    }
     
     startShake (initDeltaX:number, initDeltaY:number, numOscillations:number, duration:number) {
         this.cameraShake =
@@ -372,6 +372,6 @@ export default class Camera {
                         initDeltaY,
                         numOscillations,
                         duration);
-    };
+    }
 
 }

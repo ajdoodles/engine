@@ -22,9 +22,9 @@ export default class RigidShapeTest extends Scene {
     camera!: Camera;
     objectSet!: GameObjectSet;
     
-    minionSprite : String;
-    platform: String;
-    fontImage : String;
+    minionSprite : string;
+    platform: string;
+    fontImage : string;
 
     numHeroes: number;
     numMinions: number;
@@ -47,19 +47,19 @@ export default class RigidShapeTest extends Scene {
         textures.loadTexture(this.minionSprite);
         textures.loadTexture(this.platform);
         textures.loadTexture(this.fontImage);
-    };
+    }
     
     unloadScene ():void {
         textures.unloadTexture(this.minionSprite);
         textures.unloadTexture(this.platform);
         textures.unloadTexture(this.fontImage);
-    };
+    }
     
     initialize ():void {
         this._initCamera();
         
         this.square = new Renderable();
-        var xForm = this.square.getXform();
+        const xForm = this.square.getXform();
         xForm.setSize(30, 30);
         xForm.setPosition(10, 10);
             
@@ -75,7 +75,7 @@ export default class RigidShapeTest extends Scene {
         this.objectSet.addObject(new Hero(this.minionSprite));
         this.objectSet.selectObjectAt(0);
         this.objectSet.setAlertCollisions(true);
-    };
+    }
     
     _initCamera ():void {
         this.camera =
@@ -84,10 +84,10 @@ export default class RigidShapeTest extends Scene {
                 100,
                 [0, 0, 640, 480]);
         this.camera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-    };
+    }
     
     update ():void {
-        (this.camera as any).update();
+        this.camera.update();
         
         if (input.isKeyClicked(input.keys.E)) {
             this.objectSet.incSelected();
@@ -96,7 +96,7 @@ export default class RigidShapeTest extends Scene {
         }
     
         this.objectSet.update();
-    };
+    }
     
     draw ():void {
         core.clearCanvas([0.9, 0.9, 0.9, 1]);
@@ -106,5 +106,5 @@ export default class RigidShapeTest extends Scene {
     
         this.message.draw(this.camera);
         this.objectSet.draw(this.camera);
-    };
+    }
 }
