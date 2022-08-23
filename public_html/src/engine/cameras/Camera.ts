@@ -13,9 +13,6 @@ import CameraShake from "./CameraShake.js";
 import Transform from "../utils/Transform.js";
 import BoundingBox from "../utils/BoundingBox.js";
 
-type bounds = [number, number, number, number];
-type color = [number, number, number, number];
-
 class PreRenderCache {
     wcToPixelsRatio = 1;
     viewportBottomWC = -1;
