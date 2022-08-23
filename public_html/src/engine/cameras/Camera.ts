@@ -273,12 +273,10 @@ export default class Camera {
         
         var wcPos = vec2.create();
         vec2.sub(wcPos, mousePos2DPx, vpOrigin);
-        vec2.scaleAndAdd(wcPos, bottomLeft, wcPos, this._getPixelsToWCRatio());
+        vec2.scaleAndAdd(wcPos, bottomLeft, wcPos, this.getPixelsToWCRatio());
     //    return vec3(wcPos[0], wcPos[1]);
         return wcPos;
-    }_getPixelsToWCRatio(): any {
-        throw new Error("Method not implemented.");
-    };
+    }
     
     convertWCPosToPx(wcPosition:vec3) {
         var x = wcPosition[0] - this.renderCache.viewportLeftWC;
