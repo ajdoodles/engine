@@ -12,7 +12,7 @@ export default class CameraState {
     rate: number;
     cycles: number;
     width: InterpolatorNum;
-    center: any;
+    center: InterpolatorVec2;
     
     constructor(center: vec2, width: number) {
         this.rate = 0.1;
