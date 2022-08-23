@@ -95,14 +95,14 @@ export default (function () {
         var texInfo = textures.getTextureInfo(fontInfo.mFontImage);
         var leftPixel = Number(charInfo.getAttribute("x"));
         var rightPixel = leftPixel + Number(charInfo.getAttribute("width")) - 1;
-        var topPixel = (texInfo.mHeight - 1) - Number(charInfo.getAttribute("y"));
+        var topPixel = (texInfo.height - 1) - Number(charInfo.getAttribute("y"));
         var bottomPixel = topPixel - Number(charInfo.getAttribute("height")) + 1;
 
         // texture coordinate information
-        returnInfo.mTexCoordLeft = leftPixel / (texInfo.mWidth - 1);
-        returnInfo.mTexCoordTop = topPixel / (texInfo.mHeight - 1);
-        returnInfo.mTexCoordRight = rightPixel / (texInfo.mWidth - 1);
-        returnInfo.mTexCoordBottom = bottomPixel / (texInfo.mHeight - 1);
+        returnInfo.mTexCoordLeft = leftPixel / (texInfo.width - 1);
+        returnInfo.mTexCoordTop = topPixel / (texInfo.height - 1);
+        returnInfo.mTexCoordRight = rightPixel / (texInfo.width - 1);
+        returnInfo.mTexCoordBottom = bottomPixel / (texInfo.height - 1);
 
         // relative character size
         var charWidth = charInfo.getAttribute("xadvance");

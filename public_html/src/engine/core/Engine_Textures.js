@@ -4,15 +4,8 @@
  * and open the template in the editor.
  */
 
-function TextureInfo(name, width, height, id) {
-    this.mName = name;
-    this.mWidth = width;
-    this.mHeight = height;
-    this.mGLTexID = id;
-    this.mColorArray = null;
-}
-
 "use strict";
+import TextureInfo from "./TextureInfo.js";
 import resourceMap from "./resources/Engine_ResourceMap.js";
 import core from "./Engine_Core.js";
 
@@ -46,7 +39,7 @@ export default (function () {
     var unloadTexture = function(textureName) {
         var gl = core.getGL();
         var texInfo = resourceMap.retrieveAsset(textureName);
-        gl.deleteTexture(texInfo.mGLTexID);
+        gl.deleteTexture(texInfo.glTexID);
         resourceMap.unloadAsset(textureName);
     };
 
@@ -83,7 +76,7 @@ export default (function () {
         var texInfo = resourceMap.retrieveAsset(textureName);
         
         gl.activeTexture(textureUnit);
-        gl.bindTexture(gl.TEXTURE_2D, texInfo.mGLTexID);
+        gl.bindTexture(gl.TEXTURE_2D, texInfo.glTexID);
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
@@ -109,22 +102,22 @@ export default (function () {
 
     var getColorArray = function(textureName) {
         var texInfo = getTextureInfo(textureName);
-        if (texInfo.mColorArray === null) {
+        if (texInfo.colorArray === null) {
             var gl = core.getGL();
             var fb = gl.createFramebuffer();
             gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
-            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texInfo.mGLTexID, 0);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texInfo.glTexID, 0);
             if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE) {
-                var pixels = new Uint8Array(texInfo.mWidth * texInfo.mHeight * 4);
-                gl.readPixels(0, 0, texInfo.mWidth, texInfo.mHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-                texInfo.mColorArray = pixels;
+                var pixels = new Uint8Array(texInfo.width * texInfo.height * 4);
+                gl.readPixels(0, 0, texInfo.width, texInfo.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+                texInfo.colorArray = pixels;
             } else {
                 alert("WARNING: Failed to retreive color array");
             }
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
             gl.deleteFramebuffer(fb);
         }
-        return texInfo.mColorArray;
+        return texInfo.colorArray;
     };
 
     var mPublic = {
