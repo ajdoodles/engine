@@ -10,7 +10,7 @@ import Camera from "../cameras/Camera.js";
 import Light from "../lights/Light.js";
 
 export default class ShadowCasterShader extends SpriteShader{
-    light!: Light;
+    light?: Light;
     lightRef: ShaderLightReference;
 
     constructor  (vertexShaderId:string, fragmentShaderId:string) {

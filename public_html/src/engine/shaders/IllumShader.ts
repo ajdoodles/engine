@@ -14,7 +14,7 @@ export default class IllumShader extends LightShader {
     normalSampler: WebGLSampler;
     cameraPosition: vec3;
     materialRef: ShaderMaterialReference;
-    material!: Material;
+    material?: Material;
 
     constructor(vectorShaderId:string, fragmentShaderId:string){
         super(vectorShaderId, fragmentShaderId);
