@@ -15,7 +15,7 @@ import { vec2 } from "gl-matrix";
  * @param {Number} duration number of ticks the shake will take
  * @returns {ShakePosition}
  */
-function ShakePosition(xDelta, yDelta, numOscillations, duration) {
+export default function ShakePosition(xDelta, yDelta, numOscillations, duration) {
     this.mInitX = xDelta; 
     this.mInitY = yDelta;
     this.mOmega = numOscillations * 2 * Math.PI; //convert to radians 
