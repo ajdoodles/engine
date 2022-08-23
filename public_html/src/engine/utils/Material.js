@@ -5,7 +5,7 @@
  */
 import { vec4 } from "gl-matrix";
 
-function Material(
+export default function Material(
         ambient = vec4.fromValues(0.0, 0.0, 0.0, 0.0),
         diffuse = vec4.fromValues(0.2, 0.2, 0.2, 1.0),
         specular = vec4.fromValues(1.0, 1.0, 1.0, 1.0),

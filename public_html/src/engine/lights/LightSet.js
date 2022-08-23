@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function LightSet() {
+export default function LightSet() {
     this.mLights = [];
 };
 
