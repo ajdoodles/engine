@@ -5,19 +5,19 @@
  */
 
 import { vec2 } from "gl-matrix";
-import Interpolator from "../utils/Interpolator.js";
+import InterpolatorNum from "../utils/InterpolatorNum.js";
 import InterpolatorVec2 from "../utils/InterpolatorVec2.js";
 
 export default class CameraState {
     rate: number;
     cycles: number;
-    width: Interpolator;
+    width: InterpolatorNum;
     center: any;
     
     constructor(center: vec2, width: number) {
         this.rate = 0.1;
         this.cycles = 300;
-        this.width = new Interpolator(width, this.cycles, this.rate);
+        this.width = new InterpolatorNum(width, this.cycles, this.rate);
         this.center = new InterpolatorVec2(center, this.cycles, this.rate);
     }
 
