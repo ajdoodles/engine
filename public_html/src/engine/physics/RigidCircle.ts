@@ -77,7 +77,7 @@ export default class RigidCircle extends RigidShape {
         return distSquared < (maxDist * maxDist);
     };
     
-    collided (otherShape: RigidShape) {
+    collided (otherShape: RigidShape) : boolean {
         switch (otherShape.rigidType()) {
             case RigidShape.eRigidType.eCircle:
                 return this.collidedCircleCircle(this, otherShape as RigidCircle);

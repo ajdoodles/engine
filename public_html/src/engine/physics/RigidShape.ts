@@ -12,7 +12,7 @@ import RigidRect from "./RigidRect.js";
 import RigidCircle from "./RigidCircle.js";
 import MathUtils from "../utils/MathUtils.js";
 
-export default class RigidShape{
+export default abstract class RigidShape{
 
     static readonly eRigidType = Object.freeze({
         eAbstract: 0,
@@ -82,6 +82,8 @@ export default class RigidShape{
         this.positionMark.setEndVertex(pos[0] - this.padding, pos[1] - this.padding);
         this.positionMark.draw(camera);
     };
+
+    abstract collided (otherObj: RigidShape) : boolean;
 
     collidedRectCircle (rect:RigidRect, circle:RigidCircle) {
         const rectPos = rect.getPosition();
