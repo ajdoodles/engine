@@ -7,20 +7,19 @@
 "use strict";
 import resourceMap from "./Engine_ResourceMap.js";
 
-export default (function() {
-    var mAudioContext = null;
-    var mBgAudioNode = null;
+    let mAudioContext : AudioContext;
+    let mBgAudioNode : AudioBufferSourceNode | null;
     
-    var initAudioContext = function() {
+    const initAudioContext = function() {
       try {
-          var AudioContext = window.AudioContext || window.webkitAudioContext;
+          const AudioContext = window.AudioContext;
           mAudioContext = new AudioContext();
       } catch (e) {
           alert("Web audio is not supported.")
       }
     };
     
-    var loadAudio = function(fileName) {
+    const loadAudio = function(fileName:string) {
         if (resourceMap.isAssetLoaded(fileName)) {
             resourceMap.incAssetRefCount(fileName);
             
@@ -32,7 +31,7 @@ export default (function() {
         
         resourceMap.asyncLoadRequested(fileName);
 
-        var req = new XMLHttpRequest();
+        const req = new XMLHttpRequest();
         req.onreadystatechange = function () {
             if (req.readyState === 4 && req.status !== 200) {
                 alert("audio loading failed: " + fileName + "[see hint]");
@@ -56,22 +55,22 @@ export default (function() {
         req.send();
     };
 
-    var unloadAudio = function (filePath) {
+    const unloadAudio = function (filePath: string) {
         resourceMap.unloadAsset(filePath);
     };
 
-    var playCue = function (clipName) {
-        var clipData = resourceMap.retrieveAsset(clipName);
+    const playCue = function (clipName:string) {
+        const clipData = resourceMap.retrieveAsset(clipName) as AudioBuffer;
         if (clipData !== null) {
-            var sourceNode = mAudioContext.createBufferSource();
+            const sourceNode = mAudioContext.createBufferSource();
             sourceNode.buffer = clipData;
             sourceNode.connect(mAudioContext.destination);
             sourceNode.start(0);
         }
     };
 
-    var playBackgroundAudio = function (clipName) {
-        var clipData = resourceMap.retrieveAsset(clipName);
+    const playBackgroundAudio = function (clipName : string) {
+        const clipData = resourceMap.retrieveAsset(clipName) as AudioBuffer;
         if (clipData !== null) {
             stopBackgroundAudio();
             mBgAudioNode = mAudioContext.createBufferSource();
@@ -82,18 +81,18 @@ export default (function() {
         }
     };
 
-    var stopBackgroundAudio = function () {
+    const stopBackgroundAudio = function () {
         if (isBackgroundAudioPlaying()) {
-            mBgAudioNode.stop(0);
+            mBgAudioNode?.stop(0);
             mBgAudioNode = null;
         }
     };
 
-    var isBackgroundAudioPlaying = function () {
+    const isBackgroundAudioPlaying = function () {
         return mBgAudioNode !== null;
     };
     
-    var mPublic = {
+    const mPublic = {
         initAudioContext: initAudioContext,
         loadAudio: loadAudio,
         unloadAudio: unloadAudio,
@@ -103,5 +102,4 @@ export default (function() {
         isBackgroundAudioPlaying: isBackgroundAudioPlaying,
     };
     
-    return mPublic;
-}());
+    export default mPublic;

@@ -12,8 +12,8 @@ import LightShader from "./LightShader.js";
 import ShaderMaterialReference from "./ShaderMaterialReference.js";
 
 export default class IllumShader extends LightShader {
-    normalSampler: WebGLSampler;
-    cameraPosition: vec3;
+    normalSampler: WebGLUniformLocation;
+    cameraPosition: WebGLUniformLocation;
     materialRef: ShaderMaterialReference;
     material!: Material;
 
@@ -22,8 +22,8 @@ export default class IllumShader extends LightShader {
     
         const gl = core.getGL();
 
-        this.normalSampler = gl.getUniformLocation(this.compiledShader, "uNormalSampler");
-        this.cameraPosition = gl.getUniformLocation(this.compiledShader, "uCameraPosition");
+        this.normalSampler = gl.getUniformLocation(this.compiledShader, "uNormalSampler")as WebGLUniformLocation;
+        this.cameraPosition = gl.getUniformLocation(this.compiledShader, "uCameraPosition")as WebGLUniformLocation;
         this.materialRef = new ShaderMaterialReference(this.compiledShader);
 
     }

@@ -10,18 +10,18 @@ import Light from "../lights/Light.js";
 import Camera from "../cameras/Camera.js";
 
 export default class ShaderLightReference {
-    index: any;
-    isLitRef: any;
-    lightTypeRef: any;
-    colorRef: any;
-    positionRef: any;
-    directionRef: any;
-    intensityRef: any;
-    nearRef: any;
-    farRef: any;
-    dropoffRef: any;
-    cosInnerRef: any;
-    cosOuterRef: any;
+    index: WebGLUniformLocation;
+    isLitRef: WebGLUniformLocation;
+    lightTypeRef: WebGLUniformLocation;
+    colorRef: WebGLUniformLocation;
+    positionRef: WebGLUniformLocation;
+    directionRef: WebGLUniformLocation;
+    intensityRef: WebGLUniformLocation;
+    nearRef: WebGLUniformLocation;
+    farRef: WebGLUniformLocation;
+    dropoffRef: WebGLUniformLocation;
+    cosInnerRef: WebGLUniformLocation;
+    cosOuterRef: WebGLUniformLocation;
     
     constructor(shader: WebGLShader, index: number) {
         //TODO MOVE THIS OUT INTO A CONSTANTS MODULE OR SOMETHING
@@ -37,24 +37,24 @@ export default class ShaderLightReference {
         const indexString = "uLights[" + index + "].";
         
         const gl = core.getGL();
-        this.isLitRef = gl.getUniformLocation(shader, indexString + "IsLit");
-        this.lightTypeRef = gl.getUniformLocation(shader, indexString + "LightType");
-        this.colorRef = gl.getUniformLocation(shader, indexString + "Color");
-        this.positionRef = gl.getUniformLocation(shader, indexString + "Position");
-        this.directionRef = gl.getUniformLocation(shader, indexString + "Direction");
-        this.intensityRef = gl.getUniformLocation(shader, indexString + "Intensity");
-        this.nearRef = gl.getUniformLocation(shader, indexString + "Near");
-        this.farRef = gl.getUniformLocation(shader, indexString + "Far");
-        this.dropoffRef = gl.getUniformLocation(shader, indexString + "Dropoff");
-        this.cosInnerRef = gl.getUniformLocation(shader, indexString + "CosInner");
-        this.cosOuterRef = gl.getUniformLocation(shader, indexString + "CosOuter");
+        this.isLitRef = gl.getUniformLocation(shader, indexString + "IsLit") as WebGLUniformLocation;
+        this.lightTypeRef = gl.getUniformLocation(shader, indexString + "LightType") as WebGLUniformLocation;
+        this.colorRef = gl.getUniformLocation(shader, indexString + "Color") as WebGLUniformLocation;
+        this.positionRef = gl.getUniformLocation(shader, indexString + "Position") as WebGLUniformLocation;
+        this.directionRef = gl.getUniformLocation(shader, indexString + "Direction") as WebGLUniformLocation;
+        this.intensityRef = gl.getUniformLocation(shader, indexString + "Intensity") as WebGLUniformLocation;
+        this.nearRef = gl.getUniformLocation(shader, indexString + "Near") as WebGLUniformLocation;
+        this.farRef = gl.getUniformLocation(shader, indexString + "Far") as WebGLUniformLocation;
+        this.dropoffRef = gl.getUniformLocation(shader, indexString + "Dropoff") as WebGLUniformLocation;
+        this.cosInnerRef = gl.getUniformLocation(shader, indexString + "CosInner") as WebGLUniformLocation;
+        this.cosOuterRef = gl.getUniformLocation(shader, indexString + "CosOuter") as WebGLUniformLocation;
     }
 
     loadToShader  (camera: Camera, light: Light) {
         const gl = core.getGL();
         
         const isLit = light !== undefined && light !== null && light.isLit();
-        gl.uniform1i(this.isLitRef, isLit);
+        gl.uniform1i(this.isLitRef, isLit ? 1 : 0);
 
         if (light.isLit()) {
             gl.uniform1i(this.lightTypeRef, light.getLightType());
@@ -85,8 +85,8 @@ export default class ShaderLightReference {
         }
     };
 
-    setLit  (isLit: any) {
+    setLit  (isLit: boolean) {
         const gl = core.getGL();    
-        gl.uniform1i(this.isLitRef, isLit);
+        gl.uniform1i(this.isLitRef, isLit ? 1 : 0);
     };
 }

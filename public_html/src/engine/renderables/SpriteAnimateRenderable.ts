@@ -86,7 +86,7 @@ export default class SpriteAnimateRenderable extends SpriteRenderable {
             elementHeightPx: number,
             numElements: number,
             widthPaddingPx: number) {
-        const texInfo : TextureInfo = resourceMap.retrieveAsset(this.texture);
+        const texInfo = resourceMap.retrieveAsset(this.texture) as TextureInfo;
         const imgHeight = texInfo.height;
         const imgWidth = texInfo.width;
         

@@ -9,6 +9,7 @@ import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import TextureRenderable from "./TextureRenderable.js";
 import Camera from "../cameras/Camera.js";
 import SpriteShader from "../shaders/SpriteShader.js";
+import TextureInfo from "../core/TextureInfo.js";
 
 export default class SpriteRenderable extends TextureRenderable {
     texLeft: number;
@@ -36,7 +37,7 @@ export default class SpriteRenderable extends TextureRenderable {
     };
 
     setElementPixelCoordinates(left: number, right: number, bottom: number, top: number) {
-        const texInfo = resourceMap.retrieveAsset(this.texture);
+        const texInfo = resourceMap.retrieveAsset(this.texture) as TextureInfo;
         
         const imgHeight = texInfo.height;
         const imgWidth = texInfo.width;

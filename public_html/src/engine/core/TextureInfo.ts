@@ -2,10 +2,10 @@ export default class TextureInfo{
     name: string;
     width: number;
     height: number;
-    glTexID: number;
-    colorArray?: number[];
+    glTexID: WebGLTexture;
+    colorArray?: Uint8Array;
     
-    constructor(name:string, width:number, height:number, id:number) {
+    constructor(name:string, width:number, height:number, id:WebGLTexture) {
         this.name = name;
         this.width = width;
         this.height = height;

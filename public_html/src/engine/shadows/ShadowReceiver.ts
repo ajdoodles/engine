@@ -59,7 +59,7 @@ export default class ShadowReceiver {
 
     _shadowReceiverStencilOff () {
         const gl = core.getGL();
-        gl.depthMask(gl.TRUE);
+        gl.depthMask(true);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         gl.stencilFunc(gl.EQUAL, this.shadowStencilBit, this.shadowStencilMask);
         gl.colorMask(true, true, true, true);

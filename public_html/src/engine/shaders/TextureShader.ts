@@ -10,20 +10,19 @@ import core from "../core/Engine_Core.js";
 import Camera from "../cameras/Camera.js";
 
 export default class TextureShader extends SimpleShader {
-    textureCoordinateAttribute: null;
+    textureCoordinateAttribute: number;
     texCoord: null;
     colorSampler: WebGLSampler;
 
     constructor(vertexShaderId:string, fragmentShaderId:string) {
         super(vertexShaderId, fragmentShaderId);
     
-        this.textureCoordinateAttribute = null;
         this.texCoord = null;
         
         const gl = core.getGL();
         this.textureCoordinateAttribute =
                 gl.getAttribLocation(this.compiledShader, "aTextureCoordinate");
-        this.colorSampler = gl.getUniformLocation(this.compiledShader, "uSampler");
+        this.colorSampler = gl.getUniformLocation(this.compiledShader, "uSampler") as WebGLSampler;
     }
 
     activateShader(pixelColor:color, camera:Camera) {

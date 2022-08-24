@@ -16,19 +16,13 @@ export default class LineShader extends SimpleShader {
 
     constructor(vertexShaderId:string, fragmentShaderId:string) {
         super(vertexShaderId, fragmentShaderId);
-
-        this.compiledShader = null;
-        this.shaderVertexPositionAttribute = null;
-        this.modelTransform = null;
-        this.viewProjTransform = null;
-        this.pixelColor = null;
         
         const gl = core.getGL();
         
-        const vertexShader = this._compileShader(vertexShaderId, gl.VERTEX_SHADER);
-        const fragmentShader = this._compileShader(fragmentShaderId, gl.FRAGMENT_SHADER);
+        const vertexShader = this._compileShader(vertexShaderId, gl.VERTEX_SHADER) as WebGLShader;
+        const fragmentShader = this._compileShader(fragmentShaderId, gl.FRAGMENT_SHADER) as WebGLShader;
     
-        this.compiledShader = gl.createProgram();
+        this.compiledShader = gl.createProgram() as WebGLProgram;
         gl.attachShader(this.compiledShader, vertexShader);
         gl.attachShader(this.compiledShader, fragmentShader);
         gl.linkProgram(this.compiledShader);
@@ -39,9 +33,9 @@ export default class LineShader extends SimpleShader {
         }
         
         this.shaderVertexPositionAttribute = gl.getAttribLocation(this.compiledShader, "aSquareVertexPosition");
-        this.modelTransform = gl.getUniformLocation(this.compiledShader, "uModelTransform");
-        this.viewProjTransform = gl.getUniformLocation(this.compiledShader, "uViewProjTransform");
-        this.pixelColor = gl.getUniformLocation(this.compiledShader, "uPixelColor");
+        this.modelTransform = gl.getUniformLocation(this.compiledShader, "uModelTransform") as WebGLUniformLocation;
+        this.viewProjTransform = gl.getUniformLocation(this.compiledShader, "uViewProjTransform") as WebGLUniformLocation;
+        this.pixelColor = gl.getUniformLocation(this.compiledShader, "uPixelColor") as WebGLUniformLocation;
     
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLVertexRef());
     
@@ -56,8 +50,8 @@ export default class LineShader extends SimpleShader {
 
     _compileShader (filepath:string, shaderType:number) {
         const gl = core.getGL();
-        const shaderSource = resourceMap.retrieveAsset(filepath);
-        const compiledShader = gl.createShader(shaderType);
+        const shaderSource = resourceMap.retrieveAsset(filepath) as string;
+        const compiledShader = gl.createShader(shaderType) as WebGLShader;
     
         gl.shaderSource(compiledShader, shaderSource);
         gl.compileShader(compiledShader);

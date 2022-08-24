@@ -24,7 +24,7 @@ export default class SpriteShader extends TextureShader {
             0.0, 0.0];
     
         const gl = core.getGL();
-        this.spriteCoordBuffer = gl.createBuffer();
+        this.spriteCoordBuffer = gl.createBuffer() as WebGLBuffer;
         gl.bindBuffer(gl.ARRAY_BUFFER, this.spriteCoordBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(initialCoords), gl.DYNAMIC_DRAW);
     }

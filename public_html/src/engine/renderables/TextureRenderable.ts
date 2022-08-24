@@ -14,7 +14,7 @@ import { vec2 } from "gl-matrix";
 export default class TextureRenderable extends Renderable {
     texture: string;
     textureInfo!: TextureInfo;
-    colorArray?: number[];
+    colorArray?: Uint8Array;
     texWidth = 0;
     texHeight = 0;
     texLeftIndex = 0;
@@ -36,7 +36,7 @@ export default class TextureRenderable extends Renderable {
 
     setTexture (texture:string) {
         this.texture = texture;
-        this.textureInfo = textures.getTextureInfo(texture);
+        this.textureInfo = textures.getTextureInfo(texture) as TextureInfo;
         this.colorArray = this.textureInfo.colorArray;
         this.texWidth = this.textureInfo.width;
         this.texHeight = this.textureInfo.height;
