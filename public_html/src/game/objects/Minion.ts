@@ -10,7 +10,7 @@ import LightRenderable from "../../engine/renderables/LightRenderable.js";
 export default class Minion extends GameObject {
     delta: number;
     
-    constructor(spriteTexture: string, normalTexture: string) {
+    constructor(spriteTexture: string, normalTexture?: string) {
         
         let minion;
         if (normalTexture === null || normalTexture === undefined) {
