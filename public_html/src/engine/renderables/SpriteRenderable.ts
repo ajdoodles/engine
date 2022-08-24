@@ -8,6 +8,7 @@ import ShaderFactory from "../shaders/ShaderFactory.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import TextureRenderable from "./TextureRenderable.js";
 import Camera from "../cameras/Camera.js";
+import SpriteShader from "../shaders/SpriteShader.js";
 
 export default class SpriteRenderable extends TextureRenderable {
     texLeft: number;
@@ -47,7 +48,7 @@ export default class SpriteRenderable extends TextureRenderable {
         this._setTexInfo();
     }
 
-    getElementUVCoordinateArray() {
+    getElementUVCoordinateArray() : UVCoordArray {
         return [
             this.texRight, this.texTop,
             this.texLeft, this.texTop,
@@ -56,7 +57,7 @@ export default class SpriteRenderable extends TextureRenderable {
     }
 
     draw(camera:Camera) {
-        this.shader.setTextureCoordinates(this.getElementUVCoordinateArray());
+        (this.shader as SpriteShader).setTextureCoordinates(this.getElementUVCoordinateArray());
         TextureRenderable.prototype.draw.call(this, camera);
     };
 

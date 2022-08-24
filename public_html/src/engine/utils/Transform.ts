@@ -120,7 +120,7 @@ export default class Transform {
         this.vFlipMultiplier = shouldFlip ? -1 : 1;
     };
     
-    getXForm() {
+    getXForm() :mat4 {
         const xform = mat4.create();
         mat4.translate(xform, xform, this.getPosition3D());
         mat4.rotateZ(xform, xform, this.rotationRad);

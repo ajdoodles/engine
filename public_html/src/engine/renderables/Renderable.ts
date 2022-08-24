@@ -6,14 +6,13 @@
 
 import ShaderFactory from "../shaders/ShaderFactory.js";
 import core from "../core/Engine_Core.js";
-import { ReadonlyVec4, vec4 } from "gl-matrix";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import SimpleShader from "../shaders/SimpleShader.js";
 
 export default class Renderable {
     shader = ShaderFactory.getConstColorShader();
-    color = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+    color : color = [1.0, 1.0, 1.0, 1.0];
     xform = new Transform();
 
     _setShader (shader: SimpleShader) {
@@ -29,12 +28,12 @@ export default class Renderable {
         return this.color;
     }
 
-    setColor(color: vec4) {
+    setColor(color: color) {
         this.color = color;
     }
-    swapColor (color: ReadonlyVec4) {
-        const current = vec4.clone(this.color);
-        vec4.copy(this.color, color);
+    swapColor (color: color) : color {
+        const current = Array.from(this.color) as color;
+        this.color = Array.from(color) as color;
         return current;
     };
 

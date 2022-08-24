@@ -9,6 +9,7 @@ import textures from "../core/Engine_Textures.js";
 import LightRenderable from "./LightRenderable.js";
 import Material from "../utils/Material.js";
 import Camera from "../cameras/Camera.js";
+import IllumShader from "../shaders/IllumShader.js";
 
 export default class IllumRenderable extends LightRenderable {
     normalTexture: string;
@@ -31,7 +32,7 @@ export default class IllumRenderable extends LightRenderable {
 
     draw (camera: Camera) {
         textures.activateNormalTexture(this.normalTexture);
-        this.shader.setMaterial(this.material);
+        (this.shader as IllumShader).setMaterial(this.material);
         LightRenderable.prototype.draw.call(this, camera);
     };
 

@@ -22,7 +22,7 @@ export default class ShadowCaster {
     
 
     casterShader = ShaderFactory.getShadowCasterShader();
-    shadowColor = vec4.fromValues(0.2, 0.2, 0.2, 1.0);
+    shadowColor : color = [0.2, 0.2, 0.2, 1.0];
     saveXform = new Transform();
 
     shadowCaster: GameObject;
@@ -45,7 +45,7 @@ export default class ShadowCaster {
         
         this.saveXform.copy(castingRenderable.getXform());
         const castingShader = castingRenderable.swapShader(this.casterShader);
-        const casterColor = castingRenderable.swapColor(this.shadowColor);
+        const casterColor : color = castingRenderable.swapColor(this.shadowColor);
         
         for (let i = 0; i < numLights; i++) {
             const light = (castingRenderable as IllumRenderable).getLightAt(i);

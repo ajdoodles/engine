@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import { mat4 } from "gl-matrix";
 import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_Core.js";
 import vertexBuffer from "../core/Engine_VertexBuffer.js";
@@ -78,7 +79,7 @@ export default class LineShader extends SimpleShader {
         gl.uniform4fv(this.pixelColor, pixelColor);
     };
     
-    loadObjectTransform(modelTransform:Transform) {
+    loadObjectTransform(modelTransform:mat4) {
         const gl = core.getGL();
         gl.uniformMatrix4fv(this.modelTransform, false, modelTransform);
     };

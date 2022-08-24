@@ -10,6 +10,7 @@ import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import defaultResources from "../core/resources/Engine_DefaultResources.js";
 import Camera from "../cameras/Camera.js";
 import Transform from "../utils/Transform.js";
+import { mat4 } from "gl-matrix";
 
 export default class SimpleShader {
 
@@ -82,7 +83,7 @@ export default class SimpleShader {
         gl.uniform4fv(this.pixelColor, pixelColor);
     };
     
-    loadObjectTransform(modelTransform:Transform) {
+    loadObjectTransform(modelTransform:mat4) {
         const gl = core.getGL();
         gl.uniformMatrix4fv(this.modelTransform, false, modelTransform);
     }

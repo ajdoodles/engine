@@ -8,6 +8,7 @@ import ShaderFactory from "../shaders/ShaderFactory.js";
 import SpriteRenderable from "./SpriteRenderable.js";
 import Light from "../lights/Light.js";
 import Camera from "../cameras/Camera.js";
+import LightShader from "../shaders/LightShader.js";
 
 export default class LightRenderable extends SpriteRenderable {
     lights: Light[] = []; 
@@ -31,7 +32,7 @@ export default class LightRenderable extends SpriteRenderable {
     };
 
     draw (camera: Camera) {
-        this.shader.setLights(this.lights);
+        (this.shader as LightShader).setLights(this.lights);
         SpriteRenderable.prototype.draw.call(this, camera);
     };
 }

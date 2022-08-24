@@ -5,6 +5,7 @@
  */
 
 import { vec3 } from "gl-matrix";
+import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_Core.js";
 import Material from "../utils/Material.js";
 import LightShader from "./LightShader.js";
@@ -14,7 +15,7 @@ export default class IllumShader extends LightShader {
     normalSampler: WebGLSampler;
     cameraPosition: vec3;
     materialRef: ShaderMaterialReference;
-    material?: Material;
+    material!: Material;
 
     constructor(vectorShaderId:string, fragmentShaderId:string){
         super(vectorShaderId, fragmentShaderId);
@@ -27,20 +28,17 @@ export default class IllumShader extends LightShader {
 
     }
 
-
-
-};
-
-
-IllumShader.prototype.setMaterial = function (material :Material) {
-    this.material = material;
-};
-
-IllumShader.prototype.activateShader = function (pixelColor, camera) {
-    LightShader.prototype.activateShader.call(this, pixelColor, camera);
+    setMaterial  (material :Material) {
+        this.material = material;
+    };
     
-    const gl = core.getGL();
-    gl.uniform1i(this.normalSampler, 1);
-    gl.uniform3fv(this.cameraPosition, camera.getCameraPosPx());
-    this.materialRef.loadToShader(this.material);
+    activateShader (pixelColor: color, camera: Camera) {
+        LightShader.prototype.activateShader.call(this, pixelColor, camera);
+        
+        const gl = core.getGL();
+        gl.uniform1i(this.normalSampler, 1);
+        gl.uniform3fv(this.cameraPosition, camera.getCameraPosPx());
+        this.materialRef.loadToShader(this.material);
+    };
+
 };
