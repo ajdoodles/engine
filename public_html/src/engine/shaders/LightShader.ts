@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-import core from "../core/Engine_Core.js";
 import SpriteShader from "./SpriteShader.js";
 import ShaderLightReference from "./ShaderLightReference.js";
 import Light from "../lights/Light.js";

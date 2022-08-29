@@ -18,12 +18,6 @@ const getGL = function() {
     return mGL; 
 };
 
-const inheritPrototype = function(superClass: { prototype: any; }, subClass: { prototype: any; }) {
-    const prototype = Object.create(superClass.prototype);
-    prototype.constructor = subClass;
-    subClass.prototype = prototype;
-};
-
 const _initializeWebGL = function(htmlCanvasId: string) {
     const canvas = document.getElementById(htmlCanvasId) as HTMLCanvasElement;
 
@@ -74,7 +68,6 @@ const clearCanvas = function(color: color) {
 
 const mPublic = {
     getGL: getGL,
-    inheritPrototype: inheritPrototype,
     initializeEngineCore: initializeEngineCore,
     startScene: startScene,
     clearCanvas: clearCanvas,

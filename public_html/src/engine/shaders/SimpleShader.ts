@@ -9,7 +9,6 @@ import vertexBuffer from "../core/Engine_VertexBuffer.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import defaultResources from "../core/resources/Engine_DefaultResources.js";
 import Camera from "../cameras/Camera.js";
-import Transform from "../utils/Transform.js";
 import { mat4 } from "gl-matrix";
 
 export default class SimpleShader {

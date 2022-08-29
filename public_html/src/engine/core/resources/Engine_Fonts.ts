@@ -1,12 +1,3 @@
-/*
- * File: EngineCore_Fonts.js 
- * Provides support for loading and unloading of font image and font description
- */
-
-/*jslint node: true, vars: true, evil: true */
-/*global gEngine: false, XMLHttpRequest: false, DOMParser: false, alert: false, XPathResult: false */
-/* find out more about jslint: http://www.jslint.com/help.html */
-
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 import textures from "../Engine_Textures.js";

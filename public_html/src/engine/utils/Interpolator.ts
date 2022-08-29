@@ -31,7 +31,7 @@ export default class Interpolator<T> {
         this.cyclesLeft = this.cycles;
     };
 
-    protected interpolateValue() { };
+    protected interpolateValue() { /* stub */ };
 
     getValue() { 
         return this.current;

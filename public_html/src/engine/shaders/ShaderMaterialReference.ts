@@ -8,18 +8,18 @@ import core from "../core/Engine_Core.js";
 import Material from "../utils/Material.js";
 
 export default class ShaderMaterialReference {
-    ambientRef: any;
-    diffuseRef: any;
-    specularRef: any;
-    shininessRef: any;
+    ambientRef: WebGLUniformLocation;
+    diffuseRef: WebGLUniformLocation;
+    specularRef: WebGLUniformLocation;
+    shininessRef: WebGLUniformLocation;
     
     constructor(shader:WebGLShader) {
         const gl = core.getGL();
         
-        this.ambientRef = gl.getUniformLocation(shader, "uMaterial.Ka");
-        this.diffuseRef = gl.getUniformLocation(shader, "uMaterial.Kd");
-        this.specularRef = gl.getUniformLocation(shader, "uMaterial.Ks");
-        this.shininessRef = gl.getUniformLocation(shader, "uMaterial.Shininess");
+        this.ambientRef = gl.getUniformLocation(shader, "uMaterial.Ka") as WebGLUniformLocation;
+        this.diffuseRef = gl.getUniformLocation(shader, "uMaterial.Kd") as WebGLUniformLocation;
+        this.specularRef = gl.getUniformLocation(shader, "uMaterial.Ks") as WebGLUniformLocation;
+        this.shininessRef = gl.getUniformLocation(shader, "uMaterial.Shininess") as WebGLUniformLocation;
     }
 
     loadToShader (material:Material) {

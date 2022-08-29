@@ -9,12 +9,8 @@ import core from "../core/Engine_Core.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import SimpleShader from "../shaders/SimpleShader.js";
-import Light from "../lights/Light.js";
 
 export default class Renderable {
-    addLight(arg0: Light) {
-        throw new Error("Method not implemented.");
-    }
     shader = ShaderFactory.getConstColorShader();
     color : color = [1.0, 1.0, 1.0, 1.0];
     xform = new Transform();

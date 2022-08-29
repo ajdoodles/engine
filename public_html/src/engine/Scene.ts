@@ -14,12 +14,3 @@ export default abstract class Scene {
     abstract update(): void
     abstract draw(): void
 }
-
-//Called from Engine_Core's startScene
-Scene.prototype.loadScene = function() { };
-Scene.prototype.unloadScene = function() { };
-
-// Called by the game loop after all resources are loaded (defined in loadscene)
-Scene.prototype.initialize = function() { };
-Scene.prototype.update = function() { };
-Scene.prototype.draw = function() { };

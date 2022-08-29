@@ -8,8 +8,6 @@ import core from "../core/Engine_Core.js";
 import TextureShader from "./TextureShader.js";
 import SimpleShader from "./SimpleShader.js";
 import Camera from "../cameras/Camera.js";
-import Light from "../lights/Light.js";
-import Material from "../utils/Material.js";
 
 export default class SpriteShader extends TextureShader {
     spriteCoordBuffer: WebGLBuffer;
@@ -48,12 +46,5 @@ export default class SpriteShader extends TextureShader {
                 false,
                 0,
                 0);
-    };
-    
-    setMaterial (material:Material) {
-        // Overridden by IllumShader
-    };
-    setLights (lights:Light[]) {
-        // Overridden by LightShader
     };
 };

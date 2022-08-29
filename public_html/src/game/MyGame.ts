@@ -11,7 +11,7 @@ import input from "../engine/core/Engine_Input.js";
 import textFileLoader from "../engine/core/resources/Engine_TextFileLoader.js";
 import textures from "../engine/core/Engine_Textures.js";
 import BlueLevel from "./BlueLevel.js";
-import { vec2, vec3 } from "gl-matrix";
+import { vec2 } from "gl-matrix";
 import Camera from "../engine/cameras/Camera.js";
 import GameObject from "../engine/gameobjects/GameObject.js";
 import Light from "../engine/lights/Light.js";
@@ -237,9 +237,9 @@ export default class MyGame extends Scene {
         this.mFocus = this.mLightSet.getLightAt(0);
         
         for (let i = 0; i < this.mLightSet.numLights(); i++) {
-            this.mBg.getRenderable().addLight(this.mLightSet.getLightAt(i));
-            this.mHero.getRenderable().addLight(this.mLightSet.getLightAt(i));
-            this.mBrain.getRenderable().addLight(this.mLightSet.getLightAt(i));
+            (this.mBg.getRenderable() as IllumRenderable).addLight(this.mLightSet.getLightAt(i));
+            (this.mHero.getRenderable() as IllumRenderable).addLight(this.mLightSet.getLightAt(i));
+            (this.mBrain.getRenderable() as IllumRenderable).addLight(this.mLightSet.getLightAt(i));
         }
     };
     

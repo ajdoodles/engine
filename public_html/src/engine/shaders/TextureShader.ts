@@ -42,5 +42,4 @@ export default class TextureShader extends SimpleShader {
     };
 
 };
-core.inheritPrototype(SimpleShader, TextureShader);
 

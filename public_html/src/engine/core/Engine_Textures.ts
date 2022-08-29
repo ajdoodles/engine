@@ -41,7 +41,7 @@ const unloadTexture = function(textureName: string) {
     resourceMap.unloadAsset(textureName);
 };
 
-const _processLoadedImage = function (textureName: string, img: any) {
+const _processLoadedImage = function (textureName: string, img: HTMLImageElement) {
     const gl = core.getGL();
     const textureID = gl.createTexture() as WebGLTexture;
 

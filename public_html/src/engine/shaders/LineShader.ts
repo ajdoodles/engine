@@ -9,7 +9,6 @@ import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_Core.js";
 import vertexBuffer from "../core/Engine_VertexBuffer.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
-import Transform from "../utils/Transform.js";
 import SimpleShader from "./SimpleShader.js";
 
 export default class LineShader extends SimpleShader {
