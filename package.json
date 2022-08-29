@@ -1,5 +1,7 @@
 {
-    "name": "JavascriptSourceObjects",
+    "name": "game-engine",
+    "private": true,
+    "browser": "./public_html/build/multi-entry.js",
     "version": "1.0.0",
     "keywords": [
         "util",
@@ -8,7 +10,7 @@
         "client",
         "browser"
     ],
-    "author": "aduda",
+    "author": "agraffe",
     "contributors": [],
     "scripts": {
         "prebuild": "rm -rf public_html/build",
