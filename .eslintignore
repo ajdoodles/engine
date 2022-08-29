@@ -1,0 +1,12 @@
+.eslintrc.cjs
+.prettierrc.json
+
+package.json
+package-lock.json
+
+tsconfig.json
+
+public_html/build/
+public_html/assets/
+node_modules/
+.vscode/
