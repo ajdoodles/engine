@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,28 +11,28 @@ import Camera from "../cameras/Camera.js";
 import LightShader from "../shaders/LightShader.js";
 
 export default class LightRenderable extends SpriteRenderable {
-    lights: Light[] = []; 
-    
-    constructor(texture:string) {
-        super(texture);
-        this._setShader(ShaderFactory.getLightShader());
-    };
+  lights: Light[] = [];
 
-    getLightAt (index: number) {
-        return this.lights[index];
-    };
-    setLights(lights: Light[]) {
-        this.lights = lights;
-    };
-    addLight(light: Light) {
-        this.lights.push(light);
-    };
-    numLights () {
-        return this.lights.length;
-    };
+  constructor(texture: string) {
+    super(texture);
+    this._setShader(ShaderFactory.getLightShader());
+  }
 
-    draw (camera: Camera) {
-        (this.shader as LightShader).setLights(this.lights);
-        SpriteRenderable.prototype.draw.call(this, camera);
-    };
+  getLightAt(index: number) {
+    return this.lights[index];
+  }
+  setLights(lights: Light[]) {
+    this.lights = lights;
+  }
+  addLight(light: Light) {
+    this.lights.push(light);
+  }
+  numLights() {
+    return this.lights.length;
+  }
+
+  draw(camera: Camera) {
+    (this.shader as LightShader).setLights(this.lights);
+    SpriteRenderable.prototype.draw.call(this, camera);
+  }
 }

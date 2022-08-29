@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,63 +11,62 @@ import ShadowCaster from "./ShadowCaster.js";
 import GameObject from "../gameobjects/GameObject.js";
 
 export default class ShadowReceiver {
-    
-    shadowStencilBit = 0x01;
-    shadowStencilMask = 0xFF;
-    
-    shadowReceiverShader = ShaderFactory.getShadowReceiverShader();
-    shadowCasters : ShadowCaster[] = [];
+  shadowStencilBit = 0x01;
+  shadowStencilMask = 0xff;
 
-    shadowReceiver: GameObject;
+  shadowReceiverShader = ShaderFactory.getShadowReceiverShader();
+  shadowCasters: ShadowCaster[] = [];
 
-    constructor(receiver: GameObject) {
-        this.shadowReceiver = receiver;
-    };
+  shadowReceiver: GameObject;
 
-    addShadowCaster (casterObject: GameObject) {
-        const caster = new ShadowCaster(casterObject, this.shadowReceiver);
-        this.shadowCasters.push(caster);
-    };
+  constructor(receiver: GameObject) {
+    this.shadowReceiver = receiver;
+  }
 
-    draw (camera: Camera) {
-        this.shadowReceiver.draw(camera);
-        
-        this._shadowReceiverStencilOn();
-        const oldShader = this.shadowReceiver.getRenderable().swapShader(this.shadowReceiverShader);
-        this.shadowReceiver.draw(camera);
-        this.shadowReceiver.getRenderable().swapShader(oldShader);
-        this._shadowReceiverStencilOff();
-        
-        for (let i = 0; i < this.shadowCasters.length; i++) {
-            this.shadowCasters[i].draw(camera);
-        }
-        
-        this._shadowReceiverStencilDisable();
-    };
+  addShadowCaster(casterObject: GameObject) {
+    const caster = new ShadowCaster(casterObject, this.shadowReceiver);
+    this.shadowCasters.push(caster);
+  }
 
+  draw(camera: Camera) {
+    this.shadowReceiver.draw(camera);
 
-    _shadowReceiverStencilOn () {
-        const gl = core.getGL();
-        gl.clear(gl.STENCIL_BUFFER_BIT);
-        gl.enable(gl.STENCIL_TEST);
-        gl.colorMask(false, false, false, false);
-        gl.depthMask(false);
-        gl.stencilFunc(gl.NEVER, this.shadowStencilBit, this.shadowStencilMask);
-        gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
-        gl.stencilMask(this.shadowStencilMask);
-    };
+    this._shadowReceiverStencilOn();
+    const oldShader = this.shadowReceiver
+      .getRenderable()
+      .swapShader(this.shadowReceiverShader);
+    this.shadowReceiver.draw(camera);
+    this.shadowReceiver.getRenderable().swapShader(oldShader);
+    this._shadowReceiverStencilOff();
 
-    _shadowReceiverStencilOff () {
-        const gl = core.getGL();
-        gl.depthMask(true);
-        gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
-        gl.stencilFunc(gl.EQUAL, this.shadowStencilBit, this.shadowStencilMask);
-        gl.colorMask(true, true, true, true);
-    };
+    for (let i = 0; i < this.shadowCasters.length; i++) {
+      this.shadowCasters[i].draw(camera);
+    }
 
-    _shadowReceiverStencilDisable () {
-        const gl = core.getGL();
-        gl.disable(gl.STENCIL_TEST);
-    };
+    this._shadowReceiverStencilDisable();
+  }
 
+  _shadowReceiverStencilOn() {
+    const gl = core.getGL();
+    gl.clear(gl.STENCIL_BUFFER_BIT);
+    gl.enable(gl.STENCIL_TEST);
+    gl.colorMask(false, false, false, false);
+    gl.depthMask(false);
+    gl.stencilFunc(gl.NEVER, this.shadowStencilBit, this.shadowStencilMask);
+    gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
+    gl.stencilMask(this.shadowStencilMask);
+  }
+
+  _shadowReceiverStencilOff() {
+    const gl = core.getGL();
+    gl.depthMask(true);
+    gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
+    gl.stencilFunc(gl.EQUAL, this.shadowStencilBit, this.shadowStencilMask);
+    gl.colorMask(true, true, true, true);
+  }
+
+  _shadowReceiverStencilDisable() {
+    const gl = core.getGL();
+    gl.disable(gl.STENCIL_TEST);
+  }
 }

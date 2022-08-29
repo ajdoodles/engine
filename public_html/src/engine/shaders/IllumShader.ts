@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,33 +11,37 @@ import LightShader from "./LightShader.js";
 import ShaderMaterialReference from "./ShaderMaterialReference.js";
 
 export default class IllumShader extends LightShader {
-    normalSampler: WebGLUniformLocation;
-    cameraPosition: WebGLUniformLocation;
-    materialRef: ShaderMaterialReference;
-    material!: Material;
+  normalSampler: WebGLUniformLocation;
+  cameraPosition: WebGLUniformLocation;
+  materialRef: ShaderMaterialReference;
+  material!: Material;
 
-    constructor(vectorShaderId:string, fragmentShaderId:string){
-        super(vectorShaderId, fragmentShaderId);
-    
-        const gl = core.getGL();
+  constructor(vectorShaderId: string, fragmentShaderId: string) {
+    super(vectorShaderId, fragmentShaderId);
 
-        this.normalSampler = gl.getUniformLocation(this.compiledShader, "uNormalSampler")as WebGLUniformLocation;
-        this.cameraPosition = gl.getUniformLocation(this.compiledShader, "uCameraPosition")as WebGLUniformLocation;
-        this.materialRef = new ShaderMaterialReference(this.compiledShader);
+    const gl = core.getGL();
 
-    }
+    this.normalSampler = gl.getUniformLocation(
+      this.compiledShader,
+      "uNormalSampler"
+    ) as WebGLUniformLocation;
+    this.cameraPosition = gl.getUniformLocation(
+      this.compiledShader,
+      "uCameraPosition"
+    ) as WebGLUniformLocation;
+    this.materialRef = new ShaderMaterialReference(this.compiledShader);
+  }
 
-    setMaterial  (material :Material) {
-        this.material = material;
-    };
-    
-    activateShader (pixelColor: color, camera: Camera) {
-        LightShader.prototype.activateShader.call(this, pixelColor, camera);
-        
-        const gl = core.getGL();
-        gl.uniform1i(this.normalSampler, 1);
-        gl.uniform3fv(this.cameraPosition, camera.getCameraPosPx());
-        this.materialRef.loadToShader(this.material);
-    };
+  setMaterial(material: Material) {
+    this.material = material;
+  }
 
-};
+  activateShader(pixelColor: color, camera: Camera) {
+    LightShader.prototype.activateShader.call(this, pixelColor, camera);
+
+    const gl = core.getGL();
+    gl.uniform1i(this.normalSampler, 1);
+    gl.uniform3fv(this.cameraPosition, camera.getCameraPosPx());
+    this.materialRef.loadToShader(this.material);
+  }
+}

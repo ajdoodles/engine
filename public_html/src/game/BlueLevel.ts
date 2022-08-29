@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -18,98 +18,97 @@ import Renderable from "../engine/renderables/Renderable.js";
 import TextureRenderable from "../engine/renderables/TextureRenderable.js";
 
 export default class BlueLevel extends Scene {
-    
-    kSceneFile = "assets/bluelevel.xml";
-    
-    kPortal = "assets/minion_portal.jpg";
-    kCollector = "assets/minion_collector.jpg"
-    
-    kBgClip = "assets/sounds/BGClip.mp3";
-    kCue = "assets/sounds/BlueLevel_cue.wav";
+  kSceneFile = "assets/bluelevel.xml";
 
-    mSquareSet: (Renderable | TextureRenderable)[] = [];
-    mCamera!: Camera;
+  kPortal = "assets/minion_portal.jpg";
+  kCollector = "assets/minion_collector.jpg";
 
-    loadScene () {
-        textFileLoader.loadTextFile(
-                this.kSceneFile,
-                textFileLoader.eTextFileType.eXMLFile);
-        textures.loadTexture(this.kPortal);
-        textures.loadTexture(this.kCollector);
-        audioClips.loadAudio(this.kBgClip);
-        audioClips.loadAudio(this.kCue);
-    };
+  kBgClip = "assets/sounds/BGClip.mp3";
+  kCue = "assets/sounds/BlueLevel_cue.wav";
 
-    unloadScene () {
-        textFileLoader.unloadTextFile(this.kSceneFile);
-        audioClips.stopBackgroundAudio();
-        textures.unloadTexture(this.kPortal);
-        textures.unloadTexture(this.kCollector);
-        audioClips.unloadAudio(this.kBgClip);
-        audioClips.unloadAudio(this.kCue);
+  mSquareSet: (Renderable | TextureRenderable)[] = [];
+  mCamera!: Camera;
 
-        const myGame = new MyGame();
-        core.startScene(myGame);
-    };
+  loadScene() {
+    textFileLoader.loadTextFile(
+      this.kSceneFile,
+      textFileLoader.eTextFileType.eXMLFile
+    );
+    textures.loadTexture(this.kPortal);
+    textures.loadTexture(this.kCollector);
+    audioClips.loadAudio(this.kBgClip);
+    audioClips.loadAudio(this.kCue);
+  }
 
-    initialize () {
-        audioClips.playBackgroundAudio(this.kBgClip);
+  unloadScene() {
+    textFileLoader.unloadTextFile(this.kSceneFile);
+    audioClips.stopBackgroundAudio();
+    textures.unloadTexture(this.kPortal);
+    textures.unloadTexture(this.kCollector);
+    audioClips.unloadAudio(this.kBgClip);
+    audioClips.unloadAudio(this.kCue);
 
-        const sceneParser = new SceneFileParser(this.kSceneFile);
-        sceneParser.parseSquares(this.mSquareSet);
-        sceneParser.parseTextureSquares(this.mSquareSet);
-        this.mCamera = sceneParser.parseCamera();
-    };
+    const myGame = new MyGame();
+    core.startScene(myGame);
+  }
 
-    update () {
-        const whiteXform = this.mSquareSet[0].getXform();
-        const redXform = this.mSquareSet[1].getXform();
-        const deltaX = 0.05;
+  initialize() {
+    audioClips.playBackgroundAudio(this.kBgClip);
 
-        if (input.isKeyPressed(input.keys.Right)) {
-            audioClips.playCue(this.kCue);
-            if (whiteXform.getXPos() > 30) {
-                whiteXform.setPosition(10, 60);
-            }
-            whiteXform.incXPos(deltaX);
-        }
+    const sceneParser = new SceneFileParser(this.kSceneFile);
+    sceneParser.parseSquares(this.mSquareSet);
+    sceneParser.parseTextureSquares(this.mSquareSet);
+    this.mCamera = sceneParser.parseCamera();
+  }
 
-        if (input.isKeyClicked(input.keys.Up)) {
-            whiteXform.incRotationInDegrees(1);
-        }
+  update() {
+    const whiteXform = this.mSquareSet[0].getXform();
+    const redXform = this.mSquareSet[1].getXform();
+    const deltaX = 0.05;
 
-        if (input.isKeyPressed(input.keys.Down)) {
-            if (redXform.getWidth() > 5) {
-                redXform.setSize(2, 2);
-            }
-            redXform.incSize(0.05);
-        }
+    if (input.isKeyPressed(input.keys.Right)) {
+      audioClips.playCue(this.kCue);
+      if (whiteXform.getXPos() > 30) {
+        whiteXform.setPosition(10, 60);
+      }
+      whiteXform.incXPos(deltaX);
+    }
 
-        if (input.isKeyPressed(input.keys.Left)) {
-            audioClips.playCue(this.kCue);
-            whiteXform.incXPos(-deltaX);
-            if (whiteXform.getXPos() < 11) {
-                gameLoop.stop();
-            }
-        }
-        
-        const c = this.mSquareSet[1].getColor();;
-        let ca = c[3] + deltaX;
-        if (ca > 1) {
-            ca = 0;
-        }
-        c[3] = ca;
-    };
+    if (input.isKeyClicked(input.keys.Up)) {
+      whiteXform.incRotationInDegrees(1);
+    }
 
-    draw () {
-        // Clear entire canvas
-        core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
+    if (input.isKeyPressed(input.keys.Down)) {
+      if (redXform.getWidth() > 5) {
+        redXform.setSize(2, 2);
+      }
+      redXform.incSize(0.05);
+    }
 
-        this.mCamera.setupViewProjection();
+    if (input.isKeyPressed(input.keys.Left)) {
+      audioClips.playCue(this.kCue);
+      whiteXform.incXPos(-deltaX);
+      if (whiteXform.getXPos() < 11) {
+        gameLoop.stop();
+      }
+    }
 
-        for (let i = 0; i < this.mSquareSet.length; i++) {
-            this.mSquareSet[i].draw(this.mCamera);
-        }
-    };
+    const c = this.mSquareSet[1].getColor();
+    let ca = c[3] + deltaX;
+    if (ca > 1) {
+      ca = 0;
+    }
+    c[3] = ca;
+  }
 
+  draw() {
+    // Clear entire canvas
+    core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
+
+    this.mCamera.setupViewProjection();
+
+    for (let i = 0; i < this.mSquareSet.length; i++) {
+      this.mSquareSet[i].draw(this.mCamera);
+    }
+  }
 }
