@@ -10,45 +10,33 @@ import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import RigidCircle from "./RigidCircle.js";
 import { vec2 } from "gl-matrix";
+import CollisionInfo from "../utils/CollisionInfo.js";
 
 export default class RigidRect extends RigidShape {
-  sides: LineRenderable;
-  width: number;
-  height: number;
+  sides: LineRenderable = new LineRenderable(0, 0, 0, 0);
 
-  constructor(xform: Transform, width: number, height: number) {
+  constructor(xform: Transform, public width: number, public height: number) {
     super(xform);
-    this.sides = new LineRenderable(0, 0, 0, 0);
-
-    this.width = width;
-    this.height = height;
   }
 
-  getWidth() {
-    return this.width;
+  get halfWidth() {
+    return this.width / 2;
   }
-  setWidth(width: number) {
-    this.width = width;
-  }
-
-  getHeight() {
-    return this.height;
-  }
-  setHeight(height: number) {
-    this.height = height;
+  get halfHeight() {
+    return this.height / 2;
   }
 
   left() {
-    return this.xform.getXPos() - this.width / 2;
+    return this.xform.getXPos() - this.halfWidth;
   }
   right() {
-    return this.xform.getXPos() + this.width / 2;
+    return this.xform.getXPos() + this.halfWidth;
   }
   top() {
-    return this.xform.getYPos() + this.height / 2;
+    return this.xform.getYPos() + this.halfHeight;
   }
   bottom() {
-    return this.xform.getYPos() - this.height / 2;
+    return this.xform.getYPos() - this.halfHeight;
   }
 
   setColor(color: color) {
@@ -69,8 +57,8 @@ export default class RigidRect extends RigidShape {
 
     const x = this.getPosition()[0];
     const y = this.getPosition()[1];
-    const halfWidth = this.width / 2;
-    const halfHeight = this.height / 2;
+    const halfWidth = this.halfWidth;
+    const halfHeight = this.halfHeight;
 
     this.sides.getXform().setZPos(this.xform.getZPos());
 
@@ -92,21 +80,60 @@ export default class RigidRect extends RigidShape {
     this.sides.draw(camera);
   }
 
-  collidedRectRect(first: RigidRect, second: RigidRect) {
-    return (
-      first.left() < second.right() &&
-      first.right() > second.left() &&
-      first.bottom() < second.top() &&
-      first.top() > second.bottom()
-    );
+  collidedRectRect(
+    first: RigidRect,
+    second: RigidRect,
+    collisionInfo: CollisionInfo
+  ) {
+    const firstPos = first.getPosition();
+    const secondPos = second.getPosition();
+
+    const vFirstToSecond = vec2.create();
+    vec2.subtract(vFirstToSecond, secondPos, firstPos);
+
+    const xDepth =
+      first.halfWidth + second.halfWidth - Math.abs(vFirstToSecond[0]);
+    if (xDepth > 0) {
+      const yDepth =
+        first.halfHeight + second.halfHeight - Math.abs(vFirstToSecond[1]);
+
+      if (yDepth > 0) {
+        if (xDepth < yDepth) {
+          collisionInfo.depth = xDepth;
+          if (vFirstToSecond[0] > 0) {
+            collisionInfo.normal = vec2.fromValues(1, 0);
+          } else {
+            collisionInfo.normal = vec2.fromValues(-1, 0);
+          }
+        } else {
+          collisionInfo.depth = yDepth;
+          if (vFirstToSecond[1] > 0) {
+            collisionInfo.normal = vec2.fromValues(0, 1);
+          } else {
+            collisionInfo.normal = vec2.fromValues(0, -1);
+          }
+        }
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  collided(otherShape: RigidShape) {
+  collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
     switch (otherShape.rigidType()) {
       case RigidShape.eRigidType.eRect:
-        return this.collidedRectRect(this, otherShape as RigidRect);
+        return this.collidedRectRect(
+          this,
+          otherShape as RigidRect,
+          collisionInfo
+        );
       case RigidShape.eRigidType.eCircle:
-        return this.collidedRectCircle(this, otherShape as RigidCircle);
+        return this.collidedRectCircle(
+          this,
+          otherShape as RigidCircle,
+          collisionInfo
+        );
       default:
         return false;
     }
@@ -114,13 +141,11 @@ export default class RigidRect extends RigidShape {
 
   containsPos(position: vec2) {
     const center = this.getPosition();
-    const halfWidth = this.getWidth() / 2.0;
-    const halfHeight = this.getHeight() / 2.0;
 
-    const left = center[0] - halfWidth;
-    const right = center[0] + halfWidth;
-    const bottom = center[1] - halfHeight;
-    const top = center[1] + halfHeight;
+    const left = center[0] - this.halfWidth;
+    const right = center[0] + this.halfWidth;
+    const bottom = center[1] - this.halfHeight;
+    const top = center[1] + this.halfHeight;
 
     return (
       left < position[0] &&

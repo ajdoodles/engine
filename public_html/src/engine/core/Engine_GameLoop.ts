@@ -11,6 +11,7 @@ import resourceMap from "./resources/Engine_ResourceMap.js";
 
 const kFPS = 60;
 const kMPF = 1000 / kFPS;
+const frameTime = 1 / kFPS;
 
 let mPreviousTime: number;
 let mLagTime: number;
@@ -72,6 +73,7 @@ const stop = function () {
 const mPublic = {
   start: start,
   stop: stop,
+  frameTime: frameTime,
 }; //public methods go here
 
 export default mPublic;

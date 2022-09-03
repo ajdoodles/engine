@@ -10,6 +10,7 @@ import LineRenderable from "../renderables/LineRenderable.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import RigidRect from "./RigidRect.js";
+import CollisionInfo from "../utils/CollisionInfo.js";
 
 export default class RigidCircle extends RigidShape {
   numSides: number;
@@ -71,21 +72,54 @@ export default class RigidCircle extends RigidShape {
     }
   }
 
-  collidedCircleCircle(c1: RigidCircle, c2: RigidCircle) {
+  collidedCircleCircle(
+    c1: RigidCircle,
+    c2: RigidCircle,
+    collisionInfo: CollisionInfo
+  ) {
     const distSquared = vec2.squaredDistance(
       c1.getPosition(),
       c2.getPosition()
     );
     const maxDist = c1.getRadius() + c2.getRadius();
-    return distSquared < maxDist * maxDist;
+
+    if (distSquared >= maxDist * maxDist) {
+      return false;
+    }
+
+    const vFirstToSecond = vec2.create();
+    vec2.subtract(vFirstToSecond, c2.getPosition(), c1.getPosition());
+
+    const dist = Math.sqrt(distSquared);
+    const depth = c1.getRadius() + c2.getRadius() - dist;
+    let normal;
+
+    if (dist === 0) {
+      normal = vec2.fromValues(0, 1);
+    } else {
+      normal = vec2.clone(vFirstToSecond);
+      vec2.scale(normal, normal, 1 / dist);
+    }
+
+    collisionInfo.depth = depth;
+    collisionInfo.normal = normal;
+    return true;
   }
 
-  collided(otherShape: RigidShape): boolean {
+  collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
     switch (otherShape.rigidType()) {
       case RigidShape.eRigidType.eCircle:
-        return this.collidedCircleCircle(this, otherShape as RigidCircle);
+        return this.collidedCircleCircle(
+          this,
+          otherShape as RigidCircle,
+          collisionInfo
+        );
       case RigidShape.eRigidType.eRect:
-        return this.collidedCircleRect(this, otherShape as RigidRect);
+        return this.collidedCircleRect(
+          this,
+          otherShape as RigidRect,
+          collisionInfo
+        );
       default:
         return false;
     }

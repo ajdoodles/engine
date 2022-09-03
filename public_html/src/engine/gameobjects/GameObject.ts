@@ -12,7 +12,7 @@ import BoundingBox from "../utils/BoundingBox";
 
 export default class GameObject {
   renderComponent: Renderable;
-  physicsComponent?: RigidShape;
+  physicsComponent!: RigidShape;
   visible = true;
   currentFrontDir: vec2 = vec2.fromValues(0, 1);
   speed = 0;
@@ -119,8 +119,7 @@ export default class GameObject {
   }
 
   update() {
-    const pos = this.getXform().getPosition();
-    vec2.scaleAndAdd(pos, pos, this.currentFrontDir, this.speed);
+    this.physicsComponent.update();
   }
 
   draw(camera: Camera) {
