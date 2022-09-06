@@ -19,7 +19,7 @@ export default class Brain extends GameObject {
     brain.getXform().setSize(3, 5.4);
     brain.setElementPixelCoordinates(600, 700, 0, 180);
     super(brain);
-    this.setSpeed(0.05);
+    this.speed = 0.05;
 
     this.deltaDegrees = 1;
     this.deltaRads = this.deltaDegrees * (Math.PI / 180);

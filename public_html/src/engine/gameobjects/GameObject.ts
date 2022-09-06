@@ -11,61 +11,32 @@ import TextureRenderable from "../renderables/TextureRenderable";
 import BoundingBox from "../utils/BoundingBox";
 
 export default class GameObject {
-  renderComponent: Renderable;
-  physicsComponent!: RigidShape;
-  visible = true;
-  currentFrontDir: vec2 = vec2.fromValues(0, 1);
-  speed = 0;
+  protected _physicsComponent?: RigidShape;
+  public visible = true;
+  private _currentFrontDir: vec2 = vec2.fromValues(0, 1);
+  public speed = 0;
 
-  constructor(renderableObj: Renderable) {
-    this.renderComponent = renderableObj;
-  }
-
-  getXform() {
+  get xform() {
     return this.renderComponent.getXform();
   }
 
-  getRenderable() {
-    return this.renderComponent;
+  get physicsComponent() {
+    return this._physicsComponent;
+  }
+  set physicsComponent(shape) {
+    this._physicsComponent = shape;
+ }
+  get currentFrontDir() {
+    return this._currentFrontDir;
+  }
+  set currentFrontDir(dir) {
+    vec2.copy(this._currentFrontDir, dir);
   }
 
-  getPhysicsComponent() {
-    return this.physicsComponent;
-  }
-  setPhysicsComponent(p: RigidShape) {
-    this.physicsComponent = p;
-  }
-
-  setVisible(visible: boolean) {
-    this.visible = visible;
-  }
-
-  isVisible() {
-    return this.visible;
-  }
-
-  setSpeed(speed: number) {
-    this.speed = speed;
-  }
-
-  getSpeed() {
-    return this.speed;
-  }
-
-  incSpeedBy(delta: number) {
-    this.speed += delta;
-  }
-
-  getCurrentFrontDir() {
-    return this.currentFrontDir;
-  }
-
-  setFrontDir(direction: vec2) {
-    vec2.normalize(this.currentFrontDir, direction);
-  }
+  constructor(public renderComponent: Renderable) {}
 
   getBBox() {
-    const xform = this.getXform();
+    const xform = this.xform;
     return new BoundingBox(
       xform.getPosition(),
       xform.getWidth(),
@@ -74,9 +45,9 @@ export default class GameObject {
   }
 
   rotateObjPointTo(target: vec2, rate: number) {
-    //    var distToTarget = vec2.distance(target, this.getXform().getPosition());
+    //    var distToTarget = vec2.distance(target, this.Xform.getPosition());
     const targetVector = vec2.create();
-    vec2.subtract(targetVector, target, this.getXform().getPosition());
+    vec2.subtract(targetVector, target, this.xform.getPosition());
     const distToTarget = vec2.length(targetVector);
     if (distToTarget < Number.MIN_VALUE) {
       return; //reached target
@@ -115,11 +86,13 @@ export default class GameObject {
       vec2.fromValues(0, 0),
       rads
     );
-    this.getXform().incRotationInRads(rads);
+    this.xform.incRotationInRads(rads);
   }
 
   update() {
-    this.physicsComponent.update();
+    if (this.physicsComponent !== undefined) {
+      this.physicsComponent.update();
+    }
   }
 
   draw(camera: Camera) {
@@ -134,16 +107,16 @@ export default class GameObject {
 
   pixelTouches(otherObj: GameObject, wcTouchPos: vec2) {
     let pixelTouches = false;
-    const otherRen = otherObj.getRenderable();
-    const thisRen = this.getRenderable();
+    const otherRen = otherObj.renderComponent;
+    const thisRen = this.renderComponent;
 
     if (
       otherRen instanceof TextureRenderable &&
       thisRen instanceof TextureRenderable
     ) {
       if (
-        otherObj.getXform().getRotation() === 0 &&
-        this.getXform().getRotation() === 0
+        otherObj.xform.getRotation() === 0 &&
+        this.xform.getRotation() === 0
       ) {
         if (this.getBBox().intersects(otherObj.getBBox())) {
           thisRen.setColorArray();
@@ -151,10 +124,10 @@ export default class GameObject {
           pixelTouches = thisRen.pixelTouches(otherRen, wcTouchPos);
         }
       } else {
-        const thisWidth = this.getXform().getWidth();
-        const thisHeight = this.getXform().getHeight();
-        const otherWidth = otherObj.getXform().getWidth();
-        const otherHeight = otherObj.getXform().getHeight();
+        const thisWidth = this.xform.getWidth();
+        const thisHeight = this.xform.getHeight();
+        const otherWidth = otherObj.xform.getWidth();
+        const otherHeight = otherObj.xform.getHeight();
 
         const thisRadius = Math.sqrt(
           Math.pow(thisWidth * 0.5, 2) + Math.pow(thisHeight * 0.5, 2)
@@ -166,8 +139,8 @@ export default class GameObject {
         const delta = vec2.create();
         vec2.sub(
           delta,
-          this.getXform().getPosition(),
-          otherObj.getXform().getPosition()
+          this.xform.getPosition(),
+          otherObj.xform.getPosition()
         );
         if (vec2.length(delta) < thisRadius + otherRadius) {
           thisRen.setColorArray();

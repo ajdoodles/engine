@@ -24,6 +24,6 @@ export default class MinionActive extends GameObject {
   }
 
   update(): void {
-    (this.getRenderable() as SpriteAnimateRenderable).update();
+    (this.renderComponent as SpriteAnimateRenderable).update();
   }
 }

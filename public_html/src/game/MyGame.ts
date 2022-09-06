@@ -137,9 +137,9 @@ export default class MyGame extends Scene {
     this.mBrain = new Brain(this.kMinionSprite);
     this.mPortal = new Portal(this.kPortal);
     this.mLeftMinion = new Minion(this.kMinionSprite, this.kMinionSpriteNormal);
-    this.mLeftMinion.getXform().setPosition(30, 30);
+    this.mLeftMinion.xform.setPosition(30, 30);
     this.mRightMinion = new Minion(this.kMinionSprite);
-    this.mRightMinion.getXform().setPosition(70, 30);
+    this.mRightMinion.xform.setPosition(70, 30);
 
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([1, 1, 1, 1]);
@@ -154,26 +154,25 @@ export default class MyGame extends Scene {
     this.mCamera.update();
 
     if (input.isMouseClicked(input.mouse.Middle)) {
-      const visible = this.mPortal.isVisible();
-      this.mPortal.setVisible(!visible);
+      this.mPortal.visible = !this.mPortal.visible;
     }
 
     if (input.isMousePressed(input.mouse.Left)) {
       if (this.mCamera.isMouseInViewport()) {
         const mousePos = this.mCamera.getWCCursorPosition();
-        this.mPortal.getXform().setPosition(mousePos[0], mousePos[1]);
+        this.mPortal.xform.setPosition(mousePos[0], mousePos[1]);
       }
     }
 
     if (input.isMousePressed(input.mouse.Right)) {
       if (this.mHeroCam.isMouseInViewport()) {
         const mousePos = this.mHeroCam.getWCCursorPosition();
-        this.mHero.getXform().setPosition(mousePos[0], mousePos[1]);
+        this.mHero.xform.setPosition(mousePos[0], mousePos[1]);
       }
     }
 
-    this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
-    this.mCamera.panWith(this.mHero.getXform(), 0.9);
+    this.mCamera.clampAtBoundary(this.mBrain.xform, 0.9);
+    this.mCamera.panWith(this.mHero.xform, 0.9);
 
     this.mHero.update();
     this.mPortal.update();
@@ -181,7 +180,7 @@ export default class MyGame extends Scene {
 
     const rate = 0.02;
     if (!this.mBrain.getBBox().intersects(this.mHero.getBBox())) {
-      this.mBrain.rotateObjPointTo(this.mHero.getXform().getPosition(), rate);
+      this.mBrain.rotateObjPointTo(this.mHero.xform.getPosition(), rate);
       GameObject.prototype.update.call(this.mBrain);
     }
 
@@ -189,12 +188,12 @@ export default class MyGame extends Scene {
     this.mBrainCam.update();
 
     this.mHeroCam.panTo(
-      this.mHero.getXform().getXPos(),
-      this.mHero.getXform().getYPos()
+      this.mHero.xform.getXPos(),
+      this.mHero.xform.getYPos()
     );
     this.mBrainCam.panTo(
-      this.mBrain.getXform().getXPos(),
-      this.mBrain.getXform().getYPos()
+      this.mBrain.xform.getXPos(),
+      this.mBrain.xform.getYPos()
     );
 
     this.updateLights();
@@ -246,13 +245,13 @@ export default class MyGame extends Scene {
     this.mFocus = this.mLightSet.getLightAt(0);
 
     for (let i = 0; i < this.mLightSet.numLights(); i++) {
-      (this.mBg.getRenderable() as IllumRenderable).addLight(
+      (this.mBg.renderComponent as IllumRenderable).addLight(
         this.mLightSet.getLightAt(i)
       );
-      (this.mHero.getRenderable() as IllumRenderable).addLight(
+      (this.mHero.renderComponent as IllumRenderable).addLight(
         this.mLightSet.getLightAt(i)
       );
-      (this.mBrain.getRenderable() as IllumRenderable).addLight(
+      (this.mBrain.renderComponent as IllumRenderable).addLight(
         this.mLightSet.getLightAt(i)
       );
     }

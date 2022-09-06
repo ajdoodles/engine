@@ -70,7 +70,6 @@ export default class RigidShapeTest extends Scene {
 
     this.objectSet = new GameObjectSet();
     const mobilePlatform = new Platform(this.platform);
-    mobilePlatform.getPhysicsComponent().velocity = vec2.fromValues(1, 0);
     this.objectSet.addObject(mobilePlatform);
     this.objectSet.addObject(new Platform(this.platform));
     this.objectSet.addObject(new Hero(this.minionSprite));

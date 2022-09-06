@@ -92,7 +92,7 @@ export default class GameObjectSet {
 
   update() {
     if (this.hasValidSelection()) {
-      const xform = this.getSelectedObject()?.getXform();
+      const xform = this.getSelectedObject()?.xform;
       if (xform !== undefined) {
         if (input.isKeyPressed(input.keys.Up)) {
           xform.incYPos(this.delta);
@@ -113,15 +113,15 @@ export default class GameObjectSet {
       const obj = this.set[i];
       obj.update();
       if (this.isAlertingCollisions()) {
-        obj.getPhysicsComponent()?.setColor([1.0, 1.0, 1.0, 1.0]);
+        obj.physicsComponent?.setColor([1.0, 1.0, 1.0, 1.0]);
       }
     }
 
     if (this.isAlertingCollisions()) {
       for (let j = 0; j < this.size(); j++) {
-        const theseBounds = this.getObjectAt(j).getPhysicsComponent();
+        const theseBounds = this.getObjectAt(j).physicsComponent;
         for (let k = j + 1; k < this.size(); k++) {
-          const thoseBounds = this.getObjectAt(k).getPhysicsComponent();
+          const thoseBounds = this.getObjectAt(k).physicsComponent;
           if (
             theseBounds !== undefined &&
             thoseBounds !== undefined &&

@@ -23,6 +23,6 @@ export default class Platform extends GameObject {
 
     const rigidRect = new RigidRect(platform.getXform(), 36, 6);
     rigidRect.setDrawBounds(true);
-    this.setPhysicsComponent(rigidRect);
+    this.physicsComponent = rigidRect;
   }
 }

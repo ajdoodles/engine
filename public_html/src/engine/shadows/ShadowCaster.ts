@@ -32,7 +32,7 @@ export default class ShadowCaster {
   }
 
   draw(camera: Camera) {
-    const castingRenderable = this.shadowCaster.getRenderable();
+    const castingRenderable = this.shadowCaster.renderComponent;
     const numLights = (castingRenderable as IllumRenderable).numLights();
 
     if (numLights <= 0) {
@@ -60,8 +60,8 @@ export default class ShadowCaster {
   }
 
   _computeShadowGeometry(light: Light) {
-    const casterXform = this.shadowCaster.getXform();
-    const receiverXform = this.shadowReceiver.getXform();
+    const casterXform = this.shadowCaster.xform;
+    const receiverXform = this.shadowReceiver.xform;
     const lightDir = light.getDirection();
     const casterToReceiverZ = receiverXform.getZPos() - casterXform.getZPos();
 

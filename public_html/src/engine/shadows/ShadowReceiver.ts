@@ -33,10 +33,10 @@ export default class ShadowReceiver {
 
     this._shadowReceiverStencilOn();
     const oldShader = this.shadowReceiver
-      .getRenderable()
+      .renderComponent
       .swapShader(this.shadowReceiverShader);
     this.shadowReceiver.draw(camera);
-    this.shadowReceiver.getRenderable().swapShader(oldShader);
+    this.shadowReceiver.renderComponent.swapShader(oldShader);
     this._shadowReceiverStencilOff();
 
     for (let i = 0; i < this.shadowCasters.length; i++) {

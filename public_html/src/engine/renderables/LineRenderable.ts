@@ -36,10 +36,12 @@ export default class LineRenderable extends Renderable {
     this.xform.setHeight(thickness);
   }
 
-  constructor(x1: number, y1: number, x2: number, y2: number) {
+  constructor(x1?: number, y1?: number, x2?: number, y2?: number) {
     super();
     this.setColor([1.0, 1.0, 1.0, 1.0]);
     this._setShader(ShaderFactory.getLineShader());
+    // trigger thickness mutator
+    this.thickness = this._thickness;
 
     if (
       x1 !== undefined &&
