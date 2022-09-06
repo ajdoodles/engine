@@ -8,6 +8,7 @@ export default {
         exclude: ["public_html/src/types.d.ts"]
     },
     output: {
+        sourcemap: true,
         dir: 'public_html/build'
     },
     plugins: [multi(), nodeResolve(), typescript()]
