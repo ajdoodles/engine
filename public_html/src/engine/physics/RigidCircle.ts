@@ -58,14 +58,14 @@ export default class RigidCircle extends RigidShape {
 
     const pos = this.getPosition();
     const drawPoint = vec2.fromValues(pos[0] + this.radius, pos[1]);
-    this.sides.setStartVertex(drawPoint[0], drawPoint[1]);
+    this.sides.setStartPos(drawPoint[0], drawPoint[1]);
     for (let i = 1; i <= this.numSides; i++) {
       vec2.rotate(drawPoint, drawPoint, pos, this.angularDelta);
 
       if (i % 2 === 0) {
-        this.sides.setStartVertex(drawPoint[0], drawPoint[1]);
+        this.sides.setStartPos(drawPoint[0], drawPoint[1]);
       } else {
-        this.sides.setEndVertex(drawPoint[0], drawPoint[1]);
+        this.sides.setEndPos(drawPoint[0], drawPoint[1]);
       }
 
       this.sides.draw(camera);

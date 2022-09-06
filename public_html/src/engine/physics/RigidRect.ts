@@ -63,20 +63,20 @@ export default class RigidRect extends RigidShape {
     this.sides.getXform().setZPos(this.xform.getZPos());
 
     // top edge
-    this.sides.setStartVertex(x - halfWidth, y + halfHeight);
-    this.sides.setEndVertex(x + halfWidth, y + halfHeight);
+    this.sides.setStartPos(x - halfWidth, y + halfHeight);
+    this.sides.setEndPos(x + halfWidth, y + halfHeight);
     this.sides.draw(camera);
 
     // right edge
-    this.sides.setStartVertex(x + halfWidth, y - halfHeight);
+    this.sides.setStartPos(x + halfWidth, y - halfHeight);
     this.sides.draw(camera);
 
     //bottom edge
-    this.sides.setEndVertex(x - halfWidth, y - halfHeight);
+    this.sides.setEndPos(x - halfWidth, y - halfHeight);
     this.sides.draw(camera);
 
     // left edge
-    this.sides.setStartVertex(x - halfWidth, y + halfHeight);
+    this.sides.setStartPos(x - halfWidth, y + halfHeight);
     this.sides.draw(camera);
   }
 

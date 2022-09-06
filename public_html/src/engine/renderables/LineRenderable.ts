@@ -7,34 +7,55 @@
 import ShaderFactory from "../shaders/ShaderFactory.js";
 import Renderable from "./Renderable.js";
 import { vec2, vec3 } from "gl-matrix";
-import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 
 export default class LineRenderable extends Renderable {
-  start: vec2;
-  end: vec2;
-  xform!: Transform;
-  lineWidth!: number;
+  private readonly _start: vec2 = vec2.create();
+  private readonly _end: vec2 = vec2.create();
+  private _thickness = 0.2;
+
+  get start() {
+    return this._start;
+  }
+  set start(start) {
+    vec2.copy(this._start, start);
+  }
+
+  get end() {
+    return this._end;
+  }
+  set end(end) {
+    vec2.copy(this._end, end);
+  }
+
+  get thickness() {
+    return this._thickness;
+  }
+  set thickness(thickness) {
+    this._thickness = thickness;
+    this.xform.setHeight(thickness);
+  }
 
   constructor(x1: number, y1: number, x2: number, y2: number) {
     super();
-    Renderable.prototype.setColor.call(this, [1.0, 1.0, 1.0, 1.0]);
-    Renderable.prototype._setShader.call(this, ShaderFactory.getLineShader());
+    this.setColor([1.0, 1.0, 1.0, 1.0]);
+    this._setShader(ShaderFactory.getLineShader());
 
-    this.start = vec2.fromValues(0.0, 0.0);
-    this.end = vec2.fromValues(0.0, 0.0);
-    this.setLineWidth(0.2);
-
-    if (x1 !== undefined) {
-      this.setVertices(x1, y1, x2, y2);
+    if (
+      x1 !== undefined &&
+      y1 !== undefined &&
+      x2 !== undefined &&
+      y2 !== undefined
+    ) {
+      this.setEndpoints(x1, y1, x2, y2);
     }
   }
 
   draw(camera: Camera) {
-    Renderable.prototype.draw.call(this, camera);
+    super.draw(camera);
   }
 
-  _calcXform() {
+  private calcXform() {
     //(sx, sy) is the line's vector
     const sx = this.end[0] - this.start[0];
     const sy = this.end[1] - this.start[1];
@@ -64,28 +85,20 @@ export default class LineRenderable extends Renderable {
     this.xform.setRotationRads(rotation);
   }
 
-  setVertices(x1: number, y1: number, x2: number, y2: number) {
-    this.start[0] = x1;
-    this.start[1] = y1;
-    this.end[0] = x2;
-    this.end[1] = y2;
-    this._calcXform();
+  setEndpoints(x1: number, y1: number, x2: number, y2: number) {
+    vec2.set(this._start, x1, y1);
+    vec2.set(this._end, x2, y2);
+    this.calcXform();
   }
 
-  setStartVertex(x: number, y: number) {
-    this.start[0] = x;
-    this.start[1] = y;
-    this._calcXform();
+  setStartPos(x: number, y: number) {
+    vec2.set(this._start, x, y);
+    this.calcXform();
   }
 
-  setEndVertex(x: number, y: number) {
-    this.end[0] = x;
-    this.end[1] = y;
-    this._calcXform();
-  }
-
-  setLineWidth(width: number) {
-    this.lineWidth = width;
-    this.xform.setHeight(width);
+  setEndPos(x: number, y: number) {
+    vec2.set(this._end, x, y);
+    this.calcXform();
+    this.end = vec2.fromValues(x, y);
   }
 }

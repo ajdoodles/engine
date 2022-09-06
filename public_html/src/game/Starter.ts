@@ -2,9 +2,10 @@
 import RigidShapeTest from "./scenarios/RigidShapeTest.js";
 import ShaderFactory from "../engine/shaders/ShaderFactory.js";
 import core from "../engine/core/Engine_Core.js";
+import CollisionTest from "./scenarios/CollisionTest.js";
 
 function startGame() {
-  const myGame = new RigidShapeTest();
+  const myGame = new CollisionTest();
   core.initializeEngineCore("GLCanvas", myGame, ShaderFactory.createShaders);
 }
 

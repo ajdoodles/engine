@@ -110,24 +110,12 @@ export default abstract class RigidShape {
 
     this.positionMark.getXform().setZPos(this.xform.getZPos());
 
-    this.positionMark.setStartVertex(
-      pos[0] - this.padding,
-      pos[1] + this.padding
-    );
-    this.positionMark.setEndVertex(
-      pos[0] + this.padding,
-      pos[1] - this.padding
-    );
+    this.positionMark.setStartPos(pos[0] - this.padding, pos[1] + this.padding);
+    this.positionMark.setEndPos(pos[0] + this.padding, pos[1] - this.padding);
     this.positionMark.draw(camera);
 
-    this.positionMark.setStartVertex(
-      pos[0] + this.padding,
-      pos[1] + this.padding
-    );
-    this.positionMark.setEndVertex(
-      pos[0] - this.padding,
-      pos[1] - this.padding
-    );
+    this.positionMark.setStartPos(pos[0] + this.padding, pos[1] + this.padding);
+    this.positionMark.setEndPos(pos[0] - this.padding, pos[1] - this.padding);
     this.positionMark.draw(camera);
   }
 
