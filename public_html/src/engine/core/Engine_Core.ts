@@ -27,8 +27,7 @@ const _initializeWebGL = function (htmlCanvasId: string) {
     stencil: true,
   };
 
-  mGL = (canvas.getContext("webgl", args) ||
-    canvas.getContext("experimental-webgl", args)) as WebGL2RenderingContext;
+  mGL = canvas.getContext("webgl2", args) as WebGL2RenderingContext;
 
   if (mGL === null) {
     document.write("<br/><b> WebGL is not supported. </b>");
