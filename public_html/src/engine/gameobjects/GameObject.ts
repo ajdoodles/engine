@@ -11,7 +11,7 @@ import TextureRenderable from "../renderables/TextureRenderable";
 import BoundingBox from "../utils/BoundingBox";
 
 export default class GameObject {
-  protected _physicsComponent?: RigidShape;
+  public physicsComponent?: RigidShape;
   public visible = true;
   private _currentFrontDir: vec2 = vec2.fromValues(0, 1);
   public speed = 0;
@@ -20,12 +20,6 @@ export default class GameObject {
     return this.renderComponent.getXform();
   }
 
-  get physicsComponent() {
-    return this._physicsComponent;
-  }
-  set physicsComponent(shape) {
-    this._physicsComponent = shape;
- }
   get currentFrontDir() {
     return this._currentFrontDir;
   }
