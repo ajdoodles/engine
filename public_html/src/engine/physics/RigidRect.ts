@@ -121,6 +121,7 @@ export default class RigidRect extends RigidShape {
   }
 
   collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
+    collisionInfo.depth = 0;
     switch (otherShape.rigidType()) {
       case RigidShape.eRigidType.eRect:
         return this.collidedRectRect(

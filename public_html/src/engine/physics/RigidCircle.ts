@@ -107,6 +107,7 @@ export default class RigidCircle extends RigidShape {
   }
 
   collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
+    collisionInfo.depth = 0;
     switch (otherShape.rigidType()) {
       case RigidShape.eRigidType.eCircle:
         return this.collidedCircleCircle(

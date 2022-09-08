@@ -50,17 +50,18 @@ export default new (class {
     collisionInfo: CollisionInfo
   ) {
     const num =
-      (collisionInfo.depth / (s1.invMass, s2.invMass)) *
+      (collisionInfo.depth / (s1.invMass + s2.invMass)) *
       this.relaxationCorrectionRate;
     const correctionAmount = vec2.create();
     vec2.scale(correctionAmount, collisionInfo.normal, num);
 
     const ca = vec2.create();
-    vec2.scale(ca, correctionAmount, s1.invMass);
 
+    vec2.scale(ca, correctionAmount, s1.invMass);
     const s1Pos = s1.getPosition();
     vec2.subtract(s1Pos, s1Pos, ca);
 
+    vec2.scale(ca, correctionAmount, s2.invMass);
     const s2Pos = s2.getPosition();
     vec2.add(s2Pos, s2Pos, ca);
   }

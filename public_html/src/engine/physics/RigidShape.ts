@@ -31,7 +31,7 @@ export default abstract class RigidShape {
   restitution = 0.8;
   private _velocity = vec2.create();
   friction = 0.3;
-  acceleration = physics.systemAcceleration;
+  acceleration = vec2.create();
 
   get invMass() {
     return this._invMass;
@@ -133,14 +133,14 @@ export default abstract class RigidShape {
     const circlePos = circle.getPosition();
 
     // calculate vector from rect center to circ center
-    const vCircToRec = vec2.create();
-    vec2.subtract(vCircToRec, circlePos, rectPos);
+    const vRectToCirc = vec2.create();
+    vec2.subtract(vRectToCirc, circlePos, rectPos);
 
     // clamp that vector inside the rectangle
-    const vec = vec2.clone(vCircToRec);
+    const vec = vec2.clone(vRectToCirc);
 
-    const halfWidth = rect.width / 2;
-    const halfHeight = rect.height / 2;
+    const halfWidth = rect.halfWidth;
+    const halfHeight = rect.halfHeight;
 
     vec[0] = MathUtils.clamp(vec[0], -halfWidth, halfWidth);
     vec[1] = MathUtils.clamp(vec[1], -halfHeight, halfHeight);
@@ -148,7 +148,7 @@ export default abstract class RigidShape {
     // project the vector onto the nearst point on the rectangle
     const isInside = rect.containsPos(circlePos);
     if (isInside) {
-      if (Math.abs(vec[0] - halfWidth) > Math.abs(vec[1] - halfHeight)) {
+      if (Math.abs(vRectToCirc[0] - halfWidth) > Math.abs(vRectToCirc[1] - halfHeight)) {
         vec[0] = halfWidth;
         vec[0] *= vec[0] < 0 ? -1 : 1;
       } else {
@@ -160,7 +160,7 @@ export default abstract class RigidShape {
     // calculate the collision normal
     // i.e. the shortest distance between the rectangle's edges and the circle's center
     const normal = vec2.create();
-    vec2.subtract(normal, vCircToRec, vec);
+    vec2.subtract(normal, vRectToCirc, vec);
 
     // Either the circle is inside the rectangle, or it's close enough
     // to collide. If neither is true, no collision.
@@ -194,6 +194,8 @@ export default abstract class RigidShape {
     rect: RigidRect,
     collisionInfo: CollisionInfo
   ) {
-    return this.collidedRectCircle(rect, circle, collisionInfo);
+    const isCollided = this.collidedRectCircle(rect, circle, collisionInfo);
+    vec2.scale(collisionInfo.normal, collisionInfo.normal, -1); 
+    return isCollided;
   }
 }
