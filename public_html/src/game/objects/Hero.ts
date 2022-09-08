@@ -7,10 +7,14 @@ import GameObject from "../../engine/gameobjects/GameObject.js";
 import IllumRenderable from "../../engine/renderables/IllumRenderable.js";
 import LightRenderable from "../../engine/renderables/LightRenderable.js";
 import RigidCircle from "../../engine/physics/RigidCircle.js";
+import input from "../../engine/core/Engine_Input";
+import { vec2 } from "gl-matrix";
 
 export default class Hero extends GameObject {
   delta: number;
   deltaDegrees: number;
+
+  physicsComponent !: RigidCircle;
 
   constructor(spriteTexture: string, normalTexture?: string) {
     let hero;
@@ -32,5 +36,29 @@ export default class Hero extends GameObject {
 
     this.delta = 0.3;
     this.deltaDegrees = 1;
+  }
+
+  update() {
+    const newV = vec2.clone(this.physicsComponent.velocity);
+    if (input.isKeyPressed(input.keys.W)) {
+      if (newV[1] < 4) {
+        newV[1] += 0.2;
+      }
+    } else if (input.isKeyPressed(input.keys.A)) {
+      if (newV[0] > -4) {
+        newV[0] -= 0.2;
+      }
+    } else if (input.isKeyPressed(input.keys.S)) {
+      if (newV[1] > -4) {
+        newV[1] -= 0.2;
+      }
+    } if (input.isKeyPressed(input.keys.D)) {
+      if (newV[0] < 4) {
+        newV[0] += 0.2;
+      }
+    }
+    this.physicsComponent.velocity = newV;
+
+    super.update();
   }
 }
