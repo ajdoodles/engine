@@ -4,7 +4,7 @@ import GameObject from "../../engine/gameobjects/GameObject";
 import GameObjectSet from "../../engine/gameobjects/GameObjectSet";
 import Renderable from "../../engine/renderables/Renderable";
 import Scene from "../../engine/Scene";
-import core from "../../engine/core/Engine_Core";
+import core from "../../engine/core/Engine_GL";
 import Wall from "../objects/Wall";
 import textures from "../../engine/core/Engine_Textures";
 import Hero from "../objects/Hero";

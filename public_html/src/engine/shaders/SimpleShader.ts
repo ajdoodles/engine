@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import vertexBuffer from "../core/Engine_VertexBuffer.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import defaultResources from "../core/resources/Engine_DefaultResources.js";

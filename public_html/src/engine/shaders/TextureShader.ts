@@ -6,7 +6,7 @@
 "use strict";
 import vertexBuffer from "../core/Engine_VertexBuffer.js";
 import SimpleShader from "./SimpleShader.js";
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import Camera from "../cameras/Camera.js";
 
 export default class TextureShader extends SimpleShader {

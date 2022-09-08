@@ -6,7 +6,7 @@
 
 import Scene from "../../engine/Scene.js";
 import textures from "../../engine/core/Engine_Textures.js";
-import core from "../../engine/core/Engine_Core.js";
+import core from "../../engine/core/Engine_GL.js";
 import input from "../../engine/core/Engine_Input.js";
 import Camera from "../../engine/cameras/Camera.js";
 import Renderable from "../../engine/renderables/Renderable.js";

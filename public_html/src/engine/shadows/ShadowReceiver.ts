@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import Camera from "../cameras/Camera.js";
 import ShaderFactory from "../shaders/ShaderFactory.js";
 import ShadowCaster from "./ShadowCaster.js";

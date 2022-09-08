@@ -5,7 +5,7 @@
  */
 
 import Camera from "../cameras/Camera.js";
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import Material from "../utils/Material.js";
 import LightShader from "./LightShader.js";
 import ShaderMaterialReference from "./ShaderMaterialReference.js";

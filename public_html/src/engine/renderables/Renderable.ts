@@ -5,7 +5,7 @@
  */
 
 import ShaderFactory from "../shaders/ShaderFactory.js";
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import SimpleShader from "../shaders/SimpleShader.js";

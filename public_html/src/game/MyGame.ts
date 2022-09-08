@@ -6,7 +6,7 @@
 
 import Scene from "../engine/Scene.js";
 import audioClips from "../engine/core/resources/Engine_AudioClips.js";
-import core from "../engine/core/Engine_Core.js";
+import core from "../engine/core/Engine_GL.js";
 import input from "../engine/core/Engine_Input.js";
 import textFileLoader from "../engine/core/resources/Engine_TextFileLoader.js";
 import textures from "../engine/core/Engine_Textures.js";
@@ -25,6 +25,7 @@ import Hero from "./objects/Hero.js";
 import Minion from "./objects/Minion.js";
 import Portal from "./objects/Portal.js";
 import SceneFileParser from "./util/SceneFileParser.js";
+import { startScene } from "../engine/core/Engine_Init.js";
 
 export default class MyGame extends Scene {
   kSceneFile = "assets/scene.xml";
@@ -89,7 +90,7 @@ export default class MyGame extends Scene {
     audioClips.unloadAudio(this.kCue);
 
     const blueLevel = new BlueLevel();
-    core.startScene(blueLevel);
+    startScene(blueLevel);
   }
 
   _setupShadows() {

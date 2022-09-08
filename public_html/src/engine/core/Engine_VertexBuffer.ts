@@ -5,7 +5,7 @@
  */
 
 "use strict";
-import core from "./Engine_Core.js";
+import core from "./Engine_GL.js";
 
 const mVerticesOfSquare = [
   0.5, 0.5, 0.0, -0.5, 0.5, 0.0, 0.5, -0.5, 0.0, -0.5, -0.5, 0.0,

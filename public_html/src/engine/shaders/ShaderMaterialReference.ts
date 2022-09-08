@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import Material from "../utils/Material.js";
 
 export default class ShaderMaterialReference {

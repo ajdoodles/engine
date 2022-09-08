@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import input from "../core/Engine_Input.js";
 import CameraState from "./CameraState.js";
 import MathUtils from "../utils/MathUtils.js";

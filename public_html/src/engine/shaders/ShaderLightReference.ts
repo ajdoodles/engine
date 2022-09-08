@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import core from "../core/Engine_Core.js";
+import core from "../core/Engine_GL.js";
 import { vec3 } from "gl-matrix";
 import Light from "../lights/Light.js";
 import Camera from "../cameras/Camera.js";

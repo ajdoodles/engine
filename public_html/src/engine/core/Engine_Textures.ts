@@ -7,7 +7,7 @@
 "use strict";
 import TextureInfo from "./TextureInfo.js";
 import resourceMap from "./resources/Engine_ResourceMap.js";
-import core from "./Engine_Core.js";
+import core from "./Engine_GL.js";
 
 const loadTexture = function (
   textureName: string,

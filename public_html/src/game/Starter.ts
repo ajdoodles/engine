@@ -1,12 +1,9 @@
 "use strict";
-import RigidShapeTest from "./scenarios/RigidShapeTest.js";
-import ShaderFactory from "../engine/shaders/ShaderFactory.js";
-import core from "../engine/core/Engine_Core.js";
+import { initializeEngineCore } from "../engine/core/Engine_Init.js";
 import CollisionTest from "./scenarios/CollisionTest.js";
 
-function startGame() {
-  const myGame = new CollisionTest();
-  core.initializeEngineCore("GLCanvas", myGame, ShaderFactory.createShaders);
+function initEngine() {
+  initializeEngineCore("GLCanvas", new CollisionTest());
 }
 
-document.addEventListener("DOMContentLoaded", startGame);
+document.addEventListener("DOMContentLoaded", initEngine);
