@@ -175,7 +175,7 @@ export default class Camera {
   }
 
   setupViewProjection() {
-    const gl = core.getGL();
+    const gl = core.gl;
 
     const bounds = this.scissorBounds;
     gl.viewport(

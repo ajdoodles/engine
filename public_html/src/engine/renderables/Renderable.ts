@@ -46,7 +46,7 @@ export default class Renderable {
   }
 
   draw(camera: Camera) {
-    const gl = core.getGL();
+    const gl = core.gl;
     this.shader.activateShader(this.color, camera);
     this.shader.loadObjectTransform(this.xform.getXForm());
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

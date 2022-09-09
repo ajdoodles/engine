@@ -19,7 +19,7 @@ export default class IllumShader extends LightShader {
   constructor(vectorShaderId: string, fragmentShaderId: string) {
     super(vectorShaderId, fragmentShaderId);
 
-    const gl = core.getGL();
+    const gl = core.gl;
 
     this.normalSampler = gl.getUniformLocation(
       this.compiledShader,
@@ -39,7 +39,7 @@ export default class IllumShader extends LightShader {
   activateShader(pixelColor: color, camera: Camera) {
     LightShader.prototype.activateShader.call(this, pixelColor, camera);
 
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.uniform1i(this.normalSampler, 1);
     gl.uniform3fv(this.cameraPosition, camera.getCameraPosPx());
     this.materialRef.loadToShader(this.material);

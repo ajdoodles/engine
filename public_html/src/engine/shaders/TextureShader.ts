@@ -19,7 +19,7 @@ export default class TextureShader extends SimpleShader {
 
     this.texCoord = null;
 
-    const gl = core.getGL();
+    const gl = core.gl;
     this.textureCoordinateAttribute = gl.getAttribLocation(
       this.compiledShader,
       "aTextureCoordinate"
@@ -33,7 +33,7 @@ export default class TextureShader extends SimpleShader {
   activateShader(pixelColor: color, camera: Camera) {
     SimpleShader.prototype.activateShader.call(this, pixelColor, camera);
 
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLTexCoordRef());
     gl.enableVertexAttribArray(this.textureCoordinateAttribute);
     gl.vertexAttribPointer(

@@ -15,7 +15,7 @@ export default class LineShader extends SimpleShader {
   constructor(vertexShaderId: string, fragmentShaderId: string) {
     super(vertexShaderId, fragmentShaderId);
 
-    const gl = core.getGL();
+    const gl = core.gl;
 
     const vertexShader = this._compileShader(
       vertexShaderId,
@@ -66,7 +66,7 @@ export default class LineShader extends SimpleShader {
   }
 
   _compileShader(filepath: string, shaderType: number) {
-    const gl = core.getGL();
+    const gl = core.gl;
     const shaderSource = resourceMap.retrieveAsset(filepath) as string;
     const compiledShader = gl.createShader(shaderType) as WebGLShader;
 
@@ -83,7 +83,7 @@ export default class LineShader extends SimpleShader {
   }
 
   activateShader(pixelColor: color, camera: Camera) {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.useProgram(this.compiledShader);
     gl.uniformMatrix4fv(this.viewProjTransform, false, camera.getVPMatrix());
     gl.enableVertexAttribArray(this.shaderVertexPositionAttribute);
@@ -91,7 +91,7 @@ export default class LineShader extends SimpleShader {
   }
 
   loadObjectTransform(modelTransform: mat4) {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.uniformMatrix4fv(this.modelTransform, false, modelTransform);
   }
 }

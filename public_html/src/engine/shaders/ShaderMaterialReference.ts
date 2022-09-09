@@ -14,7 +14,7 @@ export default class ShaderMaterialReference {
   shininessRef: WebGLUniformLocation;
 
   constructor(shader: WebGLShader) {
-    const gl = core.getGL();
+    const gl = core.gl;
 
     this.ambientRef = gl.getUniformLocation(
       shader,
@@ -39,7 +39,7 @@ export default class ShaderMaterialReference {
       return;
     }
 
-    const gl = core.getGL();
+    const gl = core.gl;
 
     gl.uniform4fv(this.ambientRef, material.getAmbient());
     gl.uniform4fv(this.diffuseRef, material.getDiffuse());

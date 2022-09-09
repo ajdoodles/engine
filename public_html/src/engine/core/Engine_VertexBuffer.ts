@@ -25,7 +25,7 @@ const getGLTexCoordRef = function () {
 };
 
 const initialize = function () {
-  const gl = core.getGL();
+  const gl = core.gl;
 
   mSquareVertexBuffer = gl.createBuffer() as WebGLBuffer;
   gl.bindBuffer(gl.ARRAY_BUFFER, mSquareVertexBuffer);

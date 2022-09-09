@@ -36,7 +36,7 @@ export default class ShaderLightReference {
     this.index = index;
     const indexString = "uLights[" + index + "].";
 
-    const gl = core.getGL();
+    const gl = core.gl;
     this.isLitRef = gl.getUniformLocation(
       shader,
       indexString + "IsLit"
@@ -84,7 +84,7 @@ export default class ShaderLightReference {
   }
 
   loadToShader(camera: Camera, light: Light) {
-    const gl = core.getGL();
+    const gl = core.gl;
 
     const isLit = light !== undefined && light !== null && light.isLit();
     gl.uniform1i(this.isLitRef, isLit ? 1 : 0);
@@ -122,7 +122,7 @@ export default class ShaderLightReference {
   }
 
   setLit(isLit: boolean) {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.uniform1i(this.isLitRef, isLit ? 1 : 0);
   }
 }

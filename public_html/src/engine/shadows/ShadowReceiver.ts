@@ -47,7 +47,7 @@ export default class ShadowReceiver {
   }
 
   _shadowReceiverStencilOn() {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.clear(gl.STENCIL_BUFFER_BIT);
     gl.enable(gl.STENCIL_TEST);
     gl.colorMask(false, false, false, false);
@@ -58,7 +58,7 @@ export default class ShadowReceiver {
   }
 
   _shadowReceiverStencilOff() {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.depthMask(true);
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     gl.stencilFunc(gl.EQUAL, this.shadowStencilBit, this.shadowStencilMask);
@@ -66,7 +66,7 @@ export default class ShadowReceiver {
   }
 
   _shadowReceiverStencilDisable() {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.disable(gl.STENCIL_TEST);
   }
 }

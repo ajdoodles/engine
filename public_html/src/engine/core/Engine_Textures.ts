@@ -38,7 +38,7 @@ const loadTexture = function (
 // remaining references could break things if this texture is being used
 // elsewhere
 const unloadTexture = function (textureName: string) {
-  const gl = core.getGL();
+  const gl = core.gl;
   const texInfo = resourceMap.retrieveAsset(textureName) as TextureInfo;
   gl.deleteTexture(texInfo.glTexID);
   resourceMap.unloadAsset(textureName);
@@ -48,7 +48,7 @@ const _processLoadedImage = function (
   textureName: string,
   img: HTMLImageElement
 ) {
-  const gl = core.getGL();
+  const gl = core.gl;
   const textureID = gl.createTexture() as WebGLTexture;
 
   gl.bindTexture(gl.TEXTURE_2D, textureID);
@@ -66,17 +66,17 @@ const _processLoadedImage = function (
 };
 
 const activateColorTexture = function (textureName: string) {
-  const gl = core.getGL();
+  const gl = core.gl;
   _activateTexture(textureName, gl.TEXTURE0);
 };
 
 const activateNormalTexture = function (textureName: string) {
-  const gl = core.getGL();
+  const gl = core.gl;
   _activateTexture(textureName, gl.TEXTURE1);
 };
 
 const _activateTexture = function (textureName: string, textureUnit: GLenum) {
-  const gl = core.getGL();
+  const gl = core.gl;
   const texInfo = resourceMap.retrieveAsset(textureName) as TextureInfo;
 
   gl.activeTexture(textureUnit);
@@ -100,7 +100,7 @@ const _activateTexture = function (textureName: string, textureUnit: GLenum) {
 };
 
 const deactivateTexture = function () {
-  const gl = core.getGL();
+  const gl = core.gl;
   gl.bindTexture(gl.TEXTURE_2D, null);
 };
 
@@ -111,7 +111,7 @@ const getTextureInfo = function (textureName: string) {
 const getColorArray = function (textureName: string) {
   const texInfo = getTextureInfo(textureName) as TextureInfo;
   if (texInfo.colorArray === null) {
-    const gl = core.getGL();
+    const gl = core.gl;
     const fb = gl.createFramebuffer();
     gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
     gl.framebufferTexture2D(

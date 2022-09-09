@@ -17,7 +17,7 @@ export default class SpriteShader extends TextureShader {
 
     const initialCoords = [1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0];
 
-    const gl = core.getGL();
+    const gl = core.gl;
     this.spriteCoordBuffer = gl.createBuffer() as WebGLBuffer;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.spriteCoordBuffer);
     gl.bufferData(
@@ -28,7 +28,7 @@ export default class SpriteShader extends TextureShader {
   }
 
   setTextureCoordinates(coordinates: UVCoordArray) {
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.spriteCoordBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(coordinates));
   }
@@ -36,7 +36,7 @@ export default class SpriteShader extends TextureShader {
   activateShader(pixelColor: color, camera: Camera) {
     SimpleShader.prototype.activateShader.call(this, pixelColor, camera);
 
-    const gl = core.getGL();
+    const gl = core.gl;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.spriteCoordBuffer);
     gl.enableVertexAttribArray(this.textureCoordinateAttribute);
     gl.vertexAttribPointer(
