@@ -112,8 +112,8 @@ export default class GameObjectSet {
     for (let i = 0; i < this.set.length; i++) {
       const obj = this.set[i];
       obj.update();
-      if (this.isAlertingCollisions()) {
-        obj.physicsComponent?.setColor([1.0, 1.0, 1.0, 1.0]);
+      if (this.isAlertingCollisions() && obj.physicsComponent !== undefined) {
+        obj.physicsComponent.boundsColor = [1.0, 1.0, 1.0, 1.0];
       }
     }
 
@@ -127,8 +127,8 @@ export default class GameObjectSet {
             thoseBounds !== undefined &&
             theseBounds.collided(thoseBounds, CollisionInfo.Instance)
           ) {
-            theseBounds.setColor([1.0, 0.0, 0.0, 1.0]);
-            thoseBounds.setColor([1.0, 0.0, 0.0, 1.0]);
+            theseBounds.boundsColor = [1.0, 0.0, 0.0, 1.0];
+            thoseBounds.boundsColor = [1.0, 0.0, 0.0, 1.0];
           }
         }
       }

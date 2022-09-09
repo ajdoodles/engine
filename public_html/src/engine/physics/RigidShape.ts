@@ -5,32 +5,35 @@
  */
 
 import { vec2 } from "gl-matrix";
-import LineRenderable from "../../engine/renderables/LineRenderable.js";
-import Camera from "../cameras/Camera.js";
 import Transform from "../utils/Transform.js";
 import RigidRect from "./RigidRect.js";
 import RigidCircle from "./RigidCircle.js";
 import MathUtils from "../utils/MathUtils.js";
 import gameLoop from "../core/Engine_GameLoop";
 import CollisionInfo from "../utils/CollisionInfo.js";
+import PhysicsComponent from "./PhysicsComponent.js";
+import RigidType from "./RigidType.js";
+import Camera from "../cameras/Camera.js";
 
-export default abstract class RigidShape {
-  static readonly eRigidType = Object.freeze({
-    eAbstract: 0,
-    eCircle: 1,
-    eRect: 2,
-  });
-
-  padding: number;
-  xform: Transform;
-  positionMark: LineRenderable;
-  drawBounds: boolean;
+export default abstract class RigidShape extends PhysicsComponent {
+  public readonly rigidType: RigidType = RigidType.Abstract;
 
   private _invMass = 1;
   restitution = 0.8;
   private _velocity = vec2.create();
   friction = 0.3;
   acceleration = vec2.create();
+
+  constructor(public xform: Transform) {
+    super();
+  }
+
+  get position() {
+    return this.xform.getPosition();
+  }
+  set position(p: vec2) {
+    this.xform.setPosition(p[0], p[1]);
+  }
 
   get invMass() {
     return this._invMass;
@@ -50,72 +53,23 @@ export default abstract class RigidShape {
     vec2.copy(this._velocity, newV);
   }
 
-  constructor(xform: Transform) {
-    this.padding = 0.25;
-
-    this.xform = xform;
-    this.positionMark = new LineRenderable(0, 0, 0, 0);
-    this.drawBounds = false;
-  }
-
-  isDrawingBounds() {
-    return this.drawBounds;
-  }
-  setDrawBounds(shouldDraw: boolean) {
-    this.drawBounds = shouldDraw;
-  }
-
-  getXform() {
-    return this.xform;
-  }
-  setXform(xform: Transform) {
-    this.xform = xform;
-  }
-
-  getColor() {
-    return this.positionMark.getColor();
-  }
-  setColor(color: color) {
-    this.positionMark.setColor(color);
-  }
-
-  getPosition() {
-    return this.xform.getPosition();
-  }
-  setPosition(position: vec2) {
-    this.xform.setPosition(position[0], position[1]);
-  }
-
-  rigidType() {
-    return RigidShape.eRigidType.eAbstract;
-  }
-
   update() {
     const dt = gameLoop.frameTime;
-
-    const v = this.velocity;
-    vec2.scaleAndAdd(v, v, this.acceleration, this.invMass * dt);
-
-    const pos = this.getPosition();
-    vec2.scaleAndAdd(pos, pos, v, dt);
+    vec2.scaleAndAdd(
+      this.velocity,
+      this.velocity,
+      this.acceleration,
+      this.invMass * dt
+    );
+    vec2.scaleAndAdd(this.position, this.position, this.velocity, dt);
   }
 
   draw(camera: Camera) {
-    if (!this.isDrawingBounds()) {
-      return;
+    if (this.drawBounds) {
+      this.positionMark.getXform().setZPos(this.xform.getZPos());
     }
 
-    const pos = this.getPosition();
-
-    this.positionMark.getXform().setZPos(this.xform.getZPos());
-
-    this.positionMark.setStartPos(pos[0] - this.padding, pos[1] + this.padding);
-    this.positionMark.setEndPos(pos[0] + this.padding, pos[1] - this.padding);
-    this.positionMark.draw(camera);
-
-    this.positionMark.setStartPos(pos[0] + this.padding, pos[1] + this.padding);
-    this.positionMark.setEndPos(pos[0] - this.padding, pos[1] - this.padding);
-    this.positionMark.draw(camera);
+    super.draw(camera);
   }
 
   abstract collided(
@@ -128,8 +82,8 @@ export default abstract class RigidShape {
     circle: RigidCircle,
     collisionInfo: CollisionInfo
   ) {
-    const rectPos = rect.getPosition();
-    const circlePos = circle.getPosition();
+    const rectPos = rect.position;
+    const circlePos = circle.position;
 
     // calculate vector from rect center to circ center
     const vRectToCirc = vec2.create();
@@ -167,7 +121,7 @@ export default abstract class RigidShape {
     // Either the circle is inside the rectangle, or it's close enough
     // to collide. If neither is true, no collision.
     const squaredNormal = vec2.squaredLength(normal);
-    const squaredRadius = circle.getRadius() * circle.getRadius();
+    const squaredRadius = circle.radius * circle.radius;
     if (!isInside && squaredRadius < squaredNormal) {
       return false;
     }

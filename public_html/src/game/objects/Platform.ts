@@ -22,7 +22,7 @@ export default class Platform extends GameObject {
     this.deltaDegrees = 1;
 
     const rigidRect = new RigidRect(platform.getXform(), 36, 6);
-    rigidRect.setDrawBounds(true);
+    rigidRect.drawBounds = true;
     this.physicsComponent = rigidRect;
   }
 }

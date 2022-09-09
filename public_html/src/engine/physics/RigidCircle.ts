@@ -11,52 +11,38 @@ import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import RigidRect from "./RigidRect.js";
 import CollisionInfo from "../utils/CollisionInfo.js";
+import RigidType from "./RigidType.js";
 
 export default class RigidCircle extends RigidShape {
-  numSides: number;
-  angularDelta: number;
-  radius: number;
-  sides: LineRenderable;
+  readonly rigidType = RigidType.Circle;
 
-  constructor(xform: Transform, radius: number) {
+  numSides = 16;
+  angularDelta = (2 * Math.PI) / this.numSides;
+  sides = new LineRenderable(0, 0, 0, 0);
+
+  constructor(xform: Transform, public radius: number) {
     super(xform);
 
-    this.numSides = 16;
     if (this.numSides < 2) {
       throw "Need at least three points to draw a circle";
     }
-    this.angularDelta = (2 * Math.PI) / this.numSides;
-
-    this.radius = radius;
-    this.sides = new LineRenderable(0, 0, 0, 0);
   }
 
-  getRadius() {
-    return this.radius;
-  }
-  setRadius(radius: number) {
-    this.radius = radius;
-  }
-
-  setColor(color: color) {
-    super.setColor(color);
+  set boundsColor(color: color) {
+    super.boundsColor = color;
     this.sides.setColor(color);
-  }
-
-  rigidType() {
-    return RigidShape.eRigidType.eCircle;
   }
 
   draw(camera: Camera) {
     super.draw(camera);
 
-    if (!this.isDrawingBounds()) {
+    if (!this.drawBounds) {
       return;
     }
 
     this.sides.getXform().setZPos(this.xform.getZPos());
 
-    const pos = this.getPosition();
+    const pos = this.position;
     const drawPoint = vec2.fromValues(pos[0] + this.radius, pos[1]);
     this.sides.setStartPos(drawPoint[0], drawPoint[1]);
     for (let i = 1; i <= this.numSides; i++) {
@@ -77,21 +63,18 @@ export default class RigidCircle extends RigidShape {
     c2: RigidCircle,
     collisionInfo: CollisionInfo
   ) {
-    const distSquared = vec2.squaredDistance(
-      c1.getPosition(),
-      c2.getPosition()
-    );
-    const maxDist = c1.getRadius() + c2.getRadius();
+    const distSquared = vec2.squaredDistance(c1.position, c2.position);
+    const maxDist = c1.radius + c2.radius;
 
     if (distSquared >= maxDist * maxDist) {
       return false;
     }
 
     const vFirstToSecond = vec2.create();
-    vec2.subtract(vFirstToSecond, c2.getPosition(), c1.getPosition());
+    vec2.subtract(vFirstToSecond, c2.position, c1.position);
 
     const dist = Math.sqrt(distSquared);
-    const depth = c1.getRadius() + c2.getRadius() - dist;
+    const depth = c1.radius + c2.radius - dist;
     let normal;
 
     if (dist === 0) {
@@ -108,14 +91,14 @@ export default class RigidCircle extends RigidShape {
 
   collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
     collisionInfo.depth = 0;
-    switch (otherShape.rigidType()) {
-      case RigidShape.eRigidType.eCircle:
+    switch (otherShape.rigidType) {
+      case RigidType.Circle:
         return this.collidedCircleCircle(
           this,
           otherShape as RigidCircle,
           collisionInfo
         );
-      case RigidShape.eRigidType.eRect:
+      case RigidType.Rect:
         return this.collidedCircleRect(
           this,
           otherShape as RigidRect,
@@ -127,7 +110,7 @@ export default class RigidCircle extends RigidShape {
   }
 
   containsPos(position: vec2) {
-    const dist = vec2.dist(this.getPosition(), position);
-    return dist < this.getRadius();
+    const dist = vec2.dist(this.position, position);
+    return dist < this.radius;
   }
 }

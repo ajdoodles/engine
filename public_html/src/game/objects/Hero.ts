@@ -31,7 +31,7 @@ export default class Hero extends GameObject {
     super(hero);
 
     const hitBox = new RigidCircle(hero.getXform(), 9);
-    hitBox.setDrawBounds(true);
+    hitBox.drawBounds = true;
     this.physicsComponent = hitBox;
 
     this.delta = 0.3;

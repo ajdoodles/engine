@@ -11,12 +11,20 @@ import Camera from "../cameras/Camera.js";
 import RigidCircle from "./RigidCircle.js";
 import { vec2 } from "gl-matrix";
 import CollisionInfo from "../utils/CollisionInfo.js";
+import RigidType from "./RigidType.js";
 
 export default class RigidRect extends RigidShape {
+  rigidType = RigidType.Rect;
+
   sides: LineRenderable = new LineRenderable(0, 0, 0, 0);
 
   constructor(xform: Transform, public width: number, public height: number) {
     super(xform);
+  }
+
+  set boundsColor(c: color) {
+    super.boundsColor = c;
+    this.sides.setColor(c);
   }
 
   get halfWidth() {
@@ -26,37 +34,28 @@ export default class RigidRect extends RigidShape {
     return this.height / 2;
   }
 
-  left() {
+  get left() {
     return this.xform.getXPos() - this.halfWidth;
   }
-  right() {
+  get right() {
     return this.xform.getXPos() + this.halfWidth;
   }
-  top() {
+  get top() {
     return this.xform.getYPos() + this.halfHeight;
   }
-  bottom() {
+  get bottom() {
     return this.xform.getYPos() - this.halfHeight;
-  }
-
-  setColor(color: color) {
-    super.setColor(color);
-    this.sides.setColor(color);
-  }
-
-  rigidType() {
-    return RigidShape.eRigidType.eRect;
   }
 
   draw(camera: Camera) {
     super.draw(camera);
 
-    if (!this.isDrawingBounds()) {
+    if (!this.drawBounds) {
       return;
     }
 
-    const x = this.getPosition()[0];
-    const y = this.getPosition()[1];
+    const x = this.position[0];
+    const y = this.position[1];
     const halfWidth = this.halfWidth;
     const halfHeight = this.halfHeight;
 
@@ -85,8 +84,8 @@ export default class RigidRect extends RigidShape {
     second: RigidRect,
     collisionInfo: CollisionInfo
   ) {
-    const firstPos = first.getPosition();
-    const secondPos = second.getPosition();
+    const firstPos = first.position;
+    const secondPos = second.position;
 
     const vFirstToSecond = vec2.create();
     vec2.subtract(vFirstToSecond, secondPos, firstPos);
@@ -122,14 +121,14 @@ export default class RigidRect extends RigidShape {
 
   collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
     collisionInfo.depth = 0;
-    switch (otherShape.rigidType()) {
-      case RigidShape.eRigidType.eRect:
+    switch (otherShape.rigidType) {
+      case RigidType.Rect:
         return this.collidedRectRect(
           this,
           otherShape as RigidRect,
           collisionInfo
         );
-      case RigidShape.eRigidType.eCircle:
+      case RigidType.Circle:
         return this.collidedRectCircle(
           this,
           otherShape as RigidCircle,
@@ -141,7 +140,7 @@ export default class RigidRect extends RigidShape {
   }
 
   containsPos(position: vec2) {
-    const center = this.getPosition();
+    const center = this.position;
 
     const left = center[0] - this.halfWidth;
     const right = center[0] + this.halfWidth;

@@ -58,11 +58,11 @@ export default new (class {
     const ca = vec2.create();
 
     vec2.scale(ca, correctionAmount, s1.invMass);
-    const s1Pos = s1.getPosition();
+    const s1Pos = s1.position;
     vec2.subtract(s1Pos, s1Pos, ca);
 
     vec2.scale(ca, correctionAmount, s2.invMass);
-    const s2Pos = s2.getPosition();
+    const s2Pos = s2.position;
     vec2.add(s2Pos, s2Pos, ca);
   }
 
