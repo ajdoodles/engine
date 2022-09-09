@@ -1,6 +1,7 @@
 import { vec2 } from "gl-matrix";
 import GameObject from "../gameobjects/GameObject";
 import GameObjectSet from "../gameobjects/GameObjectSet";
+import { collided } from "../physics/Collisions";
 import RigidShape from "../physics/RigidShape";
 import CollisionInfo from "../utils/CollisionInfo";
 
@@ -149,7 +150,7 @@ export default new (class {
 
     this.beginRelaxation();
     while (this.continueRelaxation()) {
-      if (shape1.collided(shape2, this.collisionInfo)) {
+      if (collided(shape1, shape2, this.collisionInfo)) {
         this.resolveCollision(shape1, shape2, this.collisionInfo);
       }
     }
@@ -168,7 +169,7 @@ export default new (class {
         if (
           shape2 !== undefined &&
           shape1 !== shape2 &&
-          shape1.collided(shape2, this.collisionInfo)
+          collided(shape1, shape2, this.collisionInfo)
         ) {
           this.resolveCollision(shape1, shape2, this.collisionInfo);
         }
@@ -188,7 +189,7 @@ export default new (class {
             if (
               shape2 !== undefined &&
               shape1 !== shape2 &&
-              shape1.collided(shape2, this.collisionInfo)
+              collided(shape1, shape2, this.collisionInfo)
             ) {
               this.resolveCollision(shape1, shape2, this.collisionInfo);
             }

@@ -8,9 +8,7 @@ import RigidShape from "./RigidShape.js";
 import LineRenderable from "../renderables/LineRenderable.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
-import RigidCircle from "./RigidCircle.js";
 import { vec2 } from "gl-matrix";
-import CollisionInfo from "../utils/CollisionInfo.js";
 import RigidType from "./RigidType.js";
 
 export default class RigidRect extends RigidShape {
@@ -77,66 +75,6 @@ export default class RigidRect extends RigidShape {
     // left edge
     this.sides.setStartPos(x - halfWidth, y + halfHeight);
     this.sides.draw(camera);
-  }
-
-  collidedRectRect(
-    first: RigidRect,
-    second: RigidRect,
-    collisionInfo: CollisionInfo
-  ) {
-    const firstPos = first.position;
-    const secondPos = second.position;
-
-    const vFirstToSecond = vec2.create();
-    vec2.subtract(vFirstToSecond, secondPos, firstPos);
-
-    const xDepth =
-      first.halfWidth + second.halfWidth - Math.abs(vFirstToSecond[0]);
-    if (xDepth > 0) {
-      const yDepth =
-        first.halfHeight + second.halfHeight - Math.abs(vFirstToSecond[1]);
-
-      if (yDepth > 0) {
-        if (xDepth < yDepth) {
-          collisionInfo.depth = xDepth;
-          if (vFirstToSecond[0] > 0) {
-            collisionInfo.normal = vec2.fromValues(1, 0);
-          } else {
-            collisionInfo.normal = vec2.fromValues(-1, 0);
-          }
-        } else {
-          collisionInfo.depth = yDepth;
-          if (vFirstToSecond[1] > 0) {
-            collisionInfo.normal = vec2.fromValues(0, 1);
-          } else {
-            collisionInfo.normal = vec2.fromValues(0, -1);
-          }
-        }
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  collided(otherShape: RigidShape, collisionInfo: CollisionInfo): boolean {
-    collisionInfo.depth = 0;
-    switch (otherShape.rigidType) {
-      case RigidType.Rect:
-        return this.collidedRectRect(
-          this,
-          otherShape as RigidRect,
-          collisionInfo
-        );
-      case RigidType.Circle:
-        return this.collidedRectCircle(
-          this,
-          otherShape as RigidCircle,
-          collisionInfo
-        );
-      default:
-        return false;
-    }
   }
 
   containsPos(position: vec2) {
