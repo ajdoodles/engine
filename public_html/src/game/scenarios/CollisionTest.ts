@@ -1,6 +1,5 @@
 import { vec2 } from "gl-matrix";
 import Camera from "../../engine/cameras/Camera";
-import GameObject from "../../engine/gameobjects/GameObject";
 import GameObjectSet from "../../engine/gameobjects/GameObjectSet";
 import Renderable from "../../engine/renderables/Renderable";
 import Scene from "../../engine/Scene";

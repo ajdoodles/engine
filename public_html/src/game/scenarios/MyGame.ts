@@ -4,28 +4,28 @@
  * and open the template in the editor.
  */
 
-import Scene from "../engine/Scene.js";
-import audioClips from "../engine/core/resources/Engine_AudioClips.js";
-import core from "../engine/core/Engine_GL.js";
-import input from "../engine/core/Engine_Input.js";
-import textFileLoader from "../engine/core/resources/Engine_TextFileLoader.js";
-import textures from "../engine/core/Engine_Textures.js";
+import Scene from "../../engine/Scene.js";
+import audioClips from "../../engine/core/resources/Engine_AudioClips.js";
+import core from "../../engine/core/Engine_GL.js";
+import input from "../../engine/core/Engine_Input.js";
+import textFileLoader from "../../engine/core/resources/Engine_TextFileLoader.js";
+import textures from "../../engine/core/Engine_Textures.js";
 import BlueLevel from "./BlueLevel.js";
 import { vec2 } from "gl-matrix";
-import Camera from "../engine/cameras/Camera.js";
-import GameObject from "../engine/gameobjects/GameObject.js";
-import Light from "../engine/lights/Light.js";
-import LightSet from "../engine/lights/LightSet.js";
-import FontRenderable from "../engine/renderables/FontRenderable.js";
-import IllumRenderable from "../engine/renderables/IllumRenderable.js";
-import ShadowReceiver from "../engine/shadows/ShadowReceiver.js";
-import Material from "../engine/utils/Material.js";
-import Brain from "./objects/Brain.js";
-import Hero from "./objects/Hero.js";
-import Minion from "./objects/Minion.js";
-import Portal from "./objects/Portal.js";
-import SceneFileParser from "./util/SceneFileParser.js";
-import { startScene } from "../engine/core/Engine_Init.js";
+import Camera from "../../engine/cameras/Camera.js";
+import GameObject from "../../engine/gameobjects/GameObject.js";
+import Light from "../../engine/lights/Light.js";
+import LightSet from "../../engine/lights/LightSet.js";
+import FontRenderable from "../../engine/renderables/FontRenderable.js";
+import IllumRenderable from "../../engine/renderables/IllumRenderable.js";
+import ShadowReceiver from "../../engine/shadows/ShadowReceiver.js";
+import Material from "../../engine/utils/Material.js";
+import Brain from ".././objects/Brain.js";
+import Hero from ".././objects/Hero.js";
+import Minion from ".././objects/Minion.js";
+import Portal from ".././objects/Portal.js";
+import SceneFileParser from ".././util/SceneFileParser.js";
+import { startScene } from "../../engine/core/Engine_Init.js";
 
 export default class MyGame extends Scene {
   kSceneFile = "assets/scene.xml";

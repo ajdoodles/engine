@@ -4,19 +4,19 @@
  * and open the template in the editor.
  */
 
-import Scene from "../engine/Scene.js";
-import gameLoop from "../engine/core/Engine_GameLoop.js";
-import core from "../engine/core/Engine_GL.js";
-import textFileLoader from "../engine/core/resources/Engine_TextFileLoader.js";
-import textures from "../engine/core/Engine_Textures.js";
-import audioClips from "../engine/core/resources/Engine_AudioClips.js";
-import input from "../engine/core/Engine_Input.js";
-import SceneFileParser from "./util/SceneFileParser.js";
+import Scene from "../../engine/Scene.js";
+import gameLoop from "../../engine/core/Engine_GameLoop.js";
+import core from "../../engine/core/Engine_GL.js";
+import textFileLoader from "../../engine/core/resources/Engine_TextFileLoader.js";
+import textures from "../../engine/core/Engine_Textures.js";
+import audioClips from "../../engine/core/resources/Engine_AudioClips.js";
+import input from "../../engine/core/Engine_Input.js";
+import SceneFileParser from "../util/SceneFileParser.js";
 import MyGame from "./MyGame.js";
-import Camera from "../engine/cameras/Camera.js";
-import Renderable from "../engine/renderables/Renderable.js";
-import TextureRenderable from "../engine/renderables/TextureRenderable.js";
-import { startScene } from "../engine/core/Engine_Init.js";
+import Camera from "../../engine/cameras/Camera.js";
+import Renderable from "../../engine/renderables/Renderable.js";
+import TextureRenderable from "../../engine/renderables/TextureRenderable.js";
+import { startScene } from "../../engine/core/Engine_Init.js";
 
 export default class BlueLevel extends Scene {
   kSceneFile = "assets/bluelevel.xml";
