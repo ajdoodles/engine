@@ -188,10 +188,7 @@ export default class MyGame extends Scene {
     this.mHeroCam.update();
     this.mBrainCam.update();
 
-    this.mHeroCam.panTo(
-      this.mHero.xform.getXPos(),
-      this.mHero.xform.getYPos()
-    );
+    this.mHeroCam.panTo(this.mHero.xform.getXPos(), this.mHero.xform.getYPos());
     this.mBrainCam.panTo(
       this.mBrain.xform.getXPos(),
       this.mBrain.xform.getYPos()

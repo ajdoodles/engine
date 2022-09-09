@@ -7,23 +7,19 @@ import ShaderFactory from "../shaders/ShaderFactory";
 import gameLoop from "./Engine_GameLoop";
 import Scene from "../Scene";
 
+export function initializeEngineCore(htmlCanvasID: string, scene: Scene) {
+  core.initializeWebGL(htmlCanvasID);
+  vertexBuffer.initialize();
+  input.initialize(htmlCanvasID);
+  audioClips.initAudioContext();
 
-export function initializeEngineCore (
-        htmlCanvasID: string,
-        scene: Scene
-      ) {
-        core.initializeWebGL(htmlCanvasID);
-        vertexBuffer.initialize();
-        input.initialize(htmlCanvasID);
-        audioClips.initAudioContext();
-    
-        defaultResources.initialize(function() {
-            ShaderFactory.createShaders();
-            startScene(scene);
-        });
-    };
+  defaultResources.initialize(function () {
+    ShaderFactory.createShaders();
+    startScene(scene);
+  });
+}
 
 export function startScene(scene: Scene) {
-    scene.loadScene.call(scene);
-    gameLoop.start(scene);
+  scene.loadScene.call(scene);
+  gameLoop.start(scene);
 }

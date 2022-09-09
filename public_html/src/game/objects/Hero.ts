@@ -14,7 +14,7 @@ export default class Hero extends GameObject {
   delta: number;
   deltaDegrees: number;
 
-  physicsComponent !: RigidCircle;
+  physicsComponent!: RigidCircle;
 
   constructor(spriteTexture: string, normalTexture?: string) {
     let hero;
@@ -52,7 +52,8 @@ export default class Hero extends GameObject {
       if (newV[1] > -4) {
         newV[1] -= 0.2;
       }
-    } if (input.isKeyPressed(input.keys.D)) {
+    }
+    if (input.isKeyPressed(input.keys.D)) {
       if (newV[0] < 4) {
         newV[0] += 0.2;
       }

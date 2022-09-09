@@ -11,7 +11,6 @@ import Transform from "../utils/Transform.js";
 import RigidRect from "./RigidRect.js";
 import RigidCircle from "./RigidCircle.js";
 import MathUtils from "../utils/MathUtils.js";
-import physics from "../core/Engine_Physics";
 import gameLoop from "../core/Engine_GameLoop";
 import CollisionInfo from "../utils/CollisionInfo.js";
 
@@ -148,7 +147,10 @@ export default abstract class RigidShape {
     // project the vector onto the nearst point on the rectangle
     const isInside = rect.containsPos(circlePos);
     if (isInside) {
-      if (Math.abs(vRectToCirc[0] - halfWidth) > Math.abs(vRectToCirc[1] - halfHeight)) {
+      if (
+        Math.abs(vRectToCirc[0] - halfWidth) >
+        Math.abs(vRectToCirc[1] - halfHeight)
+      ) {
         vec[0] = halfWidth;
         vec[0] *= vec[0] < 0 ? -1 : 1;
       } else {
@@ -195,7 +197,7 @@ export default abstract class RigidShape {
     collisionInfo: CollisionInfo
   ) {
     const isCollided = this.collidedRectCircle(rect, circle, collisionInfo);
-    vec2.scale(collisionInfo.normal, collisionInfo.normal, -1); 
+    vec2.scale(collisionInfo.normal, collisionInfo.normal, -1);
     return isCollided;
   }
 }

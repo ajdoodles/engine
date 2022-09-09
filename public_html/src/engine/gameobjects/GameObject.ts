@@ -131,11 +131,7 @@ export default class GameObject {
         );
 
         const delta = vec2.create();
-        vec2.sub(
-          delta,
-          this.xform.getPosition(),
-          otherObj.xform.getPosition()
-        );
+        vec2.sub(delta, this.xform.getPosition(), otherObj.xform.getPosition());
         if (vec2.length(delta) < thisRadius + otherRadius) {
           thisRen.setColorArray();
           otherRen.setColorArray();
