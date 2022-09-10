@@ -3,35 +3,20 @@ import GameObject from "../../gameobjects/GameObject";
 import GameObjectSet from "../../gameobjects/GameObjectSet";
 import Particle from "../../particles/Particle";
 import ParticleGameObjectSet from "../../particles/ParticleGameObjectSet";
-import RigidCircle from "../../physics/RigidCircle";
-import RigidRect from "../../physics/RigidRect";
 import RigidShape from "../../physics/RigidShape";
 
 export default new (class {
-  public static readonly systemAcceleration = vec2.fromValues(0, -50);
+  public readonly systemAcceleration = vec2.fromValues(0, -50);
 
   resolveParticleCollision(shape: RigidShape, particle: Particle) {
-    if (shape instanceof RigidRect) {
-      this.resolveRectPos(shape, particle);
-    } else if (shape instanceof RigidCircle) {
-      this.resolveCircPos(shape, particle);
-    }
-  }
-
-  resolveRectPos(rect: RigidRect, particle: Particle) {
-    if (!rect.containsPos(particle.position)) {
-      return false;
+    if (!shape.containsPos(particle.position)) {
+      return;
     }
 
-    rect.projectToEdge(particle.position);
-  }
-
-  resolveCircPos(circle: RigidCircle, particle: Particle) {
-    if (!circle.containsPos(particle.position)) {
-      return false;
-    }
-
-    circle.projectToEdge(particle.position);
+    const pVec = vec2.create();
+    vec2.subtract(pVec, particle.position, shape.position);
+    shape.projectToEdge(pVec);
+    vec2.add(particle.position, shape.position, pVec);
   }
 
   processObjSet(obj: GameObject, set: ParticleGameObjectSet) {
