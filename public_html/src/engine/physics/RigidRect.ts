@@ -64,7 +64,7 @@ export default class RigidRect extends RigidShape {
   projectToEdge(vec: vec2): void {
     if (this.containsVec(vec)) {
       if (
-        Math.abs(vec[0] - this.halfWidth) > Math.abs(vec[1] - this.halfHeight)
+        Math.abs(vec[0] - this.halfWidth) < Math.abs(vec[1] - this.halfHeight)
       ) {
         vec[0] = this.halfWidth;
         vec[0] *= vec[0] < 0 ? -1 : 1;
