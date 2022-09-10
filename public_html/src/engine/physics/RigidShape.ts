@@ -49,6 +49,14 @@ export default abstract class RigidShape extends PhysicsComponent {
     vec2.copy(this._velocity, newV);
   }
 
+  abstract containsPos(pos: vec2): boolean;
+
+  abstract containsVec(vec: vec2): boolean;
+
+  abstract projectToEdge(pos: vec2): void;
+
+  abstract clampToEdge(pos: vec2): void;
+
   update() {
     const dt = gameLoop.frameTime;
     vec2.scaleAndAdd(
@@ -67,5 +75,4 @@ export default abstract class RigidShape extends PhysicsComponent {
 
     super.draw(camera);
   }
-
 }

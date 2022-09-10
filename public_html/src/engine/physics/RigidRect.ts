@@ -10,6 +10,7 @@ import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import { vec2 } from "gl-matrix";
 import RigidType from "./RigidType.js";
+import MathUtils from "../utils/MathUtils.js";
 
 export default class RigidRect extends RigidShape {
   rigidType = RigidType.Rect;
@@ -45,6 +46,42 @@ export default class RigidRect extends RigidShape {
     return this.xform.getYPos() - this.halfHeight;
   }
 
+  containsPos(position: vec2) {
+    return (
+      this.left < position[0] &&
+      position[0] < this.right &&
+      this.bottom < position[1] &&
+      position[1] < this.top
+    );
+  }
+
+  containsVec(vec: vec2) {
+    return (
+      Math.abs(vec[0]) < this.halfWidth && Math.abs(vec[1]) < this.halfHeight
+    );
+  }
+
+  projectToEdge(vec: vec2): void {
+    if (this.containsVec(vec)) {
+      if (
+        Math.abs(vec[0] - this.halfWidth) > Math.abs(vec[1] - this.halfHeight)
+      ) {
+        vec[0] = this.halfWidth;
+        vec[0] *= vec[0] < 0 ? -1 : 1;
+      } else {
+        vec[1] = this.halfHeight;
+        vec[1] *= vec[1] < 0 ? -1 : 1;
+      }
+    }
+  }
+
+  clampToEdge(vec: vec2): void {
+    if (!this.containsVec(vec)) {
+      vec[0] = MathUtils.clamp(vec[0], -this.halfWidth, this.halfWidth);
+      vec[1] = MathUtils.clamp(vec[1], -this.halfHeight, this.halfHeight);
+    }
+  }
+
   draw(camera: Camera) {
     super.draw(camera);
 
@@ -75,21 +112,5 @@ export default class RigidRect extends RigidShape {
     // left edge
     this.sides.setStartPos(x - halfWidth, y + halfHeight);
     this.sides.draw(camera);
-  }
-
-  containsPos(position: vec2) {
-    const center = this.position;
-
-    const left = center[0] - this.halfWidth;
-    const right = center[0] + this.halfWidth;
-    const bottom = center[1] - this.halfHeight;
-    const top = center[1] + this.halfHeight;
-
-    return (
-      left < position[0] &&
-      position[0] < right &&
-      bottom < position[1] &&
-      position[1] < top
-    );
   }
 }

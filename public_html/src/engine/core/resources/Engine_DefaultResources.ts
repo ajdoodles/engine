@@ -18,6 +18,7 @@ const kIllumFS = "src/glslshaders/IllumFS.glsl";
 const kShadowCasterFS = "src/glslshaders/ShadowCasterFS.glsl";
 const kShadowReceiverFS = "src/glslshaders/ShadowReceiverFS.glsl";
 const kLineFS = "src/glslshaders/LineFS.glsl";
+const kParticleFS = "src/glslshaders/ParticleFS.glsl";
 
 let mGlobalAmbientColor = [0.3, 0.3, 0.3, 1.0];
 let mGlobalAmbientIntensity = 0.95;
@@ -76,6 +77,10 @@ const _initialize = function (callback: () => void) {
   );
 
   textFileLoader.loadTextFile(kLineFS, textFileLoader.eTextFileType.eTextFile);
+  textFileLoader.loadTextFile(
+    kParticleFS,
+    textFileLoader.eTextFileType.eTextFile
+  );
 
   fonts.loadFont(kDefaultFont);
 

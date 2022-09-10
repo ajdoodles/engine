@@ -142,8 +142,8 @@ export default new (class {
   }
 
   public processObjObj(obj1: GameObject, obj2: GameObject) {
-    const shape1 = obj1.physicsComponent;
-    const shape2 = obj2.physicsComponent;
+    const shape1 = obj1.physicsComponent as RigidShape;
+    const shape2 = obj2.physicsComponent as RigidShape;
     if (shape1 === undefined || shape2 === undefined || shape1 === shape2) {
       return;
     }
@@ -157,7 +157,7 @@ export default new (class {
   }
 
   public processObjSet(obj: GameObject, set: GameObjectSet) {
-    const shape1 = obj.physicsComponent;
+    const shape1 = obj.physicsComponent as RigidShape;
     if (shape1 === undefined) {
       return;
     }
@@ -165,7 +165,7 @@ export default new (class {
     this.beginRelaxation();
     while (this.continueRelaxation()) {
       for (i = 0; i < set.size(); i++) {
-        shape2 = set.getObjectAt(i).physicsComponent;
+        shape2 = set.getObjectAt(i).physicsComponent as RigidShape;
         if (
           shape2 !== undefined &&
           shape1 !== shape2 &&
@@ -182,10 +182,10 @@ export default new (class {
     this.beginRelaxation();
     while (this.continueRelaxation) {
       for (i = 0; i < set1.size(); i++) {
-        shape1 = set1.getObjectAt(i).physicsComponent;
+        shape1 = set1.getObjectAt(i).physicsComponent as RigidShape;
         if (shape1 !== undefined) {
           for (j = 0; j < set2.size(); j++) {
-            shape2 = set2.getObjectAt(j).physicsComponent;
+            shape2 = set2.getObjectAt(j).physicsComponent as RigidShape;
             if (
               shape2 !== undefined &&
               shape1 !== shape2 &&

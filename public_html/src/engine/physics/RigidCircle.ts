@@ -31,6 +31,30 @@ export default class RigidCircle extends RigidShape {
     this.sides.setColor(color);
   }
 
+  containsPos(position: vec2) {
+    const dist = vec2.squaredDistance(this.position, position);
+    return dist < this.radius * this.radius;
+  }
+
+  containsVec(vec: vec2) {
+    const dist = vec2.squaredLength(vec);
+    return dist < this.radius * this.radius;
+  }
+
+  projectToEdge(vec: vec2) {
+    if (this.containsVec(vec)) {
+      const length = vec2.length(vec);
+      vec2.scale(vec, vec, this.radius / length);
+    }
+  }
+
+  clampToEdge(vec: vec2) {
+    if (!this.containsVec(vec)) {
+      const length = vec2.length(vec);
+      vec2.scale(vec, vec, this.radius / length);
+    }
+  }
+
   draw(camera: Camera) {
     super.draw(camera);
 
@@ -54,10 +78,5 @@ export default class RigidCircle extends RigidShape {
 
       this.sides.draw(camera);
     }
-  }
-
-  containsPos(position: vec2) {
-    const dist = vec2.dist(this.position, position);
-    return dist < this.radius;
   }
 }

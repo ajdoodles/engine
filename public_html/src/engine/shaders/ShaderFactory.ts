@@ -15,6 +15,7 @@ const kIllumFS = "src/glslshaders/IllumFS.glsl";
 const kShadowCasterFS = "src/glslshaders/ShadowCasterFS.glsl";
 const kShadowReceiverFS = "src/glslshaders/ShadowReceiverFS.glsl";
 const kLineFS = "src/glslshaders/LineFS.glsl";
+const kParticleFS = "src/glslshaders/ParticleFS.glsl";
 
 let mConstColorShader: SimpleShader;
 let mSpriteShader: SpriteShader;
@@ -24,6 +25,7 @@ let mIllumShader: IllumShader;
 let mShadowCasterShader: ShadowCasterShader;
 let mShadowReceiverShader: SpriteShader;
 let mLineShader: LineShader;
+let mParticleShader: TextureShader;
 
 const _getConstColorShader = function () {
   return mConstColorShader;
@@ -57,6 +59,10 @@ const _getLineShader = function () {
   return mLineShader;
 };
 
+const _getParticleShader = function () {
+  return mParticleShader;
+};
+
 const createShaders = function () {
   mConstColorShader = new SimpleShader(kSimpleVS, kSimpleFS);
   mSpriteShader = new SpriteShader(kTextureVS, kTextureFS);
@@ -66,6 +72,7 @@ const createShaders = function () {
   mShadowCasterShader = new ShadowCasterShader(kTextureVS, kShadowCasterFS);
   mShadowReceiverShader = new SpriteShader(kTextureVS, kShadowReceiverFS);
   mLineShader = new LineShader(kSimpleVS, kLineFS);
+  mParticleShader = new TextureShader(kTextureVS, kParticleFS);
 };
 
 const mPublic = {
@@ -77,6 +84,7 @@ const mPublic = {
   getShadowCasterShader: _getShadowCasterShader,
   getShadowReceiverShader: _getShadowReceiverShader,
   getLineShader: _getLineShader,
+  getParticleShader: _getParticleShader,
   createShaders: createShaders,
 };
 

@@ -4,7 +4,7 @@ import LineRenderable from "../renderables/LineRenderable";
 
 export default abstract class PhysicsComponent {
   protected readonly positionMark = new LineRenderable();
-  protected readonly padding = 0.25;
+  protected padding = 0.25;
   public drawBounds = false;
 
   abstract position: vec2;
