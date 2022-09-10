@@ -1,11 +1,12 @@
 import { vec2 } from "gl-matrix";
 import Camera from "../cameras/Camera";
 import gameloop from "../core/Engine_GameLoop";
+import particles from "../core/resources/Engine_Particle";
 import PhysicsComponent from "../physics/PhysicsComponent";
 
 export default class Particle extends PhysicsComponent {
   public readonly velocity = vec2.create();
-  public readonly acceleration = vec2.create();
+  public readonly acceleration = vec2.clone(particles.systemAcceleration);
   public drag = 0.95;
 
   constructor(public position: vec2) {
