@@ -44,11 +44,13 @@ export default class Hero extends GameObject {
       if (newV[1] < 4) {
         newV[1] += 0.2;
       }
-    } else if (input.isKeyPressed(input.keys.A)) {
+    }
+    if (input.isKeyPressed(input.keys.A)) {
       if (newV[0] > -4) {
         newV[0] -= 0.2;
       }
-    } else if (input.isKeyPressed(input.keys.S)) {
+    }
+    if (input.isKeyPressed(input.keys.S)) {
       if (newV[1] > -4) {
         newV[1] -= 0.2;
       }
