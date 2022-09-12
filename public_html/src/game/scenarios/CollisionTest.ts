@@ -12,6 +12,7 @@ import ParticleGameObject from "../../engine/particles/ParticleGameObject";
 import Particle from "../../engine/particles/Particle";
 import input from "../../engine/core/Engine_Input";
 import ParticleGameObjectSet from "../../engine/particles/ParticleGameObjectSet";
+import particles from "../../engine/core/resources/Engine_Particle";
 
 export default class CollisionTest extends Scene {
   minionSprite = "assets/minion_sprite.png";
@@ -114,6 +115,9 @@ export default class CollisionTest extends Scene {
     }
     // this.testSet.update();
     this.particleSet.update();
+
+    particles.processObjSet(this.hero, this.particleSet);
+    particles.processSetSet(this.wallSet, this.particleSet);
   }
   draw(): void {
     core.clearCanvas([0.9, 0.9, 0.9, 1]);
