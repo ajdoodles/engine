@@ -10,9 +10,11 @@ export default class ParticleGameObjectSet extends GameObjectSet {
 
   draw(camera: Camera) {
     const gl = core.gl;
+    gl.disable(gl.DEPTH_TEST);
     gl.blendFunc(gl.ONE, gl.ONE);
     super.draw(camera);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.enable(gl.DEPTH_TEST);
   }
 
   update() {
