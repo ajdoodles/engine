@@ -1,9 +1,9 @@
 "use strict";
 import { initializeEngineCore } from "../engine/core/Engine_Init.js";
-import CollisionTest from "./scenarios/CollisionTest.js";
+import ParallaxTest from "./scenarios/ParallaxTest.js";
 
 function initEngine() {
-  initializeEngineCore("GLCanvas", new CollisionTest());
+  initializeEngineCore("GLCanvas", new ParallaxTest());
 }
 
 document.addEventListener("DOMContentLoaded", initEngine);
