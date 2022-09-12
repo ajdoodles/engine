@@ -6,7 +6,7 @@ import ParticleGameObjectSet from "../../particles/ParticleGameObjectSet";
 import RigidShape from "../../physics/RigidShape";
 
 export default new (class {
-  public readonly systemAcceleration = vec2.fromValues(0, -50);
+  public readonly systemAcceleration = vec2.fromValues(-100, -40);
 
   resolveParticleCollision(shape: RigidShape, particle: Particle) {
     if (!shape.containsPos(particle.position)) {
