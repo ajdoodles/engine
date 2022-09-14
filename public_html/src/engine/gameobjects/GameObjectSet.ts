@@ -91,6 +91,18 @@ export default class GameObjectSet {
     this.set.push(obj);
   }
 
+  removeFromSet(obj: GameObject) {
+    const index = this.set.indexOf(obj);
+    if (index > -1) {
+      this.set.splice(index, 1);
+    }
+  }
+
+  moveToLast(obj: GameObject) {
+    this.removeFromSet(obj);
+    this.addObject(obj);
+  }
+
   update() {
     if (this.hasValidSelection()) {
       const xform = this.getSelectedObject()?.xform;

@@ -12,6 +12,7 @@ import TileGameObject from "../../engine/gameobjects/TiledGameObject";
 import IllumRenderable from "../../engine/renderables/IllumRenderable";
 import ParallaxGameObject from "../../engine/gameobjects/ParallaxGameObject";
 import TextureRenderable from "../../engine/renderables/TextureRenderable";
+import * as layerManager from "../../engine/core/LayerManager";
 
 export default class ParallaxTest extends Scene {
   bgSpriteTexture = "assets/bg.png";
@@ -43,6 +44,8 @@ export default class ParallaxTest extends Scene {
     textures.loadTexture(this.layerNormalTexture);
   }
   unloadScene(): void {
+    layerManager.cleanUp();
+
     textures.unloadTexture(this.minionSprite);
     textures.unloadTexture(this.minionNormal);
     textures.unloadTexture(this.bgSpriteTexture);
@@ -67,6 +70,7 @@ export default class ParallaxTest extends Scene {
     this.heroCamera.setBackgroundColor(this.heroBgColor);
 
     this.hero = new Hero(this.minionSprite, this.minionNormal);
+    layerManager.addToLayer(layerManager.Layer.Actor, this.hero);
 
     const bgTileRenderable = new IllumRenderable(
       this.bgSpriteTexture,
@@ -81,6 +85,7 @@ export default class ParallaxTest extends Scene {
     this.background = new ParallaxGameObject(bgTileRenderable, 5, this.mainCamera);
     this.background.currentFrontDir = [0, -1];
     this.background.speed = 0.1;
+    layerManager.addToLayer(layerManager.Layer.Background, this.background);
 
     const layerTileRenderable = new IllumRenderable(
       this.layerSpriteTexture,
@@ -94,13 +99,13 @@ export default class ParallaxTest extends Scene {
     this.backLayer = new ParallaxGameObject(layerTileRenderable, 3, this.mainCamera);
     this.backLayer.currentFrontDir = [0, -1];
     this.backLayer.speed = 0.1;
+    layerManager.addToLayer(layerManager.Layer.Background, this.backLayer);
 
     const frontLayerTile = new TextureRenderable(this.layerSpriteTexture);
     frontLayerTile.xform.setSize(30, 30);
     frontLayerTile.xform.setPosition(0, 0);
     this.frontLayer = new ParallaxGameObject(frontLayerTile, 0.9, this.mainCamera);
-
-    this.minionSet = new GameObjectSet();
+    layerManager.addToLayer(layerManager.Layer.Foreground, this.frontLayer);
   }
 
   private spawnRandomMinion() {
@@ -122,8 +127,7 @@ export default class ParallaxTest extends Scene {
       minY
     );
     minion.xform.setPosition(randX, randY);
-
-    this.minionSet.addObject(minion);
+    layerManager.addToLayer(layerManager.Layer.Actor, minion);
   }
   restHeroPosition() {
     const wcCenter = this.mainCamera.getWCCenter();
@@ -137,12 +141,7 @@ export default class ParallaxTest extends Scene {
       this.restHeroPosition();
     }
 
-    this.background.update();
-    this.backLayer.update();
-    this.frontLayer.update();
-
-    this.minionSet.update();
-    this.hero.update();
+    layerManager.updateAllLayers();
 
     this.mainCamera.panWith(this.hero.xform, .85);
 
@@ -152,11 +151,7 @@ export default class ParallaxTest extends Scene {
 
   private drawCamera(camera: Camera) {
     camera.setupViewProjection();
-    this.background.draw(camera);
-    this.backLayer.draw(camera);
-    this.minionSet.draw(camera);
-    this.hero.draw(camera);
-    this.frontLayer.draw(camera);
+    layerManager.drawAllLayers(camera);
   }
   draw(): void {
     core.clearCanvas(this.mainBgColor);
