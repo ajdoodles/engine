@@ -10,6 +10,11 @@ export default class TileGameObject extends GameObject {
     super(renderable);
   }
 
+  public update() {
+    const pos = this.xform.getPosition();
+    vec2.scaleAndAdd(pos, pos, this._currentFrontDir, this.speed);
+  }
+
   private drawTiles(camera: Camera) {
     const tileWidth = this.xform.getWidth();
     const tileHeight = this.xform.getHeight();

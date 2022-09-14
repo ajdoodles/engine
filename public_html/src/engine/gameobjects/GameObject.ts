@@ -13,7 +13,7 @@ import BoundingBox from "../utils/BoundingBox";
 export default class GameObject {
   public physicsComponent?: PhysicsComponent;
   public visible = true;
-  private _currentFrontDir: vec2 = vec2.fromValues(0, 1);
+  protected _currentFrontDir: vec2 = vec2.fromValues(0, 1);
   public speed = 0;
 
   get xform() {
