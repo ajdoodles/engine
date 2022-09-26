@@ -6,16 +6,16 @@ import IllumShader from "./IllumShader.js";
 import ShadowCasterShader from "./ShadowCasterShader.js";
 import LineShader from "./LineShader.js";
 
-const kSimpleVS = "src/glslshaders/SimpleVS.glsl";
-const kSimpleFS = "src/glslshaders/SimpleFS.glsl";
-const kTextureVS = "src/glslshaders/TextureVS.glsl";
-const kTextureFS = "src/glslshaders/TextureFS.glsl";
-const kLightFS = "src/glslshaders/LightFS.glsl";
-const kIllumFS = "src/glslshaders/IllumFS.glsl";
-const kShadowCasterFS = "src/glslshaders/ShadowCasterFS.glsl";
-const kShadowReceiverFS = "src/glslshaders/ShadowReceiverFS.glsl";
-const kLineFS = "src/glslshaders/LineFS.glsl";
-const kParticleFS = "src/glslshaders/ParticleFS.glsl";
+const kSimpleVS = "shaders/SimpleVS.glsl";
+const kSimpleFS = "shaders/SimpleFS.glsl";
+const kTextureVS = "shaders/TextureVS.glsl";
+const kTextureFS = "shaders/TextureFS.glsl";
+const kLightFS = "shaders/LightFS.glsl";
+const kIllumFS = "shaders/IllumFS.glsl";
+const kShadowCasterFS = "shaders/ShadowCasterFS.glsl";
+const kShadowReceiverFS = "shaders/ShadowReceiverFS.glsl";
+const kLineFS = "shaders/LineFS.glsl";
+const kParticleFS = "shaders/ParticleFS.glsl";
 
 let mConstColorShader: SimpleShader;
 let mSpriteShader: SpriteShader;

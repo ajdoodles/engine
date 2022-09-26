@@ -3,6 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+class Scene {
+}
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 var core = new (class {
     initializeWebGL(htmlCanvasId) {
         const canvas = document.getElementById(htmlCanvasId);
@@ -1689,16 +1697,16 @@ const mPublic$3 = {
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-const kSimpleVS$1 = "src/glslshaders/SimpleVS.glsl";
-const kSimpleFS$1 = "src/glslshaders/SimpleFS.glsl";
-const kTextureVS$1 = "src/glslshaders/TextureVS.glsl";
-const kTextureFS$1 = "src/glslshaders/TextureFS.glsl";
-const kLightFS$1 = "src/glslshaders/LightFS.glsl";
-const kIllumFS$1 = "src/glslshaders/IllumFS.glsl";
-const kShadowCasterFS$1 = "src/glslshaders/ShadowCasterFS.glsl";
-const kShadowReceiverFS$1 = "src/glslshaders/ShadowReceiverFS.glsl";
-const kLineFS$1 = "src/glslshaders/LineFS.glsl";
-const kParticleFS$1 = "src/glslshaders/ParticleFS.glsl";
+const kSimpleVS$1 = "shaders/SimpleVS.glsl";
+const kSimpleFS$1 = "shaders/SimpleFS.glsl";
+const kTextureVS$1 = "shaders/TextureVS.glsl";
+const kTextureFS$1 = "shaders/TextureFS.glsl";
+const kLightFS$1 = "shaders/LightFS.glsl";
+const kIllumFS$1 = "shaders/IllumFS.glsl";
+const kShadowCasterFS$1 = "shaders/ShadowCasterFS.glsl";
+const kShadowReceiverFS$1 = "shaders/ShadowReceiverFS.glsl";
+const kLineFS$1 = "shaders/LineFS.glsl";
+const kParticleFS$1 = "shaders/ParticleFS.glsl";
 let mGlobalAmbientColor = [0.3, 0.3, 0.3, 1.0];
 let mGlobalAmbientIntensity = 0.95;
 const kDefaultFont = "assets/fonts/system-default-font";
@@ -2237,16 +2245,16 @@ class LineShader extends SimpleShader {
     }
 }
 
-const kSimpleVS = "src/glslshaders/SimpleVS.glsl";
-const kSimpleFS = "src/glslshaders/SimpleFS.glsl";
-const kTextureVS = "src/glslshaders/TextureVS.glsl";
-const kTextureFS = "src/glslshaders/TextureFS.glsl";
-const kLightFS = "src/glslshaders/LightFS.glsl";
-const kIllumFS = "src/glslshaders/IllumFS.glsl";
-const kShadowCasterFS = "src/glslshaders/ShadowCasterFS.glsl";
-const kShadowReceiverFS = "src/glslshaders/ShadowReceiverFS.glsl";
-const kLineFS = "src/glslshaders/LineFS.glsl";
-const kParticleFS = "src/glslshaders/ParticleFS.glsl";
+const kSimpleVS = "shaders/SimpleVS.glsl";
+const kSimpleFS = "shaders/SimpleFS.glsl";
+const kTextureVS = "shaders/TextureVS.glsl";
+const kTextureFS = "shaders/TextureFS.glsl";
+const kLightFS = "shaders/LightFS.glsl";
+const kIllumFS = "shaders/IllumFS.glsl";
+const kShadowCasterFS = "shaders/ShadowCasterFS.glsl";
+const kShadowReceiverFS = "shaders/ShadowReceiverFS.glsl";
+const kLineFS = "shaders/LineFS.glsl";
+const kParticleFS = "shaders/ParticleFS.glsl";
 let mConstColorShader;
 let mSpriteShader;
 let mTextureShader;
@@ -2380,14 +2388,6 @@ function initializeEngineCore(htmlCanvasID, scene) {
 function startScene(scene) {
     scene.loadScene.call(scene);
     mPublic.start(scene);
-}
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-class Scene {
 }
 
 /*
@@ -4402,96 +4402,6 @@ function initEngine() {
 }
 document.addEventListener("DOMContentLoaded", initEngine);
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-class SpriteAnimateRenderable extends SpriteRenderable {
-    constructor(texture) {
-        super(texture);
-        this.firstElmLeft = 0.0;
-        this.elmTop = 1.0;
-        this.elmWidth = 1.0;
-        this.elmHeight = 1.0;
-        this.widthPadding = 0.0;
-        this.numElems = 1;
-        this.animationType = SpriteAnimateRenderable.eAnimationType.eAnimateRight;
-        this.updateInterval = 1;
-        this.currentElem = 0;
-        this.currentAnimAdvance = -1.0;
-        this.currentTick = 0;
-        this._initAnimation();
-    }
-    setAnimationType(animationType) {
-        this.animationType = animationType;
-        this.currentElem = -2;
-        this.currentAnimAdvance = -1;
-        this._initAnimation();
-    }
-    _initAnimation() {
-        this.currentTick = 0;
-        switch (this.animationType) {
-            case SpriteAnimateRenderable.eAnimationType.eAnimateRight:
-                this.currentElem = 0;
-                this.currentAnimAdvance = 1;
-                break;
-            case SpriteAnimateRenderable.eAnimationType.eAnimateLeft:
-                this.currentElem = this.numElems - 1;
-                this.currentAnimAdvance = -1;
-                break;
-            // Assumes that currentElem is just out of bounds on either side
-            // 2*animAdvance brings currentElem back inBounds, skipping the first
-            // and last frames to avoid rendering the same frame twice
-            case SpriteAnimateRenderable.eAnimationType.eAnimateSwing:
-                this.currentAnimAdvance = -1 * this.currentAnimAdvance;
-                this.currentElem += 2 * this.currentAnimAdvance;
-                break;
-        }
-        this._setSpriteElement();
-    }
-    _setSpriteElement() {
-        const left = this.firstElmLeft +
-            this.currentElem * (this.elmWidth + this.widthPadding);
-        this.setElementUVCoordinates(left, left + this.elmWidth, this.elmTop - this.elmHeight, this.elmTop);
-    }
-    setSpriteSequence(topPixel, leftPixel, elementWidthPx, elementHeightPx, numElements, widthPaddingPx) {
-        const texInfo = mPublic$7.retrieveAsset(this.texture);
-        const imgHeight = texInfo.height;
-        const imgWidth = texInfo.width;
-        this.firstElmLeft = leftPixel / imgWidth;
-        this.elmTop = topPixel / imgHeight;
-        this.elmWidth = elementWidthPx / imgWidth;
-        this.elmHeight = elementHeightPx / imgHeight;
-        this.numElems = numElements;
-        this.widthPadding = widthPaddingPx / imgWidth;
-        this._initAnimation();
-    }
-    setAnimationSpeed(tickInterval) {
-        this.updateInterval = tickInterval;
-    }
-    incAnimationSpeed(delta) {
-        this.updateInterval += delta;
-    }
-    update() {
-        this.currentTick++;
-        if (this.currentTick % this.updateInterval === 0) {
-            this.currentElem += this.currentAnimAdvance;
-            if (this.currentElem >= 0 && this.currentElem < this.numElems) {
-                this._setSpriteElement();
-            }
-            else {
-                this._initAnimation();
-            }
-        }
-    }
-}
-SpriteAnimateRenderable.eAnimationType = Object.freeze({
-    eAnimateRight: 0,
-    eAnimateLeft: 1,
-    eAnimateSwing: 2,
-});
-
 new (class {
     constructor() {
         this.collisionInfo = CollisionInfo.Instance;
@@ -4666,6 +4576,96 @@ new (class {
         }
     }
 })();
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+class SpriteAnimateRenderable extends SpriteRenderable {
+    constructor(texture) {
+        super(texture);
+        this.firstElmLeft = 0.0;
+        this.elmTop = 1.0;
+        this.elmWidth = 1.0;
+        this.elmHeight = 1.0;
+        this.widthPadding = 0.0;
+        this.numElems = 1;
+        this.animationType = SpriteAnimateRenderable.eAnimationType.eAnimateRight;
+        this.updateInterval = 1;
+        this.currentElem = 0;
+        this.currentAnimAdvance = -1.0;
+        this.currentTick = 0;
+        this._initAnimation();
+    }
+    setAnimationType(animationType) {
+        this.animationType = animationType;
+        this.currentElem = -2;
+        this.currentAnimAdvance = -1;
+        this._initAnimation();
+    }
+    _initAnimation() {
+        this.currentTick = 0;
+        switch (this.animationType) {
+            case SpriteAnimateRenderable.eAnimationType.eAnimateRight:
+                this.currentElem = 0;
+                this.currentAnimAdvance = 1;
+                break;
+            case SpriteAnimateRenderable.eAnimationType.eAnimateLeft:
+                this.currentElem = this.numElems - 1;
+                this.currentAnimAdvance = -1;
+                break;
+            // Assumes that currentElem is just out of bounds on either side
+            // 2*animAdvance brings currentElem back inBounds, skipping the first
+            // and last frames to avoid rendering the same frame twice
+            case SpriteAnimateRenderable.eAnimationType.eAnimateSwing:
+                this.currentAnimAdvance = -1 * this.currentAnimAdvance;
+                this.currentElem += 2 * this.currentAnimAdvance;
+                break;
+        }
+        this._setSpriteElement();
+    }
+    _setSpriteElement() {
+        const left = this.firstElmLeft +
+            this.currentElem * (this.elmWidth + this.widthPadding);
+        this.setElementUVCoordinates(left, left + this.elmWidth, this.elmTop - this.elmHeight, this.elmTop);
+    }
+    setSpriteSequence(topPixel, leftPixel, elementWidthPx, elementHeightPx, numElements, widthPaddingPx) {
+        const texInfo = mPublic$7.retrieveAsset(this.texture);
+        const imgHeight = texInfo.height;
+        const imgWidth = texInfo.width;
+        this.firstElmLeft = leftPixel / imgWidth;
+        this.elmTop = topPixel / imgHeight;
+        this.elmWidth = elementWidthPx / imgWidth;
+        this.elmHeight = elementHeightPx / imgHeight;
+        this.numElems = numElements;
+        this.widthPadding = widthPaddingPx / imgWidth;
+        this._initAnimation();
+    }
+    setAnimationSpeed(tickInterval) {
+        this.updateInterval = tickInterval;
+    }
+    incAnimationSpeed(delta) {
+        this.updateInterval += delta;
+    }
+    update() {
+        this.currentTick++;
+        if (this.currentTick % this.updateInterval === 0) {
+            this.currentElem += this.currentAnimAdvance;
+            if (this.currentElem >= 0 && this.currentElem < this.numElems) {
+                this._setSpriteElement();
+            }
+            else {
+                this._initAnimation();
+            }
+        }
+    }
+}
+SpriteAnimateRenderable.eAnimationType = Object.freeze({
+    eAnimateRight: 0,
+    eAnimateLeft: 1,
+    eAnimateSwing: 2,
+});
 
 export { addToLayer, cleanUp, collided, drawAllLayers, drawLayer, initializeEngineCore, layerSize, moveToLayerFront, startScene, updateAllLayers, updateLayer };
 //# sourceMappingURL=multi-entry.js.map

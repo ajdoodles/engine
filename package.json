@@ -13,8 +13,9 @@
     "author": "agraffe",
     "contributors": [],
     "scripts": {
-        "prebuild": "rm -f public_html/multi-entry.js public_html/multi-entry.js.map",
-        "build": "npx rollup -c"
+        "prebuild": "rm -rf public_html/shaders && rm -f public_html/multi-entry.js public_html/multi-entry.js.map",
+        "build": "npx rollup -c",
+        "postbuild": "cp -r src/glslshaders public_html/shaders"
     },
     "devDependencies": {
         "@rollup/plugin-multi-entry": "^4.1.0",

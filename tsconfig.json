@@ -1,6 +1,6 @@
 {
-  "include": ["./public_html/src/**/*.ts", "./public_html/src/**/*.js"],
-  "exclude": ["./node_modules", "./public_html/build"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["./node_modules"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
@@ -28,7 +28,7 @@
 
     /* Modules */
     "module": "ES6",                                /* Specify what module code is generated. */
-    "rootDir": "./public_html/src",                                  /* Specify the root folder within your source files. */
+    "rootDir": "src",                                  /* Specify the root folder within your source files. */
     "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
     // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
