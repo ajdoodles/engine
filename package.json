@@ -1,7 +1,7 @@
 {
     "name": "game-engine",
     "private": true,
-    "browser": "./public_html/build/multi-entry.js",
+    "browser": "./public_html/multi-entry.js",
     "version": "1.0.0",
     "keywords": [
         "util",
@@ -13,7 +13,7 @@
     "author": "agraffe",
     "contributors": [],
     "scripts": {
-        "prebuild": "rm -rf public_html/build",
+        "prebuild": "rm -f public_html/multi-entry.js public_html/multi-entry.js.map",
         "build": "npx rollup -c"
     },
     "devDependencies": {

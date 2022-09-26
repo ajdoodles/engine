@@ -9,7 +9,7 @@ export default {
     },
     output: {
         sourcemap: true,
-        dir: 'public_html/build'
+        dir: 'public_html/'
     },
     plugins: [multi(), nodeResolve(), typescript()]
 }
