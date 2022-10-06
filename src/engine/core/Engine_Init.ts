@@ -20,6 +20,6 @@ export function initializeEngineCore(htmlCanvasID: string, scene: Scene) {
 }
 
 export function startScene(scene: Scene) {
-  scene.loadScene.call(scene);
+  scene.loadScene();
   gameLoop.start(scene);
 }
