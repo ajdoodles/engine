@@ -1,5 +1,5 @@
 import core from "./Engine_GL";
-import vertexBuffer from "./Engine_VertexBuffer";
+import vertexBuffer from "./Engine_VertexBuffers";
 import input from "./Engine_Input";
 import audioClips from "./resources/Engine_AudioClips";
 import defaultResources from "./resources/Engine_DefaultResources";

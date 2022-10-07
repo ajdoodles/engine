@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 "use strict";
-import vertexBuffer from "../core/Engine_VertexBuffer.js";
+import vertexBuffer from "../core/Engine_VertexBuffers.js";
 import SimpleShader from "./SimpleShader.js";
 import core from "../core/Engine_GL.js";
 import Camera from "../cameras/Camera.js";
@@ -34,7 +34,7 @@ export default class TextureShader extends SimpleShader {
     SimpleShader.prototype.activateShader.call(this, pixelColor, camera);
 
     const gl = core.gl;
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLTexCoordRef());
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.textureCoordinateBuffer);
     gl.enableVertexAttribArray(this.textureCoordinateAttribute);
     gl.vertexAttribPointer(
       this.textureCoordinateAttribute,

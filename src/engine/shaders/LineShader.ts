@@ -7,7 +7,7 @@
 import { mat4 } from "gl-matrix";
 import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_GL.js";
-import vertexBuffer from "../core/Engine_VertexBuffer.js";
+import vertexBuffer from "../core/Engine_VertexBuffers.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import SimpleShader from "./SimpleShader.js";
 
@@ -53,7 +53,7 @@ export default class LineShader extends SimpleShader {
       "uPixelColor"
     ) as WebGLUniformLocation;
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLVertexRef());
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.squareVertexBuffer);
 
     gl.vertexAttribPointer(
       this.shaderVertexPositionAttribute,

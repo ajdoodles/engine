@@ -5,7 +5,7 @@
  */
 
 import core from "../core/Engine_GL.js";
-import vertexBuffer from "../core/Engine_VertexBuffer.js";
+import vertexBuffer from "../core/Engine_VertexBuffers.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
 import defaultResources from "../core/resources/Engine_DefaultResources.js";
 import Camera from "../cameras/Camera.js";
@@ -69,7 +69,7 @@ export default class SimpleShader {
       "uGlobalAmbientIntensity"
     ) as WebGLUniformLocation;
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getGLVertexRef());
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.squareVertexBuffer);
 
     gl.vertexAttribPointer(
       this.shaderVertexPositionAttribute,
