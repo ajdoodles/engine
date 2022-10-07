@@ -38,7 +38,7 @@ export default class LineShader extends SimpleShader {
 
     this.shaderVertexPositionAttribute = gl.getAttribLocation(
       this.compiledShader,
-      "aSquareVertexPosition"
+      "aShapeVertexPosition"
     );
     this.modelTransform = gl.getUniformLocation(
       this.compiledShader,
