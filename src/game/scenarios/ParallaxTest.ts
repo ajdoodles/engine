@@ -8,7 +8,6 @@ import MathUtils from "../../engine/utils/MathUtils";
 import { vec2 } from "gl-matrix";
 import core from "../../engine/core/Engine_GL";
 import Hero from "../objects/Hero";
-import TileGameObject from "../../engine/gameobjects/TiledGameObject";
 import IllumRenderable from "../../engine/renderables/IllumRenderable";
 import ParallaxGameObject from "../../engine/gameobjects/ParallaxGameObject";
 import TextureRenderable from "../../engine/renderables/TextureRenderable";

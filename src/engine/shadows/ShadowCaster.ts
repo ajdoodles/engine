@@ -7,7 +7,6 @@
 import ShaderFactory from "../shaders/ShaderFactory.js";
 import { vec3 } from "gl-matrix";
 import Light from "../lights/Light.js";
-import SpriteRenderable from "../renderables/SpriteRenderable.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import GameObject from "../gameobjects/GameObject.js";

@@ -6,7 +6,6 @@
 
 import core from "../core/Engine_GL.js";
 import TextureShader from "./TextureShader.js";
-import SimpleShader from "./SimpleShader.js";
 import Camera from "../cameras/Camera.js";
 
 export default class SpriteShader extends TextureShader {
