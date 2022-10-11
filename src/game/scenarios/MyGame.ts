@@ -182,7 +182,7 @@ export default class MyGame extends Scene {
     const rate = 0.02;
     if (!this.mBrain.getBBox().intersects(this.mHero.getBBox())) {
       this.mBrain.rotateObjPointTo(this.mHero.xform.getPosition(), rate);
-      GameObject.prototype.update.call(this.mBrain);
+      this.mBrain.update();
     }
 
     this.mHeroCam.update();

@@ -37,7 +37,7 @@ export default class IllumShader extends LightShader {
   }
 
   activateShader(pixelColor: color, camera: Camera) {
-    LightShader.prototype.activateShader.call(this, pixelColor, camera);
+    super.activateShader(pixelColor, camera);
 
     const gl = core.gl;
     gl.uniform1i(this.normalSampler, 1);

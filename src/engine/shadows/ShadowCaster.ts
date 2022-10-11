@@ -49,7 +49,7 @@ export default class ShadowCaster {
         castingRenderable.getXform().copy(this.saveXform);
         if (this._computeShadowGeometry(light)) {
           this.casterShader.setLight(light);
-          SpriteRenderable.prototype.draw.call(castingRenderable, camera);
+          castingRenderable.draw(camera);
         }
       }
     }

@@ -34,7 +34,7 @@ export default class SpriteShader extends TextureShader {
   }
 
   activateShader(pixelColor: color, camera: Camera) {
-    SimpleShader.prototype.activateShader.call(this, pixelColor, camera);
+    super.activateShader(pixelColor, camera);
 
     const gl = core.gl;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.spriteCoordBuffer);

@@ -37,6 +37,6 @@ export default class IllumRenderable extends LightRenderable {
   draw(camera: Camera) {
     textures.activateNormalTexture(this.normalTexture);
     (this.shader as IllumShader).setMaterial(this.material);
-    LightRenderable.prototype.draw.call(this, camera);
+    super.draw(camera);
   }
 }

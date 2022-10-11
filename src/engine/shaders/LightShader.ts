@@ -33,7 +33,7 @@ export default class LightShader extends SpriteShader {
   }
 
   activateShader(color: color, camera: Camera) {
-    SpriteShader.prototype.activateShader.call(this, color, camera);
+    super.activateShader(color, camera);
 
     for (let i = 0; i < this.lights.length; i++) {
       this.lightRefs[i].loadToShader(camera, this.lights[i]);

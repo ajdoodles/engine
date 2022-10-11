@@ -46,7 +46,7 @@ export default class TextureRenderable extends Renderable {
 
   draw(camera: Camera) {
     textures.activateColorTexture(this.texture);
-    Renderable.prototype.draw.call(this, camera);
+    super.draw(camera);
   }
 
   setColorArray() {

@@ -24,7 +24,7 @@ export default class ShadowCasterShader extends SpriteShader {
   }
 
   activateShader(pixelColor: color, camera: Camera) {
-    SpriteShader.prototype.activateShader.call(this, pixelColor, camera);
+    super.activateShader(pixelColor, camera);
 
     this.lightRef.loadToShader(camera, this.light);
   }

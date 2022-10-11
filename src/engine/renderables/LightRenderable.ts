@@ -33,6 +33,6 @@ export default class LightRenderable extends SpriteRenderable {
 
   draw(camera: Camera) {
     (this.shader as LightShader).setLights(this.lights);
-    SpriteRenderable.prototype.draw.call(this, camera);
+    super.draw(camera);
   }
 }

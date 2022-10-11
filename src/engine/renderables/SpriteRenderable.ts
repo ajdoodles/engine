@@ -76,7 +76,7 @@ export default class SpriteRenderable extends TextureRenderable {
     (this.shader as SpriteShader).setTextureCoordinates(
       this.getElementUVCoordinateArray()
     );
-    TextureRenderable.prototype.draw.call(this, camera);
+    super.draw(camera);
   }
 
   _setTexInfo() {
