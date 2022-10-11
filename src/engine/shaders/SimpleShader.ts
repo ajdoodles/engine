@@ -10,8 +10,8 @@ import Camera from "../cameras/Camera.js";
 import FlatShader from "./FlatShader.js";
 
 export default class SimpleShader extends FlatShader {
-  globalAmbientColor!: WebGLUniformLocation;
-  globalAmbientIntensity: WebGLUniformLocation = 1.0;
+  globalAmbientColor: WebGLUniformLocation;
+  globalAmbientIntensity: WebGLUniformLocation;
 
   constructor(vertexShaderId: string, fragmentShaderId: string) {
     super (vertexShaderId, fragmentShaderId);
