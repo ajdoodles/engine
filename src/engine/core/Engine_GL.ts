@@ -16,7 +16,7 @@ export default new (class {
       stencil: true,
     };
 
-    this.gl = canvas.getContext("webgl2", args) as WebGL2RenderingContext;
+    this.gl = canvas.getContext("webgl", args) as WebGLRenderingContext;
 
     if (this.gl === null) {
       document.write("<br/><b> WebGL is not supported. </b>");
