@@ -4,7 +4,7 @@ import TextureShader from "./TextureShader.js";
 import LightShader from "./LightShader.js";
 import IllumShader from "./IllumShader.js";
 import ShadowCasterShader from "./ShadowCasterShader.js";
-import LineShader from "./LineShader.js";
+import FlatShader from "./FlatShader.js";
 
 const kSimpleVS = "shaders/SimpleVS.glsl";
 const kSimpleFS = "shaders/SimpleFS.glsl";
@@ -24,7 +24,7 @@ let mLightShader: LightShader;
 let mIllumShader: IllumShader;
 let mShadowCasterShader: ShadowCasterShader;
 let mShadowReceiverShader: SpriteShader;
-let mLineShader: LineShader;
+let mFlatShader: FlatShader;
 let mParticleShader: TextureShader;
 
 const _getConstColorShader = function () {
@@ -55,8 +55,8 @@ const _getShadowReceiverShader = function () {
   return mShadowReceiverShader;
 };
 
-const _getLineShader = function () {
-  return mLineShader;
+const _getFlatShader = function () {
+  return mFlatShader;
 };
 
 const _getParticleShader = function () {
@@ -71,7 +71,7 @@ const createShaders = function () {
   mIllumShader = new IllumShader(kTextureVS, kIllumFS);
   mShadowCasterShader = new ShadowCasterShader(kTextureVS, kShadowCasterFS);
   mShadowReceiverShader = new SpriteShader(kTextureVS, kShadowReceiverFS);
-  mLineShader = new LineShader(kSimpleVS, kLineFS);
+  mFlatShader = new FlatShader(kSimpleVS, kLineFS);
   mParticleShader = new TextureShader(kTextureVS, kParticleFS);
 };
 
@@ -83,7 +83,7 @@ const mPublic = {
   getIllumShader: _getIllumShader,
   getShadowCasterShader: _getShadowCasterShader,
   getShadowReceiverShader: _getShadowReceiverShader,
-  getLineShader: _getLineShader,
+  getFlatShader: _getFlatShader,
   getParticleShader: _getParticleShader,
   createShaders: createShaders,
 };

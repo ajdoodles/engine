@@ -9,12 +9,15 @@ import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_GL.js";
 import vertexBuffer from "../core/Engine_VertexBuffers.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
-import SimpleShader from "./SimpleShader.js";
 
-export default class LineShader extends SimpleShader {
+export default class FlatShader {
+  compiledShader: WebGLProgram;
+  shaderVertexPositionAttribute!: number;
+  modelTransform!: WebGLUniformLocation;
+  viewProjTransform!: WebGLUniformLocation;
+  pixelColor!: WebGLUniformLocation;
+
   constructor(vertexShaderId: string, fragmentShaderId: string) {
-    super(vertexShaderId, fragmentShaderId);
-
     const gl = core.gl;
 
     const vertexShader = this._compileShader(
@@ -36,10 +39,6 @@ export default class LineShader extends SimpleShader {
       return;
     }
 
-    this.shaderVertexPositionAttribute = gl.getAttribLocation(
-      this.compiledShader,
-      "aShapeVertexPosition"
-    );
     this.modelTransform = gl.getUniformLocation(
       this.compiledShader,
       "uModelTransform"
@@ -53,8 +52,17 @@ export default class LineShader extends SimpleShader {
       "uPixelColor"
     ) as WebGLUniformLocation;
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.squareVertexBuffer);
+    this._bindVertexBuffer();
+  }
 
+  protected _bindVertexBuffer() {
+    const gl = core.gl;
+
+    this.shaderVertexPositionAttribute = gl.getAttribLocation(
+      this.compiledShader,
+      "aShapeVertexPosition"
+    );
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.squareVertexBuffer);
     gl.vertexAttribPointer(
       this.shaderVertexPositionAttribute,
       3,
@@ -93,5 +101,9 @@ export default class LineShader extends SimpleShader {
   loadObjectTransform(modelTransform: mat4) {
     const gl = core.gl;
     gl.uniformMatrix4fv(this.modelTransform, false, modelTransform);
+  }
+
+  getShader() {
+    return this.compiledShader;
   }
 }

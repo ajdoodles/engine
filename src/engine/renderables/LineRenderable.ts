@@ -39,7 +39,7 @@ export default class LineRenderable extends Renderable {
   constructor(x1?: number, y1?: number, x2?: number, y2?: number) {
     super();
     this.setColor([1.0, 1.0, 1.0, 1.0]);
-    this._setShader(ShaderFactory.getLineShader());
+    this._setShader(ShaderFactory.getFlatShader());
     // trigger thickness mutator
     this.thickness = this._thickness;
 

@@ -8,17 +8,17 @@ import ShaderFactory from "../shaders/ShaderFactory.js";
 import core from "../core/Engine_GL.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
-import SimpleShader from "../shaders/SimpleShader.js";
+import FlatShader from "../shaders/FlatShader.js";
 
 export default class Renderable {
-  shader = ShaderFactory.getConstColorShader();
+  shader = ShaderFactory.getFlatShader();
   color: color = [1.0, 1.0, 1.0, 1.0];
   xform = new Transform();
 
-  _setShader(shader: SimpleShader) {
+  _setShader(shader: FlatShader) {
     this.shader = shader;
   }
-  swapShader(shader: SimpleShader) {
+  swapShader(shader: FlatShader) {
     const current = this.shader;
     this.shader = shader;
     return current;
