@@ -7,8 +7,9 @@
 import { mat4 } from "gl-matrix";
 import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_GL.js";
-import vertexBuffer from "../core/Engine_VertexBuffers.js";
+import vertexBuffers from "../core/Engine_VertexBuffers.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
+import { GeometryType } from "./Geometry.js";
 
 export default class FlatShader {
   compiledShader: WebGLProgram;
@@ -17,7 +18,16 @@ export default class FlatShader {
   viewProjTransform!: WebGLUniformLocation;
   pixelColor!: WebGLUniformLocation;
 
-  constructor(vertexShaderId: string, fragmentShaderId: string) {
+  _shape = GeometryType.SQUARE;
+  get shape() {
+    return this._shape;
+  }
+  set shape(shape) {
+    this._shape = shape;
+    this._bindVertexBuffer();
+  }
+
+  constructor(vertexShaderId: string, fragmentShaderId: string, shape = GeometryType.SQUARE) {
     const gl = core.gl;
 
     const vertexShader = this._compileShader(
@@ -52,17 +62,26 @@ export default class FlatShader {
       "uPixelColor"
     ) as WebGLUniformLocation;
 
-    this._bindVertexBuffer();
+    this.shaderVertexPositionAttribute = gl.getAttribLocation(
+      this.compiledShader,
+      "aShapeVertexPosition"
+    );
+    this.shape = shape;
   }
 
   protected _bindVertexBuffer() {
     const gl = core.gl;
 
-    this.shaderVertexPositionAttribute = gl.getAttribLocation(
-      this.compiledShader,
-      "aShapeVertexPosition"
-    );
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.squareVertexBuffer);
+    let vertexBuffer;
+    switch(this._shape) {
+      case GeometryType.SQUARE:
+        vertexBuffer = vertexBuffers.squareVertexBuffer;
+        break;
+      default:
+        throw "Attempting to bind vertex buffer for an unkown geometry."
+    }
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     gl.vertexAttribPointer(
       this.shaderVertexPositionAttribute,
       3,
