@@ -9,6 +9,8 @@ import core from "../core/Engine_GL.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import FlatShader from "../shaders/FlatShader.js";
+import { GeometryType } from "../shaders/Geometry.js";
+import assertExhaustive from "../utils/ExhaustTypes.js";
 
 export default class Renderable {
   shader = ShaderFactory.getFlatShader();
@@ -49,6 +51,15 @@ export default class Renderable {
     const gl = core.gl;
     this.shader.activateShader(this.color, camera);
     this.shader.loadObjectTransform(this.xform.getXForm());
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    switch(this.shader.shape) {
+      case GeometryType.SQUARE:
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        break;
+      case GeometryType.TRIANGLE:
+        gl.drawArrays(gl.LINE_LOOP, 0, 3);
+        break;
+      default:
+        assertExhaustive(this.shader.shape);
+    }
   }
 }

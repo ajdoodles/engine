@@ -9,6 +9,7 @@ import Camera from "../cameras/Camera.js";
 import core from "../core/Engine_GL.js";
 import vertexBuffers from "../core/Engine_VertexBuffers.js";
 import resourceMap from "../core/resources/Engine_ResourceMap.js";
+import assertExhaustive from "../utils/ExhaustTypes.js";
 import { GeometryType } from "./Geometry.js";
 
 export default class FlatShader {
@@ -24,7 +25,6 @@ export default class FlatShader {
   }
   set shape(shape) {
     this._shape = shape;
-    this._bindVertexBuffer();
   }
 
   constructor(vertexShaderId: string, fragmentShaderId: string, shape = GeometryType.SQUARE) {
@@ -73,12 +73,15 @@ export default class FlatShader {
     const gl = core.gl;
 
     let vertexBuffer;
-    switch(this._shape) {
+    switch(this.shape) {
       case GeometryType.SQUARE:
         vertexBuffer = vertexBuffers.squareVertexBuffer;
         break;
+      case GeometryType.TRIANGLE:
+        vertexBuffer = vertexBuffers.triangleVertexBuffer;
+        break;
       default:
-        throw "Attempting to bind vertex buffer for an unkown geometry."
+        assertExhaustive(this.shape);
     }
 
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -90,6 +93,7 @@ export default class FlatShader {
       0,
       0
     );
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
   }
 
   _compileShader(filepath: string, shaderType: number) {
@@ -110,6 +114,8 @@ export default class FlatShader {
   }
 
   activateShader(pixelColor: color, camera: Camera) {
+    this._bindVertexBuffer();
+
     const gl = core.gl;
     gl.useProgram(this.compiledShader);
     gl.uniformMatrix4fv(this.viewProjTransform, false, camera.getVPMatrix());
