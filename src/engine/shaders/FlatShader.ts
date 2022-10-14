@@ -71,6 +71,9 @@ export default class FlatShader {
       case GeometryType.TRIANGLE:
         vertexBuffer = vertexBuffers.triangleVertexBuffer;
         break;
+      case GeometryType.ASTEROID:
+        vertexBuffer = vertexBuffers.asteroidVertexBuffer;
+        break;
       default:
         assertExhaustive(shape);
     }

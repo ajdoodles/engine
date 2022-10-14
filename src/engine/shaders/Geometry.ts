@@ -7,9 +7,16 @@ interface Triangle {
     type: GeometryType.TRIANGLE,
     vertices: 3,
 }
-type Geometry = Square | Triangle;
+
+interface Asteroid {
+    type: GeometryType.ASTEROID,
+    vertices: 8,
+}
+
+type Geometry = Square | Triangle | Asteroid;
 
 export enum GeometryType {
     SQUARE,
     TRIANGLE,
+    ASTEROID,
 }

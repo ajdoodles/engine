@@ -58,6 +58,9 @@ export default class Renderable {
       case GeometryType.TRIANGLE:
         gl.drawArrays(gl.LINE_LOOP, 0, 3);
         break;
+      case GeometryType.ASTEROID:
+        gl.drawArrays(gl.LINE_LOOP, 0, 8);
+        break;
       default:
         assertExhaustive(shape);
     }
