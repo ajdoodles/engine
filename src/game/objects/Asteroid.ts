@@ -23,7 +23,7 @@ export default class Asteroid extends GameObject {
         renderable.xform.setSize(randScale, randScale);
         renderable.setColor(Asteroids.objectWhite);
         super(renderable);
-        this.physicsComponent = new RigidRect(renderable.xform, renderable.xform.getWidth(), renderable.xform.getHeight());
+        this.physicsComponent = new RigidRect(renderable.xform);
         this.physicsComponent.velocity = vec2.fromValues(randVx, randVy);
     }
 

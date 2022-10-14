@@ -17,7 +17,7 @@ export default class RigidRect extends RigidShape {
 
   sides: LineRenderable = new LineRenderable(0, 0, 0, 0);
 
-  constructor(xform: Transform, public width: number, public height: number) {
+  constructor(xform: Transform, public width: number = xform.getWidth(), public height: number = xform.getHeight()) {
     super(xform);
   }
 

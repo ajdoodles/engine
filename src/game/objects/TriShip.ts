@@ -18,7 +18,7 @@ export default class TriShip extends GameObject {
         super(triShip);
 
         const xform = this.renderComponent.xform;
-        this.physicsComponent = new RigidRect(xform, xform.getWidth(), xform.getHeight());
+        this.physicsComponent = new RigidRect(xform);
     }
 
     update() {

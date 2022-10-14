@@ -7,11 +7,7 @@ export default class Wall extends GameObject {
 
   constructor(wall: Renderable) {
     super(wall);
-    this.physicsComponent = new RigidRect(
-      this.xform,
-      this.xform.getWidth(),
-      this.xform.getHeight()
-    );
+    this.physicsComponent = new RigidRect(this.xform);
     this.physicsComponent.mass = 0;
     this.physicsComponent.drawBounds = true;
   }
