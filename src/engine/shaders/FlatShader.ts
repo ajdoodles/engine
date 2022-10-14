@@ -19,15 +19,7 @@ export default class FlatShader {
   viewProjTransform!: WebGLUniformLocation;
   pixelColor!: WebGLUniformLocation;
 
-  _shape = GeometryType.SQUARE;
-  get shape() {
-    return this._shape;
-  }
-  set shape(shape) {
-    this._shape = shape;
-  }
-
-  constructor(vertexShaderId: string, fragmentShaderId: string, shape = GeometryType.SQUARE) {
+  constructor(vertexShaderId: string, fragmentShaderId: string) {
     const gl = core.gl;
 
     const vertexShader = this._compileShader(
@@ -66,14 +58,13 @@ export default class FlatShader {
       this.compiledShader,
       "aShapeVertexPosition"
     );
-    this.shape = shape;
   }
 
-  protected _bindVertexBuffer() {
+  protected _bindVertexBuffer(shape: GeometryType = GeometryType.SQUARE) {
     const gl = core.gl;
 
     let vertexBuffer;
-    switch(this.shape) {
+    switch(shape) {
       case GeometryType.SQUARE:
         vertexBuffer = vertexBuffers.squareVertexBuffer;
         break;
@@ -81,7 +72,7 @@ export default class FlatShader {
         vertexBuffer = vertexBuffers.triangleVertexBuffer;
         break;
       default:
-        assertExhaustive(this.shape);
+        assertExhaustive(shape);
     }
 
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -113,8 +104,8 @@ export default class FlatShader {
     return compiledShader;
   }
 
-  activateShader(pixelColor: color, camera: Camera) {
-    this._bindVertexBuffer();
+  activateShader(pixelColor: color, camera: Camera, shape: GeometryType = GeometryType.SQUARE) {
+    this._bindVertexBuffer(shape);
 
     const gl = core.gl;
     gl.useProgram(this.compiledShader);

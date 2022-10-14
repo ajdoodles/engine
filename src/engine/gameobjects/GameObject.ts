@@ -8,6 +8,7 @@ import Camera from "../cameras/Camera";
 import PhysicsComponent from "../physics/PhysicsComponent";
 import Renderable from "../renderables/Renderable";
 import TextureRenderable from "../renderables/TextureRenderable";
+import { GeometryType } from "../shaders/Geometry";
 import BoundingBox from "../utils/BoundingBox";
 
 export default class GameObject {
@@ -15,6 +16,7 @@ export default class GameObject {
   public visible = true;
   protected _currentFrontDir: vec2 = vec2.fromValues(0, 1);
   public speed = 0;
+  public shape = GeometryType.SQUARE;
 
   get xform() {
     return this.renderComponent.getXform();
@@ -91,7 +93,7 @@ export default class GameObject {
 
   draw(camera: Camera) {
     if (this.visible) {
-      this.renderComponent.draw(camera);
+      this.renderComponent.draw(camera, this.shape);
 
       if (this.physicsComponent !== null) {
         this.physicsComponent?.draw(camera);

@@ -47,11 +47,11 @@ export default class Renderable {
     this.xform = xform;
   }
 
-  draw(camera: Camera) {
+  draw(camera: Camera, shape: GeometryType = GeometryType.SQUARE) {
     const gl = core.gl;
-    this.shader.activateShader(this.color, camera);
+    this.shader.activateShader(this.color, camera, shape);
     this.shader.loadObjectTransform(this.xform.getXForm());
-    switch(this.shader.shape) {
+    switch(shape) {
       case GeometryType.SQUARE:
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         break;
@@ -59,7 +59,7 @@ export default class Renderable {
         gl.drawArrays(gl.LINE_LOOP, 0, 3);
         break;
       default:
-        assertExhaustive(this.shader.shape);
+        assertExhaustive(shape);
     }
   }
 }
