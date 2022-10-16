@@ -5,14 +5,14 @@
  */
 import { vec2, vec3 } from "gl-matrix";
 import Camera from "../cameras/Camera";
-import PhysicsComponent from "../physics/PhysicsComponent";
+import { PhysicsBody } from "../physics/RigidType";
 import Renderable from "../renderables/Renderable";
 import TextureRenderable from "../renderables/TextureRenderable";
 import { GeometryType } from "../shaders/Geometry";
 import BoundingBox from "../utils/BoundingBox";
 
 export default class GameObject {
-  public physicsComponent?: PhysicsComponent;
+  public physicsComponent?: PhysicsBody;
   public visible = true;
   protected _currentFrontDir: vec2 = vec2.fromValues(0, 1);
   public speed = 0;

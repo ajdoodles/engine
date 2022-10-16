@@ -1,24 +1,30 @@
 import CollisionInfo from "../../utils/CollisionInfo";
+import assertExhaustive from "../../utils/ExhaustTypes";
 import RigidCircle from "../RigidCircle";
 import RigidRect from "../RigidRect";
-import RigidShape from "../RigidShape";
+import { ICircle, IRect, PhysicsBody, PhysicsType } from "../RigidType";
 
-export interface Collider<T extends RigidShape>{
-    collided<U extends RigidShape>(thing1:T, thing2:U, cInfo:CollisionInfo): boolean;
+export interface Collider<T extends PhysicsBody>{
+    collided(thing1:T, thing2:PhysicsBody, cInfo:CollisionInfo): boolean;
     collidedWithRect(thing: T, rect: RigidRect, cInfo: CollisionInfo): boolean;
     collidedWithCirc(thing: T, circ: RigidCircle, cInfo: CollisionInfo): boolean;
 }
 
-export abstract class BaseCollider<T extends RigidShape> implements Collider<T>{
-    collided<U extends RigidShape>(thing1: T, thing2: U, cInfo: CollisionInfo): boolean {
-        if (thing2 instanceof RigidRect) {
-            return this.collidedWithRect(thing1, thing2, cInfo);
-          } else if (thing2 instanceof RigidCircle) {
-            return this.collidedWithCirc(thing1, thing2, cInfo);
-          }
-          return false;
+export abstract class BaseCollider<T extends PhysicsBody> implements Collider<T>{
+    collided(thing1: T, thing2: PhysicsBody, cInfo: CollisionInfo): boolean {
+      const pType = thing2.pType;
+      switch(pType) {
+        case PhysicsType.RECT:
+          return this.collidedWithRect(thing1, thing2, cInfo);
+        case PhysicsType.CIRCLE:
+          return this.collidedWithCirc(thing1, thing2, cInfo);
+        case PhysicsType.PARTICLE:
+          throw new Error("PARTICLE COLLIDER NOT YET IMPLEMENTED");
+        default:
+          assertExhaustive(pType);
+      }
     }
 
-    abstract collidedWithRect(thing: T, rect: RigidRect, cInfo: CollisionInfo): boolean;
-    abstract collidedWithCirc(thing: T, circ: RigidCircle, cInfo: CollisionInfo): boolean;
+    abstract collidedWithRect(thing: T, rect: IRect, cInfo: CollisionInfo): boolean;
+    abstract collidedWithCirc(thing: T, circ: ICircle, cInfo: CollisionInfo): boolean;
 }

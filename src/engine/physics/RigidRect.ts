@@ -9,11 +9,11 @@ import LineRenderable from "../renderables/LineRenderable.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import { vec2 } from "gl-matrix";
-import { RigidType } from "./RigidType.js";
+import { IRect, PhysicsType } from "./RigidType.js";
 import MathUtils from "../utils/MathUtils.js";
 
-export default class RigidRect extends RigidShape {
-  public readonly rigidType: RigidType = RigidType.RECT;
+export default class RigidRect extends RigidShape implements IRect {
+  public readonly pType = PhysicsType.RECT;
   
   sides: LineRenderable = new LineRenderable(0, 0, 0, 0);
 

@@ -1,20 +1,19 @@
 import { vec2 } from "gl-matrix";
 import CollisionInfo from "../../utils/CollisionInfo";
-import RigidCircle from "../RigidCircle";
-import RigidRect from "../RigidRect";
+import { ICircle, IRect } from "../RigidType";
 import { BaseCollider } from "./Collider";
 import RectCollider from "./RectCollider";
 
-export default new class CircCollider extends BaseCollider<RigidCircle> {
+export default new class CircCollider extends BaseCollider<ICircle> {
     
-    collidedWithRect(circle: RigidCircle, rect: RigidRect, cInfo: CollisionInfo): boolean {
+    collidedWithRect(circle: ICircle, rect: IRect, cInfo: CollisionInfo): boolean {
         const isCollided = RectCollider.collidedWithCirc(rect, circle, cInfo);
         // flip the normal to match the new order of arguments
         vec2.scale(cInfo.normal, cInfo.normal, -1);
         return isCollided;
     }
      
-    collidedWithCirc(first: RigidCircle, second: RigidCircle, cInfo: CollisionInfo): boolean {
+    collidedWithCirc(first: ICircle, second: ICircle, cInfo: CollisionInfo): boolean {
         const distSquared = vec2.squaredDistance(first.position, second.position);
         const maxDist = first.radius + second.radius;
       

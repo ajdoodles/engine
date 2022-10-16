@@ -3,8 +3,11 @@ import Camera from "../cameras/Camera";
 import gameloop from "../core/Engine_GameLoop";
 import particles from "../core/resources/Engine_Particle";
 import PhysicsComponent from "../physics/PhysicsComponent";
+import { IParticle, PhysicsType } from "../physics/RigidType";
 
-export default class Particle extends PhysicsComponent {
+export default class Particle extends PhysicsComponent implements IParticle {
+  public readonly pType = PhysicsType.PARTICLE;
+
   public readonly velocity = vec2.create();
   public readonly acceleration = vec2.clone(particles.systemAcceleration);
   public drag = 0.95;

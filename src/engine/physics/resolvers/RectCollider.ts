@@ -1,12 +1,11 @@
 import { vec2 } from "gl-matrix";
 import CollisionInfo from "../../utils/CollisionInfo";
-import RigidCircle from "../RigidCircle";
-import RigidRect from "../RigidRect";
+import { ICircle, IRect } from "../RigidType";
 import { BaseCollider } from "./Collider";
 
-export default new class RectCollider extends BaseCollider<RigidRect> {
+export default new class RectCollider extends BaseCollider<IRect> {
 
-    collidedWithRect(first: RigidRect, second: RigidRect, cInfo: CollisionInfo): boolean {
+    collidedWithRect(first: IRect, second: IRect, cInfo: CollisionInfo): boolean {
         const firstPos = first.position;
         const secondPos = second.position;
       
@@ -42,7 +41,7 @@ export default new class RectCollider extends BaseCollider<RigidRect> {
         return false;
     }
 
-    collidedWithCirc(rect: RigidRect, circle: RigidCircle, cInfo: CollisionInfo): boolean {
+    collidedWithCirc(rect: IRect, circle: ICircle, cInfo: CollisionInfo): boolean {
         const rectPos = rect.position;
         const circlePos = circle.position;
       
