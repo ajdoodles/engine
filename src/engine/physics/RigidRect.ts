@@ -9,12 +9,12 @@ import LineRenderable from "../renderables/LineRenderable.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
 import { vec2 } from "gl-matrix";
-import RigidType from "./RigidType.js";
+import { RigidType } from "./RigidType.js";
 import MathUtils from "../utils/MathUtils.js";
 
 export default class RigidRect extends RigidShape {
-  rigidType = RigidType.Rect;
-
+  public readonly rigidType: RigidType = RigidType.RECT;
+  
   sides: LineRenderable = new LineRenderable(0, 0, 0, 0);
 
   constructor(xform: Transform, public width: number = xform.getWidth(), public height: number = xform.getHeight()) {

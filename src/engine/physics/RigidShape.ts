@@ -8,11 +8,11 @@ import { vec2 } from "gl-matrix";
 import Transform from "../utils/Transform.js";
 import gameLoop from "../core/Engine_GameLoop";
 import PhysicsComponent from "./PhysicsComponent.js";
-import RigidType from "./RigidType.js";
 import Camera from "../cameras/Camera.js";
+import { RigidType } from "./RigidType.js";
 
 export default abstract class RigidShape extends PhysicsComponent {
-  public readonly rigidType: RigidType = RigidType.Abstract;
+  public readonly abstract rigidType: RigidType;
 
   private _invMass = 1;
   restitution = 0.8;

@@ -9,10 +9,10 @@ import { vec2 } from "gl-matrix";
 import LineRenderable from "../renderables/LineRenderable.js";
 import Transform from "../utils/Transform.js";
 import Camera from "../cameras/Camera.js";
-import RigidType from "./RigidType.js";
+import { RigidType } from "./RigidType.js";
 
 export default class RigidCircle extends RigidShape {
-  readonly rigidType = RigidType.Circle;
+  public readonly rigidType: RigidType = RigidType.CIRCLE;
 
   numSides = 16;
   angularDelta = (2 * Math.PI) / this.numSides;

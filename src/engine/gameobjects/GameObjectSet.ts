@@ -7,6 +7,7 @@
 import Camera from "../cameras/Camera.js";
 import input from "../core/Engine_Input.js";
 import { collided } from "../physics/Collisions.js";
+import RigidShape from "../physics/RigidShape.js";
 import CollisionInfo from "../utils/CollisionInfo.js";
 import GameObject from "./GameObject.js";
 
@@ -138,7 +139,7 @@ export default class GameObjectSet {
           if (
             theseBounds !== undefined &&
             thoseBounds !== undefined &&
-            collided(theseBounds, thoseBounds, CollisionInfo.Instance)
+            collided(theseBounds as RigidShape, thoseBounds as RigidShape, CollisionInfo.Instance)
           ) {
             theseBounds.boundsColor = [1.0, 0.0, 0.0, 1.0];
             thoseBounds.boundsColor = [1.0, 0.0, 0.0, 1.0];
