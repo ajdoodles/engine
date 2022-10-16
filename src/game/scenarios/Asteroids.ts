@@ -7,6 +7,7 @@ import { vec2 } from "gl-matrix";
 import TriShip from "../objects/TriShip";
 import GameObjectSet from "../../engine/gameobjects/GameObjectSet";
 import Asteroid from "../objects/Asteroid";
+import physics from "../../engine/core/Engine_Physics";
 
 export default class Asteroids extends Scene {
 
@@ -53,7 +54,7 @@ export default class Asteroids extends Scene {
         for (let i = 0; i < numAsteroids; i++) {
             this.asteroidSet.addObject(new Asteroid());
         }
-        this.asteroidSet.setAlertCollisions(false);
+        this.asteroidSet.setAlertCollisions(true);
     }
 
     update(): void {
@@ -62,6 +63,12 @@ export default class Asteroids extends Scene {
 
         this.triShip.update();
         this.asteroidSet.update();
+
+        for (let i = 0; i < this.asteroidSet.size(); i++) {
+            for (let j  = i; j < this.asteroidSet.size(); j++) {
+                physics.processObjObj(this.asteroidSet.getObjectAt(i), this.asteroidSet.getObjectAt(j));
+            }
+        }
     }
 
     draw(): void {

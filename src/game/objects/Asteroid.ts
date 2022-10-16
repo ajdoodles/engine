@@ -1,5 +1,6 @@
 import { vec2 } from "gl-matrix";
 import GameObject from "../../engine/gameobjects/GameObject";
+import RigidCircle from "../../engine/physics/RigidCircle";
 import RigidRect from "../../engine/physics/RigidRect";
 import Renderable from "../../engine/renderables/Renderable";
 import { GeometryType } from "../../engine/shaders/Geometry";
@@ -7,7 +8,7 @@ import Asteroids from "../scenarios/Asteroids";
 
 export default class Asteroid extends GameObject {
     
-    physicsComponent: RigidRect;
+    physicsComponent: RigidCircle;
 
     shape = GeometryType.ASTEROID;
     rotation = (Math.random() * 10) - 5;
@@ -23,8 +24,9 @@ export default class Asteroid extends GameObject {
         renderable.xform.setSize(randScale, randScale);
         renderable.setColor(Asteroids.objectWhite);
         super(renderable);
-        this.physicsComponent = new RigidRect(renderable.xform);
+        this.physicsComponent = new RigidCircle(renderable.xform, renderable.xform.getHeight()/2);
         this.physicsComponent.velocity = vec2.fromValues(randVx, randVy);
+        this.physicsComponent.drawBounds = true;
     }
 
     update() {
